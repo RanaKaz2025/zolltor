@@ -1,0 +1,185 @@
+{
+  "countries": [
+    {
+      "code": "US",
+      "name": "United States",
+      "flag": "🇺🇸"
+    },
+    {
+      "code": "CN",
+      "name": "China",
+      "flag": "🇨🇳"
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "flag": "🇩🇪"
+    },
+    {
+      "code": "UK",
+      "name": "United Kingdom",
+      "flag": "🇬🇧"
+    },
+    {
+      "code": "JP",
+      "name": "Japan",
+      "flag": "🇯🇵"
+    },
+    {
+      "code": "IN",
+      "name": "India",
+      "flag": "🇮🇳"
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "flag": "🇫🇷"
+    },
+    {
+      "code": "CA",
+      "name": "Canada",
+      "flag": "🇨🇦"
+    },
+    {
+      "code": "AU",
+      "name": "Australia",
+      "flag": "🇦🇺"
+    },
+    {
+      "code": "BR",
+      "name": "Brazil",
+      "flag": "🇧🇷"
+    }
+  ],
+  "hsCodes": [
+    {
+      "code": "8517.12.00",
+      "description": "Smartphones and other cellular network telephones",
+      "category": "Electronics"
+    },
+    {
+      "code": "6403.99.10",
+      "description": "Leather footwear with outer soles of rubber or plastic",
+      "category": "Footwear"
+    },
+    {
+      "code": "8708.99.50",
+      "description": "Automotive parts and accessories",
+      "category": "Automotive"
+    },
+    {
+      "code": "6109.10.00",
+      "description": "Cotton t-shirts, singlets and other vests",
+      "category": "Textiles"
+    },
+    {
+      "code": "8471.30.01",
+      "description": "Portable automatic data processing machines",
+      "category": "Electronics"
+    }
+  ],
+  "tariffRates": [
+    {
+      "hsCode": "8517.12.00",
+      "origin": "CN",
+      "destination": "US",
+      "currentRate": 25.0,
+      "rateType": "Additional Duty",
+      "effectiveDate": "2024-01-01",
+      "source": "USTR Trade Policy",
+      "projections": [
+        { "quarter": "Q1 2025", "rate": 25.0, "change": "stable" },
+        { "quarter": "Q2 2025", "rate": 22.5, "change": "decrease" },
+        { "quarter": "Q3 2025", "rate": 20.0, "change": "decrease" },
+        { "quarter": "Q4 2025", "rate": 20.0, "change": "stable" }
+      ],
+      "marketIntelligence": [
+        { "country": "CN", "marketShare": 45.2, "volume": 125000, "avgDuty": 25.0 },
+        { "country": "IN", "marketShare": 18.7, "volume": 52000, "avgDuty": 12.5 },
+        { "country": "DE", "marketShare": 12.3, "volume": 34000, "avgDuty": 8.2 },
+        { "country": "JP", "marketShare": 8.9, "volume": 24500, "avgDuty": 15.0 }
+      ],
+      "additionalInfo": "Trade war tensions may affect future rates. Consider alternative suppliers from India or Germany for better duty rates."
+    },
+    {
+      "hsCode": "6403.99.10",
+      "origin": "IN",
+      "destination": "DE",
+      "currentRate": 8.5,
+      "rateType": "MFN",
+      "effectiveDate": "2024-01-01",
+      "source": "EU Trade Policy",
+      "projections": [
+        { "quarter": "Q1 2025", "rate": 8.5, "change": "stable" },
+        { "quarter": "Q2 2025", "rate": 6.0, "change": "decrease" },
+        { "quarter": "Q3 2025", "rate": 6.0, "change": "stable" },
+        { "quarter": "Q4 2025", "rate": 4.5, "change": "decrease" }
+      ],
+      "marketIntelligence": [
+        { "country": "IN", "marketShare": 32.1, "volume": 89000, "avgDuty": 8.5 },
+        { "country": "CN", "marketShare": 28.4, "volume": 78500, "avgDuty": 12.0 },
+        { "country": "BR", "marketShare": 15.6, "volume": 43200, "avgDuty": 9.8 },
+        { "country": "JP", "marketShare": 11.2, "volume": 31000, "avgDuty": 7.5 }
+      ],
+      "additionalInfo": "EU-India trade agreement negotiations may reduce tariffs significantly by Q2 2025."
+    }
+  ],
+  "watchlist": [
+    {
+      "id": 1,
+      "productName": "Smartphones",
+      "hsCode": "8517.12.00",
+      "origin": "CN",
+      "destination": "US",
+      "currentRate": 25.0,
+      "lastChange": {
+        "date": "2024-01-15",
+        "description": "Trade policy adjustment"
+      },
+      "nextChange": {
+        "date": "2025-04-01",
+        "description": "Expected reduction to 22.5%"
+      },
+      "type": "import"
+    },
+    {
+      "id": 2,
+      "productName": "Leather Footwear",
+      "hsCode": "6403.99.10",
+      "origin": "IN",
+      "destination": "DE",
+      "currentRate": 8.5,
+      "lastChange": {
+        "date": "2024-03-10",
+        "description": "Standard MFN rate applied"
+      },
+      "nextChange": {
+        "date": "2025-06-01",
+        "description": "Potential reduction under new trade agreement"
+      },
+      "type": "export"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "type": "rate_change",
+      "title": "Tariff Rate Reduction Alert",
+      "message": "Smartphone tariffs from China to US expected to decrease from 25% to 22.5% on April 1, 2025",
+      "date": "2025-03-15",
+      "read": false,
+      "productId": 1
+    }
+  ],
+  "user": {
+    "name": "John Smith",
+    "email": "john.smith@example.com",
+    "country": "US",
+    "language": "en",
+    "currency": "USD",
+    "notifications": {
+      "email": "john.smith@example.com",
+      "frequency": "immediate"
+    }
+  }
+}

@@ -1,0 +1,328 @@
+import React, { useState } from "react";
+import { Eye, EyeOff, Mail, Lock, User, Globe } from "lucide-react";
+import dummyData from "../data/dummyData.json";
+
+const AuthPage = ({ onLogin }) => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    country: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    if (!isLogin) {
+      if (!formData.country) {
+        newErrors.country = "Country is required";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    // Simulate authentication
+    if (isLogin) {
+      // Mock login - in real app, this would call an API
+      const userData = {
+        name: formData.name || "User",
+        email: formData.email,
+        country: formData.country || "US",
+      };
+      onLogin(userData);
+    } else {
+      // Mock registration - in real app, this would call an API
+      const userData = {
+        name: formData.name,
+        email: formData.email,
+        country: formData.country,
+      };
+      onLogin(userData);
+    }
+  };
+
+  const handleSocialLogin = (provider) => {
+    // Mock social login
+    const userData = {
+      name: `${provider} User`,
+      email: `user@${provider.toLowerCase()}.com`,
+      country: "US",
+    };
+    onLogin(userData);
+  };
+
+  return (
+    <div className="max-w-md mx-auto">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            {isLogin ? "Sign In" : "Create Account"}
+          </h1>
+          <p className="text-gray-600">
+            {isLogin
+              ? "Access your tariff watchlist and get personalized alerts"
+              : "Join Zolltor to monitor tariff changes and make informed trade decisions"}
+          </p>
+        </div>
+
+        {/* Social Login Buttons */}
+        <div className="space-y-3 mb-6">
+          <button
+            onClick={() => handleSocialLogin("Google")}
+            className="w-full flex items-center justify-center space-x-2 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            <span className="text-lg">🇬</span>
+            <span>Continue with Google</span>
+          </button>
+
+          <button
+            onClick={() => handleSocialLogin("LinkedIn")}
+            className="w-full flex items-center justify-center space-x-2 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            <span className="text-lg">💼</span>
+            <span>Continue with LinkedIn</span>
+          </button>
+
+          <div className="flex space-x-3">
+            <button
+              onClick={() => handleSocialLogin("Twitter")}
+              className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg">🐦</span>
+              <span>Twitter</span>
+            </button>
+
+            <button
+              onClick={() => handleSocialLogin("Facebook")}
+              className="flex-1 flex items-center justify-center space-x-2 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <span className="text-lg">📘</span>
+              <span>Facebook</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300" />
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-gray-500">
+              Or continue with email
+            </span>
+          </div>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {!isLogin && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Name (Optional)
+              </label>
+              <div className="relative">
+                <User
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  placeholder="Your name"
+                />
+              </div>
+            </div>
+          )}
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email Address *
+            </label>
+            <div className="relative">
+              <Mail
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                size={18}
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className={`w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                  errors.email ? "border-red-300" : "border-gray-300"
+                }`}
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Password *
+            </label>
+            <div className="relative">
+              <Lock
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                size={18}
+              />
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                  errors.password ? "border-red-300" : "border-gray-300"
+                }`}
+                placeholder="Enter your password"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+            )}
+          </div>
+
+          {!isLogin && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Country of Operation *
+              </label>
+              <div className="relative">
+                <Globe
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
+                <select
+                  name="country"
+                  value={formData.country}
+                  onChange={handleInputChange}
+                  className={`w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                    errors.country ? "border-red-300" : "border-gray-300"
+                  }`}
+                  required={!isLogin}
+                >
+                  <option value="">Select your country</option>
+                  {dummyData.countries.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {country.flag} {country.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {errors.country && (
+                <p className="mt-1 text-sm text-red-600">{errors.country}</p>
+              )}
+              <p className="mt-1 text-xs text-gray-500">
+                This helps us personalize your trade data perspective
+              </p>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 transition-colors font-medium"
+          >
+            {isLogin ? "Sign In" : "Create Account"}
+          </button>
+        </form>
+
+        {/* Switch Mode */}
+        <div className="mt-6 text-center">
+          <p className="text-gray-600">
+            {isLogin ? "Don't have an account?" : "Already have an account?"}
+            <button
+              onClick={() => {
+                setIsLogin(!isLogin);
+                setErrors({});
+                setFormData({ name: "", email: "", password: "", country: "" });
+              }}
+              className="ml-1 text-primary-600 hover:text-primary-800 font-medium"
+            >
+              {isLogin ? "Sign up" : "Sign in"}
+            </button>
+          </p>
+        </div>
+
+        {/* Password Recovery */}
+        {isLogin && (
+          <div className="mt-4 text-center">
+            <button className="text-sm text-gray-500 hover:text-gray-700">
+              Forgot your password?
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Information Box */}
+      <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <h3 className="text-sm font-medium text-blue-900 mb-2">
+          Why create an account?
+        </h3>
+        <ul className="text-sm text-blue-800 space-y-1">
+          <li>• Monitor unlimited products in your watchlist</li>
+          <li>• Receive real-time email alerts for tariff changes</li>
+          <li>• Access detailed historical trend analysis</li>
+          <li>• Export your watchlist data as CSV</li>
+          <li>• Get personalized AI-powered recommendations</li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default AuthPage;
