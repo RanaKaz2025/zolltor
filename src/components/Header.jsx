@@ -11,7 +11,7 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
   };
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
+    <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo and Brand */}
@@ -19,7 +19,7 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-lg">Z</span>
             </div>
-            <span className="text-xl font-bold text-gray-900">Zolltor</span>
+            <span className="text-xl font-bold text-gray-900">Zolltor AI</span>
           </Link>
 
           {/* Navigation Links */}
@@ -47,9 +47,9 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-700">
+                {/* <span className="text-sm text-gray-700">
                   Welcome, {user?.name || user?.email}
-                </span>
+                </span> */}
                 <Link
                   to="/profile"
                   className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors"

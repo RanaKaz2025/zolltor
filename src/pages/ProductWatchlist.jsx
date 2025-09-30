@@ -9,34 +9,60 @@ import {
   Minus,
   Eye,
 } from "lucide-react";
+import { useToast } from "../components/ToastProvider";
 import dummyData from "../data/dummyData.json";
 
 const ProductWatchlist = ({ user }) => {
   const [baseCountry, setBaseCountry] = useState(user?.country || "US");
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedImportItems, setSelectedImportItems] = useState([]);
+  const [selectedExportItems, setSelectedExportItems] = useState([]);
   const [watchlistData, setWatchlistData] = useState(dummyData.watchlist);
+  const toast = useToast();
 
-  const handleSelectAll = (e) => {
+  const handleSelectAllImport = (e) => {
     if (e.target.checked) {
-      setSelectedItems(watchlistData.map((item) => item.id));
+      setSelectedImportItems(importItems.map((item) => item.id));
     } else {
-      setSelectedItems([]);
+      setSelectedImportItems([]);
     }
   };
 
-  const handleSelectItem = (id) => {
-    if (selectedItems.includes(id)) {
-      setSelectedItems(selectedItems.filter((item) => item !== id));
+  const handleSelectAllExport = (e) => {
+    if (e.target.checked) {
+      setSelectedExportItems(exportItems.map((item) => item.id));
     } else {
-      setSelectedItems([...selectedItems, id]);
+      setSelectedExportItems([]);
     }
   };
 
-  const handleRemoveSelected = () => {
+  const handleSelectImportItem = (id) => {
+    if (selectedImportItems.includes(id)) {
+      setSelectedImportItems(selectedImportItems.filter((item) => item !== id));
+    } else {
+      setSelectedImportItems([...selectedImportItems, id]);
+    }
+  };
+
+  const handleSelectExportItem = (id) => {
+    if (selectedExportItems.includes(id)) {
+      setSelectedExportItems(selectedExportItems.filter((item) => item !== id));
+    } else {
+      setSelectedExportItems([...selectedExportItems, id]);
+    }
+  };
+
+  const handleRemoveSelectedImport = () => {
     setWatchlistData(
-      watchlistData.filter((item) => !selectedItems.includes(item.id))
+      watchlistData.filter((item) => !selectedImportItems.includes(item.id))
     );
-    setSelectedItems([]);
+    setSelectedImportItems([]);
+  };
+
+  const handleRemoveSelectedExport = () => {
+    setWatchlistData(
+      watchlistData.filter((item) => !selectedExportItems.includes(item.id))
+    );
+    setSelectedExportItems([]);
   };
 
   const getChangeIcon = (description) => {
@@ -66,17 +92,17 @@ const ProductWatchlist = ({ user }) => {
   const importItems = watchlistData.filter((item) => item.type === "import");
   const exportItems = watchlistData.filter((item) => item.type === "export");
 
-  const handleCSVUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // In a real app, you would parse the CSV file here
-      alert("CSV upload functionality would be implemented here");
-    }
+  const handleCSVUpload = () => {
+    // In a real app, you would parse the CSV file here
+    toast.warning(
+      "CSV upload functionality would be implemented in production",
+      4000
+    );
   };
 
   const handleCSVDownload = () => {
     // In a real app, you would generate and download a CSV file
-    alert("CSV download functionality would be implemented here");
+    toast.warning("CSV download would start in production version", 3000);
   };
 
   return (
@@ -111,19 +137,14 @@ const ProductWatchlist = ({ user }) => {
           </div>
         </div>
       </div>
-
       {/* Bulk Actions */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="rounded-lg mb-6">
+        <div className="flex flex-wrap items-center justify-end gap-4">
           <div className="flex items-center space-x-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="file"
-                accept=".csv"
-                onChange={handleCSVUpload}
-                className="hidden"
-                id="csv-upload"
-              />
+            <div
+              className="flex items-center space-x-2"
+              onClick={handleCSVUpload}
+            >
               <label
                 htmlFor="csv-upload"
                 className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors cursor-pointer flex items-center space-x-2"
@@ -131,7 +152,7 @@ const ProductWatchlist = ({ user }) => {
                 <Upload size={16} />
                 <span>Upload CSV</span>
               </label>
-            </label>
+            </div>
 
             <button
               onClick={handleCSVDownload}
@@ -141,26 +162,28 @@ const ProductWatchlist = ({ user }) => {
               <span>Export CSV</span>
             </button>
           </div>
-
-          {selectedItems.length > 0 && (
-            <button
-              onClick={handleRemoveSelected}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center space-x-2"
-            >
-              <Trash2 size={16} />
-              <span>Remove Selected ({selectedItems.length})</span>
-            </button>
-          )}
         </div>
-      </div>
-
+      </div>{" "}
       {/* Import Watchlist */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
-        <div className="p-6 border-b border-gray-200">
+        <div className="p-[16px] border-b border-gray-200 flex justify-between items-center min-h-[40px]">
           <h2 className="text-xl font-semibold text-gray-900">
             Import Watchlist (Products coming into{" "}
             {dummyData.countries.find((c) => c.code === baseCountry)?.name})
           </h2>
+          <div className="flex items-center h-10">
+            {selectedImportItems.length > 0 ? (
+              <button
+                onClick={handleRemoveSelectedImport}
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center space-x-2"
+              >
+                <Trash2 size={16} />
+                <span>Remove Selected ({selectedImportItems.length})</span>
+              </button>
+            ) : (
+              <div className="w-0 h-10"></div>
+            )}
+          </div>
         </div>
 
         <div className="overflow-x-auto">
@@ -171,10 +194,10 @@ const ProductWatchlist = ({ user }) => {
                   <input
                     type="checkbox"
                     checked={
-                      selectedItems.length === importItems.length &&
+                      selectedImportItems.length === importItems.length &&
                       importItems.length > 0
                     }
-                    onChange={handleSelectAll}
+                    onChange={handleSelectAllImport}
                     className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                   />
                 </th>
@@ -212,8 +235,8 @@ const ProductWatchlist = ({ user }) => {
                   <td className="px-6 py-4">
                     <input
                       type="checkbox"
-                      checked={selectedItems.includes(item.id)}
-                      onChange={() => handleSelectItem(item.id)}
+                      checked={selectedImportItems.includes(item.id)}
+                      onChange={() => handleSelectImportItem(item.id)}
                       className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                     />
                   </td>
@@ -279,14 +302,26 @@ const ProductWatchlist = ({ user }) => {
           )}
         </div>
       </div>
-
       {/* Export Watchlist */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
+        <div className="p-[16px] border-b border-gray-200 flex justify-between items-center min-h-[40px]">
           <h2 className="text-xl font-semibold text-gray-900">
             Export Watchlist (Products going from{" "}
             {dummyData.countries.find((c) => c.code === baseCountry)?.name})
           </h2>
+          <div className="flex items-center h-10">
+            {selectedExportItems.length > 0 ? (
+              <button
+                onClick={handleRemoveSelectedExport}
+                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center space-x-2"
+              >
+                <Trash2 size={16} />
+                <span>Remove Selected ({selectedExportItems.length})</span>
+              </button>
+            ) : (
+              <div className="w-0 h-10"></div>
+            )}
+          </div>
         </div>
 
         <div className="overflow-x-auto">
@@ -296,6 +331,11 @@ const ProductWatchlist = ({ user }) => {
                 <th className="px-6 py-3 text-left">
                   <input
                     type="checkbox"
+                    checked={
+                      selectedExportItems.length === exportItems.length &&
+                      exportItems.length > 0
+                    }
+                    onChange={handleSelectAllExport}
                     className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                   />
                 </th>
@@ -333,8 +373,8 @@ const ProductWatchlist = ({ user }) => {
                   <td className="px-6 py-4">
                     <input
                       type="checkbox"
-                      checked={selectedItems.includes(item.id)}
-                      onChange={() => handleSelectItem(item.id)}
+                      checked={selectedExportItems.includes(item.id)}
+                      onChange={() => handleSelectExportItem(item.id)}
                       className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                     />
                   </td>

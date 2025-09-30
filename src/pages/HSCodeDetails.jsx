@@ -82,7 +82,6 @@ const HSCodeDetails = () => {
   const tabs = [
     { id: "overview", label: "Overview", icon: BookOpen },
     { id: "trends", label: "Historical Trends", icon: TrendingUp },
-    { id: "countries", label: "Top Countries", icon: Globe },
     { id: "news", label: "Recent News", icon: FileText },
   ];
 
@@ -173,48 +172,323 @@ const HSCodeDetails = () => {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
                 Import Trend Analysis
               </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 text-sm font-medium text-gray-700">
-                        Year
-                      </th>
-                      <th className="text-left py-3 text-sm font-medium text-gray-700">
-                        Volume (Units)
-                      </th>
-                      <th className="text-left py-3 text-sm font-medium text-gray-700">
-                        Value (USD)
-                      </th>
-                      <th className="text-left py-3 text-sm font-medium text-gray-700">
-                        Growth Rate
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {hsCodeData.historicalTrends.map((trend, index) => (
-                      <tr key={index} className="border-b border-gray-100">
-                        <td className="py-3 text-sm text-gray-900 font-medium">
-                          {trend.year}
-                        </td>
-                        <td className="py-3 text-sm text-gray-900">
-                          {trend.volume.toLocaleString()}
-                        </td>
-                        <td className="py-3 text-sm text-gray-900">
-                          ${trend.value.toLocaleString()}
-                        </td>
-                        <td
-                          className={`py-3 text-sm font-medium ${
-                            trend.growth > 0 ? "text-green-600" : "text-red-600"
-                          }`}
-                        >
-                          {trend.growth > 0 ? "+" : ""}
-                          {trend.growth}%
-                        </td>
+
+              {/* Data Table */}
+              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
+                  <h4 className="text-md font-medium text-gray-800">
+                    Detailed Data
+                  </h4>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-gray-200 bg-gray-50">
+                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
+                          Year
+                        </th>
+                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
+                          Volume (Units)
+                        </th>
+                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
+                          Value (USD)
+                        </th>
+                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
+                          Growth Rate
+                        </th>
                       </tr>
+                    </thead>
+                    <tbody>
+                      {hsCodeData.historicalTrends.map((trend, index) => (
+                        <tr
+                          key={index}
+                          className="border-b border-gray-100 hover:bg-gray-50"
+                        >
+                          <td className="py-3 px-4 text-sm text-gray-900 font-medium">
+                            {trend.year}
+                          </td>
+                          <td className="py-3 px-4 text-sm text-gray-900">
+                            {trend.volume.toLocaleString()}
+                          </td>
+                          <td className="py-3 px-4 text-sm text-gray-900">
+                            ${trend.value.toLocaleString()}
+                          </td>
+                          <td
+                            className={`py-3 px-4 text-sm font-medium ${
+                              trend.growth > 0
+                                ? "text-green-600"
+                                : "text-red-600"
+                            }`}
+                          >
+                            {trend.growth > 0 ? "+" : ""}
+                            {trend.growth}%
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Charts Section */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8 mb-8">
+                {/* Volume Trend Chart */}
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="text-md font-medium text-gray-800 mb-3">
+                    Volume Trend (Units)
+                  </h4>
+                  <svg
+                    width="100%"
+                    height="200"
+                    viewBox="0 0 400 200"
+                    className="border rounded"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="volumeGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
+                        <stop
+                          offset="0%"
+                          style={{ stopColor: "#3B82F6", stopOpacity: 0.3 }}
+                        />
+                        <stop
+                          offset="100%"
+                          style={{ stopColor: "#3B82F6", stopOpacity: 0.1 }}
+                        />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Grid lines */}
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <line
+                        key={i}
+                        x1="50"
+                        y1={40 + i * 32}
+                        x2="380"
+                        y2={40 + i * 32}
+                        stroke="#e5e7eb"
+                        strokeWidth="1"
+                      />
                     ))}
-                  </tbody>
-                </table>
+
+                    {/* Volume line and area */}
+                    <path
+                      d="M 50 140 L 160 120 L 270 100 L 380 80"
+                      stroke="#3B82F6"
+                      strokeWidth="3"
+                      fill="none"
+                    />
+                    <path
+                      d="M 50 140 L 160 120 L 270 100 L 380 80 L 380 168 L 50 168 Z"
+                      fill="url(#volumeGradient)"
+                    />
+
+                    {/* Data points */}
+                    {hsCodeData.historicalTrends.map((trend, index) => (
+                      <circle
+                        key={index}
+                        cx={50 + index * 110}
+                        cy={168 - (trend.volume - 1200000) / 10000}
+                        r="4"
+                        fill="#3B82F6"
+                      />
+                    ))}
+
+                    {/* Y-axis labels */}
+                    <text
+                      x="40"
+                      y="45"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      1.6M
+                    </text>
+                    <text
+                      x="40"
+                      y="77"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      1.5M
+                    </text>
+                    <text
+                      x="40"
+                      y="109"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      1.4M
+                    </text>
+                    <text
+                      x="40"
+                      y="141"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      1.3M
+                    </text>
+                    <text
+                      x="40"
+                      y="173"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      1.2M
+                    </text>
+
+                    {/* X-axis labels */}
+                    {hsCodeData.historicalTrends.map((trend, index) => (
+                      <text
+                        key={index}
+                        x={50 + index * 110}
+                        y="185"
+                        fontSize="10"
+                        fill="#6b7280"
+                        textAnchor="middle"
+                      >
+                        {trend.year}
+                      </text>
+                    ))}
+                  </svg>
+                </div>
+
+                {/* Value Trend Chart */}
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="text-md font-medium text-gray-800 mb-3">
+                    Value Trend (USD)
+                  </h4>
+                  <svg
+                    width="100%"
+                    height="200"
+                    viewBox="0 0 400 200"
+                    className="border rounded"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="valueGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
+                        <stop
+                          offset="0%"
+                          style={{ stopColor: "#10B981", stopOpacity: 0.3 }}
+                        />
+                        <stop
+                          offset="100%"
+                          style={{ stopColor: "#10B981", stopOpacity: 0.1 }}
+                        />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Grid lines */}
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <line
+                        key={i}
+                        x1="50"
+                        y1={40 + i * 32}
+                        x2="380"
+                        y2={40 + i * 32}
+                        stroke="#e5e7eb"
+                        strokeWidth="1"
+                      />
+                    ))}
+
+                    {/* Value line and area */}
+                    <path
+                      d="M 50 140 L 160 115 L 270 85 L 380 60"
+                      stroke="#10B981"
+                      strokeWidth="3"
+                      fill="none"
+                    />
+                    <path
+                      d="M 50 140 L 160 115 L 270 85 L 380 60 L 380 168 L 50 168 Z"
+                      fill="url(#valueGradient)"
+                    />
+
+                    {/* Data points */}
+                    {hsCodeData.historicalTrends.map((trend, index) => (
+                      <circle
+                        key={index}
+                        cx={50 + index * 110}
+                        cy={168 - (trend.value - 2400000000) / 10000000}
+                        r="4"
+                        fill="#10B981"
+                      />
+                    ))}
+
+                    {/* Y-axis labels */}
+                    <text
+                      x="40"
+                      y="45"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      $3.5B
+                    </text>
+                    <text
+                      x="40"
+                      y="77"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      $3.2B
+                    </text>
+                    <text
+                      x="40"
+                      y="109"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      $2.9B
+                    </text>
+                    <text
+                      x="40"
+                      y="141"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      $2.6B
+                    </text>
+                    <text
+                      x="40"
+                      y="173"
+                      fontSize="10"
+                      fill="#6b7280"
+                      textAnchor="end"
+                    >
+                      $2.3B
+                    </text>
+
+                    {/* X-axis labels */}
+                    {hsCodeData.historicalTrends.map((trend, index) => (
+                      <text
+                        key={index}
+                        x={50 + index * 110}
+                        y="185"
+                        fontSize="10"
+                        fill="#6b7280"
+                        textAnchor="middle"
+                      >
+                        {trend.year}
+                      </text>
+                    ))}
+                  </svg>
+                </div>
               </div>
 
               <div className="mt-6 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
@@ -223,70 +497,6 @@ const HSCodeDetails = () => {
                   consistent growth over the past 4 years, indicating strong
                   market demand and stable trade conditions.
                 </p>
-              </div>
-            </div>
-          )}
-
-          {/* Top Countries Tab */}
-          {activeTab === "countries" && (
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Top Supplying Countries
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 text-sm font-medium text-gray-700">
-                        Country
-                      </th>
-                      <th className="text-left py-3 text-sm font-medium text-gray-700">
-                        Volume (Units)
-                      </th>
-                      <th className="text-left py-3 text-sm font-medium text-gray-700">
-                        Value (USD)
-                      </th>
-                      <th className="text-left py-3 text-sm font-medium text-gray-700">
-                        Market Share
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {hsCodeData.topCountries.map((country, index) => (
-                      <tr key={index} className="border-b border-gray-100">
-                        <td className="py-3 text-sm text-gray-900 font-medium">
-                          {
-                            dummyData.countries.find(
-                              (c) => c.code === country.country
-                            )?.flag
-                          }{" "}
-                          {dummyData.countries.find(
-                            (c) => c.code === country.country
-                          )?.name || country.country}
-                        </td>
-                        <td className="py-3 text-sm text-gray-900">
-                          {country.volume.toLocaleString()}
-                        </td>
-                        <td className="py-3 text-sm text-gray-900">
-                          ${country.value.toLocaleString()}
-                        </td>
-                        <td className="py-3 text-sm text-gray-900">
-                          <div className="flex items-center">
-                            <div className="w-20 bg-gray-200 rounded-full h-2 mr-2">
-                              <div
-                                className="bg-primary-600 h-2 rounded-full"
-                                style={{ width: `${country.share}%` }}
-                              ></div>
-                            </div>
-                            <span className="text-sm font-medium">
-                              {country.share}%
-                            </span>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
               </div>
             </div>
           )}

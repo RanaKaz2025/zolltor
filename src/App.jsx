@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Header from "./components/Header";
+import ToastProvider from "./components/ToastProvider";
 import TariffLookup from "./pages/TariffLookup";
 import ProductWatchlist from "./pages/ProductWatchlist";
 import HSCodeDetails from "./pages/HSCodeDetails";
@@ -39,52 +40,54 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Header
-          isAuthenticated={isAuthenticated}
-          user={user}
-          onLogout={handleLogout}
-        />
+    <ToastProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-50">
+          <Header
+            isAuthenticated={isAuthenticated}
+            user={user}
+            onLogout={handleLogout}
+          />
 
-        <main className="container mx-auto px-4 py-8">
-          <Routes>
-            <Route path="/" element={<TariffLookup />} />
-            <Route
-              path="/auth"
-              element={
-                isAuthenticated ? (
-                  <Navigate to="/watchlist" replace />
-                ) : (
-                  <AuthPage onLogin={handleLogin} />
-                )
-              }
-            />
-            <Route
-              path="/watchlist"
-              element={
-                isAuthenticated ? (
-                  <ProductWatchlist user={user} />
-                ) : (
-                  <Navigate to="/auth" replace />
-                )
-              }
-            />
-            <Route path="/hscode/:code" element={<HSCodeDetails />} />
-            <Route
-              path="/profile"
-              element={
-                isAuthenticated ? (
-                  <UserProfile user={user} setUser={setUser} />
-                ) : (
-                  <Navigate to="/auth" replace />
-                )
-              }
-            />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+          <main className="container mx-auto px-4 py-8">
+            <Routes>
+              <Route path="/" element={<TariffLookup />} />
+              <Route
+                path="/auth"
+                element={
+                  isAuthenticated ? (
+                    <Navigate to="/watchlist" replace />
+                  ) : (
+                    <AuthPage onLogin={handleLogin} />
+                  )
+                }
+              />
+              <Route
+                path="/watchlist"
+                element={
+                  isAuthenticated ? (
+                    <ProductWatchlist user={user} />
+                  ) : (
+                    <Navigate to="/auth" replace />
+                  )
+                }
+              />
+              <Route path="/hscode/:code" element={<HSCodeDetails />} />
+              <Route
+                path="/profile"
+                element={
+                  isAuthenticated ? (
+                    <UserProfile user={user} setUser={setUser} />
+                  ) : (
+                    <Navigate to="/auth" replace />
+                  )
+                }
+              />
+            </Routes>
+          </main>
+        </div>
+      </Router>
+    </ToastProvider>
   );
 }
 

@@ -7,6 +7,7 @@ import {
   Plus,
   AlertCircle,
 } from "lucide-react";
+import { useToast } from "../components/ToastProvider";
 import dummyData from "../data/dummyData.json";
 
 const TariffLookup = () => {
@@ -15,6 +16,13 @@ const TariffLookup = () => {
   const [destinationCountry, setDestinationCountry] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
+
+  // Function to get product description based on HS Code
+  const getProductDescription = (code) => {
+    const hsCodeData = dummyData.hsCodes.find((item) => item.code === code);
+    return hsCodeData ? hsCodeData.description : "";
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -99,8 +107,9 @@ const TariffLookup = () => {
 
   const handleAddToWatchlist = () => {
     // In a real app, this would make an API call
-    alert(
-      "Product added to watchlist! (Login required for full functionality)"
+    toast.success(
+      "Product added to watchlist! (Login required for full functionality)",
+      4000
     );
   };
 
@@ -117,7 +126,8 @@ const TariffLookup = () => {
       {/* Search Form */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
         <form onSubmit={handleSearch} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* First Row: HS Code and Product Description */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 HS Code
@@ -150,6 +160,23 @@ const TariffLookup = () => {
                 ))}
               </select>
             </div>
+          </div>
+
+          {/* Second Row: Origin Country and Destination Country */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Product Description
+              </label>
+              <div className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-100 min-h-[42px] flex items-center">
+                <p className="text-gray-600 text-sm">
+                  {hsCode
+                    ? getProductDescription(hsCode) ||
+                      "Product description not available for this HS Code"
+                    : "Enter valid HS Code to see product description"}
+                </p>
+              </div>
+            </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -175,7 +202,7 @@ const TariffLookup = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="bg-primary-600 text-white px-8 py-3 rounded-lg hover:bg-primary-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
+              className="bg-primary-600 text-white mt-4 px-8 py-3 rounded-lg hover:bg-primary-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
             >
               <Search size={20} />
               <span>{isLoading ? "Searching..." : "Search Tariff Rates"}</span>
