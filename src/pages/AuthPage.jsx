@@ -106,7 +106,7 @@ const AuthPage = ({ onLogin }) => {
         </div>
 
         {/* Social Login Buttons */}
-        <div className="space-y-3 mb-6">
+        {/* <div className="space-y-3 mb-6">
           <button
             onClick={() => handleSocialLogin("Google")}
             className="w-full flex items-center justify-center space-x-2 px-4 py-3 border border-gray-300 rounded-3px hover:bg-gray-50 transition-colors"
@@ -163,10 +163,10 @@ const AuthPage = ({ onLogin }) => {
               <span>Facebook</span>
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* Divider */}
-        <div className="relative mb-6">
+        {/* <div className="relative mb-6">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-gray-300" />
           </div>
@@ -175,7 +175,7 @@ const AuthPage = ({ onLogin }) => {
               Or continue with email
             </span>
           </div>
-        </div>
+        </div> */}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
