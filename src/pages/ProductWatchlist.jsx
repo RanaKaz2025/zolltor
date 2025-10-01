@@ -214,6 +214,9 @@ const ProductWatchlist = ({ user }) => {
                   Current Rate
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  Tax
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                   Last Change
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
@@ -260,6 +263,10 @@ const ProductWatchlist = ({ user }) => {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-900 font-semibold">
                     {item.currentRate}%
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    <div className="font-medium">{item.tax}%</div>
+                    <div className="text-xs text-gray-500">(VAT+Other Tax)</div>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">
                     <div>{item.lastChange.date}</div>
@@ -352,6 +359,9 @@ const ProductWatchlist = ({ user }) => {
                   Current Rate
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  Tax
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                   Last Change
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
@@ -399,6 +409,10 @@ const ProductWatchlist = ({ user }) => {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-900 font-semibold">
                     {item.currentRate}%
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    <div className="font-medium">{item.tax}%</div>
+                    <div className="text-xs text-gray-500">(VAT+Other Tax)</div>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">
                     <div>{item.lastChange.date}</div>

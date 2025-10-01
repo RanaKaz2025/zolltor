@@ -46,6 +46,7 @@ const TariffLookup = () => {
           origin: originCountry,
           destination: destinationCountry,
           currentRate: 12.5,
+          vat: 3.0,
           rateType: "MFN",
           effectiveDate: "2024-01-01",
           source: "Trade Policy Database",
@@ -219,7 +220,7 @@ const TariffLookup = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Current Tariff Information
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-600">Current Rate</p>
                 <p className="text-2xl font-bold text-gray-900">
@@ -246,6 +247,14 @@ const TariffLookup = () => {
                 <p className="text-lg font-semibold text-gray-900">
                   {searchResults.hsCode}
                 </p>
+              </div>
+
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <p className="text-sm text-blue-600">VAT</p>
+                <p className="text-2xl font-bold text-blue-900">
+                  {searchResults.vat}%
+                </p>
+                <p className="text-sm text-blue-500">Standard Rate</p>
               </div>
             </div>
           </div>

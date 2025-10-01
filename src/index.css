@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -10,5 +12,48 @@
   }
   body {
     @apply bg-gray-50 text-gray-900;
+    font-family: "Source Sans Pro", sans-serif;
+  }
+
+  /* Title styles using Libre Baskerville */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Libre Baskerville", serif;
+  }
+
+  /* Brand name in header */
+  .brand-title {
+    font-family: "Libre Baskerville", serif;
+  }
+
+  /* Global border radius for inputs, buttons, and cards */
+  input,
+  textarea,
+  select,
+  button,
+  .card,
+  [class*="rounded"] {
+    border-radius: 3px !important;
+  }
+
+  /* Remove focus styles from all inputs */
+  /* input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: inherit !important;
+  } */
+
+  /* Override Tailwind focus styles */
+  .focus\:ring-2:focus,
+  .focus\:ring-primary-500:focus,
+  .focus\:border-primary-500:focus {
+    --tw-ring-shadow: none !important;
+    border-color: inherit !important;
   }
 }

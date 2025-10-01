@@ -94,10 +94,30 @@
         { "quarter": "Q4 2025", "rate": 20.0, "change": "stable" }
       ],
       "marketIntelligence": [
-        { "country": "CN", "marketShare": 45.2, "volume": 125000, "avgDuty": 25.0 },
-        { "country": "IN", "marketShare": 18.7, "volume": 52000, "avgDuty": 12.5 },
-        { "country": "DE", "marketShare": 12.3, "volume": 34000, "avgDuty": 8.2 },
-        { "country": "JP", "marketShare": 8.9, "volume": 24500, "avgDuty": 15.0 }
+        {
+          "country": "CN",
+          "marketShare": 45.2,
+          "volume": 125000,
+          "avgDuty": 25.0
+        },
+        {
+          "country": "IN",
+          "marketShare": 18.7,
+          "volume": 52000,
+          "avgDuty": 12.5
+        },
+        {
+          "country": "DE",
+          "marketShare": 12.3,
+          "volume": 34000,
+          "avgDuty": 8.2
+        },
+        {
+          "country": "JP",
+          "marketShare": 8.9,
+          "volume": 24500,
+          "avgDuty": 15.0
+        }
       ],
       "additionalInfo": "Trade war tensions may affect future rates. Consider alternative suppliers from India or Germany for better duty rates."
     },
@@ -116,10 +136,30 @@
         { "quarter": "Q4 2025", "rate": 4.5, "change": "decrease" }
       ],
       "marketIntelligence": [
-        { "country": "IN", "marketShare": 32.1, "volume": 89000, "avgDuty": 8.5 },
-        { "country": "CN", "marketShare": 28.4, "volume": 78500, "avgDuty": 12.0 },
-        { "country": "BR", "marketShare": 15.6, "volume": 43200, "avgDuty": 9.8 },
-        { "country": "JP", "marketShare": 11.2, "volume": 31000, "avgDuty": 7.5 }
+        {
+          "country": "IN",
+          "marketShare": 32.1,
+          "volume": 89000,
+          "avgDuty": 8.5
+        },
+        {
+          "country": "CN",
+          "marketShare": 28.4,
+          "volume": 78500,
+          "avgDuty": 12.0
+        },
+        {
+          "country": "BR",
+          "marketShare": 15.6,
+          "volume": 43200,
+          "avgDuty": 9.8
+        },
+        {
+          "country": "JP",
+          "marketShare": 11.2,
+          "volume": 31000,
+          "avgDuty": 7.5
+        }
       ],
       "additionalInfo": "EU-India trade agreement negotiations may reduce tariffs significantly by Q2 2025."
     }
@@ -132,6 +172,7 @@
       "origin": "CN",
       "destination": "US",
       "currentRate": 25.0,
+      "tax": 5.0,
       "lastChange": {
         "date": "2024-01-15",
         "description": "Trade policy adjustment"
@@ -149,6 +190,7 @@
       "origin": "IN",
       "destination": "DE",
       "currentRate": 8.5,
+      "tax": 3.0,
       "lastChange": {
         "date": "2024-03-10",
         "description": "Standard MFN rate applied"

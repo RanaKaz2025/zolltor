@@ -253,11 +253,11 @@ const HSCodeDetails = () => {
                       >
                         <stop
                           offset="0%"
-                          style={{ stopColor: "#3B82F6", stopOpacity: 0.3 }}
+                          style={{ stopColor: "#0d9488", stopOpacity: 0.3 }}
                         />
                         <stop
                           offset="100%"
-                          style={{ stopColor: "#3B82F6", stopOpacity: 0.1 }}
+                          style={{ stopColor: "#0d9488", stopOpacity: 0.1 }}
                         />
                       </linearGradient>
                     </defs>
@@ -278,7 +278,7 @@ const HSCodeDetails = () => {
                     {/* Volume line and area */}
                     <path
                       d="M 50 140 L 160 120 L 270 100 L 380 80"
-                      stroke="#3B82F6"
+                      stroke="#0d9488"
                       strokeWidth="3"
                       fill="none"
                     />
@@ -294,7 +294,7 @@ const HSCodeDetails = () => {
                         cx={50 + index * 110}
                         cy={168 - (trend.volume - 1200000) / 10000}
                         r="4"
-                        fill="#3B82F6"
+                        fill="#0d9488"
                       />
                     ))}
 
@@ -382,11 +382,11 @@ const HSCodeDetails = () => {
                       >
                         <stop
                           offset="0%"
-                          style={{ stopColor: "#10B981", stopOpacity: 0.3 }}
+                          style={{ stopColor: "#14b8a6", stopOpacity: 0.3 }}
                         />
                         <stop
                           offset="100%"
-                          style={{ stopColor: "#10B981", stopOpacity: 0.1 }}
+                          style={{ stopColor: "#14b8a6", stopOpacity: 0.1 }}
                         />
                       </linearGradient>
                     </defs>
@@ -407,7 +407,7 @@ const HSCodeDetails = () => {
                     {/* Value line and area */}
                     <path
                       d="M 50 140 L 160 115 L 270 85 L 380 60"
-                      stroke="#10B981"
+                      stroke="#14b8a6"
                       strokeWidth="3"
                       fill="none"
                     />
@@ -423,7 +423,7 @@ const HSCodeDetails = () => {
                         cx={50 + index * 110}
                         cy={168 - (trend.value - 2400000000) / 10000000}
                         r="4"
-                        fill="#10B981"
+                        fill="#14b8a6"
                       />
                     ))}
 
