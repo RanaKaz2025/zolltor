@@ -4,7 +4,7 @@ import {
   TrendingUp,
   TrendingDown,
   Minus,
-  Plus,
+  Bookmark,
   AlertCircle,
 } from "lucide-react";
 import { useToast } from "../components/ToastProvider";
@@ -54,23 +54,26 @@ const TariffLookup = () => {
             { quarter: "Q1 2025", rate: 12.5, change: "stable" },
             { quarter: "Q2 2025", rate: 10.0, change: "decrease" },
             { quarter: "Q3 2025", rate: 10.0, change: "stable" },
-            { quarter: "Q4 2025", rate: 8.5, change: "decrease" },
+            { quarter: "Q4 2025", rate: 13.5, change: "increase" },
           ],
           marketIntelligence: [
             {
               country: originCountry,
+              total: 123000,
               marketShare: 35.2,
               volume: 95000,
               avgDuty: 12.5,
             },
             {
               country: "Other",
+              total: 89000,
               marketShare: 25.8,
               volume: 69500,
               avgDuty: 15.2,
             },
             {
               country: "Alternative",
+              total: 64000,
               marketShare: 18.4,
               volume: 49600,
               avgDuty: 8.8,
@@ -116,16 +119,16 @@ const TariffLookup = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Tariff Lookup</h1>
         <p className="text-gray-600">
           Search for current tariff rates and future projections for your
           products
         </p>
-      </div>
+      </div> */}
 
       {/* Search Form */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+      <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6 mb-8">
         <form onSubmit={handleSearch} className="space-y-4">
           {/* First Row: HS Code and Product Description */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -138,7 +141,7 @@ const TariffLookup = () => {
                 value={hsCode}
                 onChange={(e) => setHsCode(e.target.value)}
                 placeholder="e.g., 8517.12.00"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-3px"
                 required
               />
             </div>
@@ -150,7 +153,7 @@ const TariffLookup = () => {
               <select
                 value={originCountry}
                 onChange={(e) => setOriginCountry(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-3px"
                 required
               >
                 <option value="">Select country</option>
@@ -169,7 +172,7 @@ const TariffLookup = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Product Description
               </label>
-              <div className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-100 min-h-[42px] flex items-center">
+              <div className="w-full px-3 py-2 border border-gray-200 rounded-3px bg-gray-100 min-h-[42px] flex items-center">
                 <p className="text-gray-600 text-sm">
                   {hsCode
                     ? getProductDescription(hsCode) ||
@@ -186,7 +189,7 @@ const TariffLookup = () => {
               <select
                 value={destinationCountry}
                 onChange={(e) => setDestinationCountry(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-3px"
                 required
               >
                 <option value="">Select country</option>
@@ -203,10 +206,9 @@ const TariffLookup = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="bg-primary-600 text-white mt-4 px-8 py-3 rounded-lg hover:bg-primary-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
+              className="min-w-[140px] justify-center bg-primary-600 text-white mt-4 px-8 py-3 rounded-3px hover:bg-primary-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
             >
-              <Search size={20} />
-              <span>{isLoading ? "Searching..." : "Search Tariff Rates"}</span>
+              <span>{isLoading ? "Searching..." : "Search"}</span>
             </button>
           </div>
         </form>
@@ -216,51 +218,76 @@ const TariffLookup = () => {
       {searchResults && (
         <div className="space-y-6">
           {/* Current Tariff Information */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Current Tariff Information
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">Current Rate</p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {searchResults.currentRate}%
-                </p>
-                <p className="text-sm text-gray-500">
-                  {searchResults.rateType}
-                </p>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">Effective Date</p>
-                <p className="text-lg font-semibold text-gray-900">
-                  {searchResults.effectiveDate}
-                </p>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">Source</p>
-                <p className="text-lg font-semibold text-gray-900">
-                  {searchResults.source}
-                </p>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">HS Code</p>
-                <p className="text-lg font-semibold text-gray-900">
-                  {searchResults.hsCode}
-                </p>
+          <div className="bg-white rounded-3px  p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+              {/* Left Side - Applicable Duty */}
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                  Applicable Duty
+                </h2>
+
+                <div className="space-y-2">
+                  <div>
+                    <p className="text-3xl font-bold text-gray-900">
+                      {searchResults.currentRate || 10}%
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-gray-200 space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-[16px] text-gray-600">
+                        Preferential Rate:
+                      </span>
+                      <span className="text-[16px] font-medium text-gray-900">
+                        {searchResults.preferentialRate || 5}%
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span className="text-[16px] text-gray-600">VAT:</span>
+                      <span className="text-[16px] font-medium text-gray-900">
+                        {searchResults.vat || 4}%
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span className="text-[16px] text-gray-600">
+                        Effective:
+                      </span>
+                      <span className="text-[16px] font-medium text-gray-900">
+                        {searchResults.effectiveDate || "01.01.2024"}
+                      </span>
+                    </div>
+
+                    <div className="pt-3 border-t border-gray-100">
+                      <p className="text-xs text-gray-500">
+                        Source:{" "}
+                        {searchResults.detailedSource ||
+                          "TARIC Entry – Regulation 2023/1191 (retrieved 01.06.2025)"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                <p className="text-sm text-blue-600">VAT</p>
-                <p className="text-2xl font-bold text-blue-900">
-                  {searchResults.vat}%
-                </p>
-                <p className="text-sm text-blue-500">Standard Rate</p>
+              {/* Right Side - Additional Info */}
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                  Additional Info
+                </h2>
+
+                <div className="prose prose-sm text-gray-700 leading-relaxed">
+                  <p>
+                    {searchResults.detailedInfo ||
+                      "Woven cotton fabrics (HS 5208.52) imported from India into Germany are eligible for a reduced 3.2% tariff under the EU's GSP. To use this benefit, the goods must meet origin rules and include valid documentation. Importers should also ensure that fabrics comply with EU chemical safety standards and product labeling rules. While no quota is currently active, high import volumes are monitored and could trigger safeguards in future."}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Future Projections */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-3px p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Future Tariff Projections
             </h2>
@@ -268,7 +295,7 @@ const TariffLookup = () => {
               {searchResults.projections.map((projection, index) => (
                 <div
                   key={index}
-                  className={`p-4 rounded-lg border-2 ${getChangeColor(
+                  className={`p-4 rounded-3px border-2 ${getChangeColor(
                     projection.change
                   )}`}
                 >
@@ -284,42 +311,49 @@ const TariffLookup = () => {
           </div>
 
           {/* Market Intelligence */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-3px  p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Market Intelligence
+              Annual Imports of {searchResults.hsCode} to{" "}
+              {searchResults.destination} (2024)
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 text-sm font-medium text-gray-700">
-                      Country
+                    <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
+                      Origin Country
                     </th>
-                    <th className="text-left py-3 text-sm font-medium text-gray-700">
-                      Market Share
+                    <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
+                      Total
                     </th>
-                    <th className="text-left py-3 text-sm font-medium text-gray-700">
-                      Volume
+                    <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
+                      % of Total
                     </th>
-                    <th className="text-left py-3 text-sm font-medium text-gray-700">
-                      Avg Duty Rate
+                    <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
+                      Quantity
+                    </th>
+                    <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
+                      Avg Duty
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {searchResults.marketIntelligence.map((intel, index) => (
                     <tr key={index} className="border-b border-gray-100">
-                      <td className="py-3 text-sm text-gray-900">
+                      <td className="py-3 text-[16px] text-gray-900">
                         {intel.country}
                       </td>
-                      <td className="py-3 text-sm text-gray-900">
+                      <td className="py-3 text-[16px] text-gray-900">
+                        {intel.total}
+                      </td>
+                      <td className="py-3 text-[16px] text-gray-900">
                         {intel.marketShare}%
                       </td>
-                      <td className="py-3 text-sm text-gray-900">
+                      <td className="py-3 text-[16px] text-gray-900">
                         {intel.volume.toLocaleString()}
                       </td>
                       <td
-                        className={`py-3 text-sm font-medium ${
+                        className={`py-3 text-[16px] font-medium ${
                           intel.avgDuty > searchResults.currentRate
                             ? "text-red-600"
                             : intel.avgDuty < searchResults.currentRate
@@ -336,29 +370,16 @@ const TariffLookup = () => {
             </div>
           </div>
 
-          {/* Additional Information */}
-          <div className="bg-blue-50 rounded-lg border border-blue-200 p-6">
-            <div className="flex items-start space-x-3">
-              <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5" />
-              <div>
-                <h3 className="text-lg font-medium text-blue-900 mb-2">
-                  AI Analysis & Recommendations
-                </h3>
-                <p className="text-blue-800">{searchResults.additionalInfo}</p>
-              </div>
-            </div>
-          </div>
-
           {/* Action Buttons */}
           <div className="flex justify-center space-x-4">
             <button
               onClick={handleAddToWatchlist}
-              className="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors flex items-center space-x-2"
+              className="bg-primary-600 text-white px-6 py-3 rounded-3px hover:bg-primary-700 transition-colors flex items-center space-x-2"
             >
-              <Plus size={20} />
+              <Bookmark size={20} />
               <span>Add to My Watchlist</span>
             </button>
-            <button className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors">
+            <button className="bg-transparent text-teal-700 px-6 py-3 rounded-3px hover:bg-teal-50 transition-colors">
               Search Recent News
             </button>
           </div>

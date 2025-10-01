@@ -25,35 +25,32 @@
     font-family: "Libre Baskerville", serif;
   }
 
+  button {
+    font-weight: 500;
+  }
+
   /* Brand name in header */
   .brand-title {
     font-family: "Libre Baskerville", serif;
   }
+}
 
-  /* Global border radius for inputs, buttons, and cards */
-  input,
-  textarea,
-  select,
-  button,
-  .card,
-  [class*="rounded"] {
-    border-radius: 3px !important;
+@layer utilities {
+  .rounded-3px {
+    border-radius: 3px;
   }
 
-  /* Remove focus styles from all inputs */
-  /* input:focus,
-  textarea:focus,
-  select:focus {
+  /* Remove all focus styles globally */
+  /* *:focus {
     outline: none !important;
     box-shadow: none !important;
+    --tw-ring-shadow: none !important;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus,
+  button:focus {
     border-color: inherit !important;
   } */
-
-  /* Override Tailwind focus styles */
-  .focus\:ring-2:focus,
-  .focus\:ring-primary-500:focus,
-  .focus\:border-primary-500:focus {
-    --tw-ring-shadow: none !important;
-    border-color: inherit !important;
-  }
 }

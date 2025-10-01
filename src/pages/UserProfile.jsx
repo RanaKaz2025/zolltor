@@ -80,12 +80,12 @@ const UserProfile = ({ user, setUser }) => {
 
       {/* Success Message */}
       {saveMessage && (
-        <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
+        <div className="mb-6 bg-green-50 border border-green-200 rounded-3px p-4">
           <p className="text-green-800">{saveMessage}</p>
         </div>
       )}
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-white rounded-3px shadow-sm border border-gray-200">
         {/* Tabs */}
         <div className="border-b border-gray-200">
           <nav className="flex">
@@ -129,7 +129,7 @@ const UserProfile = ({ user, setUser }) => {
                       onChange={(e) =>
                         setProfileData({ ...profileData, name: e.target.value })
                       }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                       placeholder="Your name"
                     />
                   </div>
@@ -152,7 +152,7 @@ const UserProfile = ({ user, setUser }) => {
                             email: e.target.value,
                           })
                         }
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                         placeholder="you@example.com"
                       />
                     </div>
@@ -175,7 +175,7 @@ const UserProfile = ({ user, setUser }) => {
                             country: e.target.value,
                           })
                         }
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                       >
                         {dummyData.countries.map((country) => (
                           <option key={country.code} value={country.code}>
@@ -193,7 +193,7 @@ const UserProfile = ({ user, setUser }) => {
                 <div className="mt-6">
                   <button
                     onClick={handleProfileSave}
-                    className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors flex items-center space-x-2"
+                    className="bg-primary-600 text-white px-6 py-2 rounded-3px hover:bg-primary-700 transition-colors flex items-center space-x-2"
                   >
                     <Save size={18} />
                     <span>Save Changes</span>
@@ -230,7 +230,7 @@ const UserProfile = ({ user, setUser }) => {
                             emailAddress: e.target.value,
                           })
                         }
-                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                         placeholder="notifications@example.com"
                       />
                     </div>
@@ -251,7 +251,7 @@ const UserProfile = ({ user, setUser }) => {
                           frequency: e.target.value,
                         })
                       }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                     >
                       <option value="immediate">
                         Immediate (Real-time alerts)
@@ -263,7 +263,7 @@ const UserProfile = ({ user, setUser }) => {
                   </div>
                 </div>
 
-                <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="mt-6 p-4 bg-blue-50 rounded-3px border border-blue-200">
                   <h4 className="text-sm font-medium text-blue-900 mb-2">
                     What you'll receive notifications about:
                   </h4>
@@ -278,7 +278,7 @@ const UserProfile = ({ user, setUser }) => {
                 <div className="mt-6">
                   <button
                     onClick={handleNotificationSave}
-                    className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors flex items-center space-x-2"
+                    className="bg-primary-600 text-white px-6 py-2 rounded-3px hover:bg-primary-700 transition-colors flex items-center space-x-2"
                   >
                     <Save size={18} />
                     <span>Save Notification Settings</span>
@@ -315,7 +315,7 @@ const UserProfile = ({ user, setUser }) => {
                             currentPassword: e.target.value,
                           })
                         }
-                        className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                         placeholder="Enter current password"
                       />
                       <button
@@ -355,7 +355,7 @@ const UserProfile = ({ user, setUser }) => {
                             newPassword: e.target.value,
                           })
                         }
-                        className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                         placeholder="Enter new password"
                       />
                       <button
@@ -395,7 +395,7 @@ const UserProfile = ({ user, setUser }) => {
                             confirmPassword: e.target.value,
                           })
                         }
-                        className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                         placeholder="Confirm new password"
                       />
                       <button
@@ -421,7 +421,7 @@ const UserProfile = ({ user, setUser }) => {
                 <div className="mt-6">
                   <button
                     onClick={handlePasswordSave}
-                    className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors flex items-center space-x-2"
+                    className="bg-primary-600 text-white px-6 py-2 rounded-3px hover:bg-primary-700 transition-colors flex items-center space-x-2"
                   >
                     <Save size={18} />
                     <span>Update Password</span>

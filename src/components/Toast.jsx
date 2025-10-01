@@ -69,7 +69,7 @@ const Toast = ({ message, type = "info", duration = 3000, onClose }) => {
       }`}
     >
       <div
-        className={`${styles.bg} ${styles.border} ${styles.text} border rounded-lg shadow-lg p-4 pr-10 min-w-80 max-w-lg`}
+        className={`${styles.bg} ${styles.border} ${styles.text} border rounded-3px shadow-lg p-4 pr-10 min-w-80 max-w-lg`}
       >
         <div className="flex items-start space-x-3">
           {styles.icon}

@@ -97,7 +97,7 @@ const HSCodeDetails = () => {
           <span>Back to Watchlist</span>
         </Link>
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6">
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -115,7 +115,7 @@ const HSCodeDetails = () => {
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
+      <div className="bg-white rounded-3px shadow-sm border border-gray-200 mb-8">
         <div className="border-b border-gray-200">
           <nav className="flex">
             {tabs.map((tab) => {
@@ -146,7 +146,7 @@ const HSCodeDetails = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   Regulatory Text
                 </h3>
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-3px">
                   <p className="text-gray-700 leading-relaxed">
                     {hsCodeData.regulatoryText}
                   </p>
@@ -157,7 +157,7 @@ const HSCodeDetails = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   Plain Language Explanation
                 </h3>
-                <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <div className="bg-blue-50 p-4 rounded-3px border border-blue-200">
                   <p className="text-blue-800 leading-relaxed">
                     {hsCodeData.plainLanguageExplanation}
                   </p>
@@ -174,7 +174,7 @@ const HSCodeDetails = () => {
               </h3>
 
               {/* Data Table */}
-              <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+              <div className="bg-white rounded-3px border border-gray-200 overflow-hidden">
                 <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
                   <h4 className="text-md font-medium text-gray-800">
                     Detailed Data
@@ -233,7 +233,7 @@ const HSCodeDetails = () => {
               {/* Charts Section */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8 mb-8">
                 {/* Volume Trend Chart */}
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-3px">
                   <h4 className="text-md font-medium text-gray-800 mb-3">
                     Volume Trend (Units)
                   </h4>
@@ -362,7 +362,7 @@ const HSCodeDetails = () => {
                 </div>
 
                 {/* Value Trend Chart */}
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 p-4 rounded-3px">
                   <h4 className="text-md font-medium text-gray-800 mb-3">
                     Value Trend (USD)
                   </h4>
@@ -491,7 +491,7 @@ const HSCodeDetails = () => {
                 </div>
               </div>
 
-              <div className="mt-6 bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+              <div className="mt-6 bg-yellow-50 p-4 rounded-3px border border-yellow-200">
                 <p className="text-yellow-800">
                   <strong>Market Insight:</strong> This product category shows
                   consistent growth over the past 4 years, indicating strong
@@ -511,7 +511,7 @@ const HSCodeDetails = () => {
                 {hsCodeData.recentNews.map((news, index) => (
                   <div
                     key={index}
-                    className="bg-gray-50 p-4 rounded-lg border border-gray-200"
+                    className="bg-gray-50 p-4 rounded-3px border border-gray-200"
                   >
                     <div className="flex items-start justify-between mb-2">
                       <h4 className="text-lg font-medium text-gray-900">
