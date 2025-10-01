@@ -20,7 +20,7 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
             {/* Logo and Brand */}
             <Link to="/" className="flex items-center space-x-2">
               <img
-                src="/src/assets/zolltor-logo.png"
+                src="/zolltor-logo.png"
                 alt="Zolltor Logo"
                 className="w-[128px] h-[128px] object-contain"
               />

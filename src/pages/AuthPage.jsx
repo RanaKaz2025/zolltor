@@ -7,8 +7,8 @@ const AuthPage = ({ onLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    password: "",
+    email: "ceo@gmail.com",
+    password: "123456",
     country: "",
   });
   const [errors, setErrors] = useState({});
