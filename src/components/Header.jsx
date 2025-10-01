@@ -66,7 +66,7 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
                   className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors"
                 >
                   <CircleUserRound size={18} />
-                  <span className="hidden sm:inline">Ceo</span>
+                  <span className="hidden sm:inline">CEO</span>
                 </Link>
                 <button
                   onClick={handleLogout}

@@ -19,6 +19,8 @@ const ProductWatchlist = ({ user }) => {
   const [selectedExportItems, setSelectedExportItems] = useState([]);
   const [watchlistData, setWatchlistData] = useState(dummyData.watchlist);
   const [activeTab, setActiveTab] = useState("import");
+  const [newImportRow, setNewImportRow] = useState(null);
+  const [newExportRow, setNewExportRow] = useState(null);
   const toast = useToast();
 
   const handleSelectAllImport = (e) => {
@@ -103,19 +105,107 @@ const ProductWatchlist = ({ user }) => {
   };
 
   const handleAddImportItem = () => {
-    // In a real app, this would open a form or modal to add new item
-    toast.info(
-      "Add new import item functionality would be implemented in production",
-      4000
-    );
+    setNewImportRow({
+      id: "new-import",
+      productName: "",
+      hsCode: "",
+      origin: "",
+      currentRate: "",
+      tax: "",
+      lastChange: { date: "", description: "" },
+      nextChange: { date: "", description: "" },
+    });
   };
 
   const handleAddExportItem = () => {
-    // In a real app, this would open a form or modal to add new item
-    toast.info(
-      "Add new export item functionality would be implemented in production",
-      4000
-    );
+    setNewExportRow({
+      id: "new-export",
+      productName: "",
+      hsCode: "",
+      destination: "",
+      currentRate: "",
+      tax: "",
+      lastChange: { date: "", description: "" },
+      nextChange: { date: "", description: "" },
+    });
+  };
+
+  const handleSaveNewImportItem = () => {
+    if (
+      newImportRow.productName &&
+      newImportRow.hsCode &&
+      newImportRow.origin
+    ) {
+      const newItem = {
+        ...newImportRow,
+        id: Date.now(), // Generate unique ID
+        type: "import",
+        currentRate: parseFloat(newImportRow.currentRate) || 0,
+        tax: parseFloat(newImportRow.tax) || 0,
+        lastChange: {
+          date: new Date().toLocaleDateString(),
+          description: "Added to watchlist",
+        },
+        nextChange: {
+          date: "TBD",
+          description: "No changes scheduled",
+        },
+      };
+      setWatchlistData([...watchlistData, newItem]);
+      setNewImportRow(null);
+      toast.success("Import item added to watchlist!");
+    } else {
+      toast.error(
+        "Please fill in all required fields (Product, HS Code, Origin)"
+      );
+    }
+  };
+
+  const handleSaveNewExportItem = () => {
+    if (
+      newExportRow.productName &&
+      newExportRow.hsCode &&
+      newExportRow.destination
+    ) {
+      const newItem = {
+        ...newExportRow,
+        id: Date.now(), // Generate unique ID
+        type: "export",
+        currentRate: parseFloat(newExportRow.currentRate) || 0,
+        tax: parseFloat(newExportRow.tax) || 0,
+        lastChange: {
+          date: new Date().toLocaleDateString(),
+          description: "Added to watchlist",
+        },
+        nextChange: {
+          date: "TBD",
+          description: "No changes scheduled",
+        },
+      };
+      setWatchlistData([...watchlistData, newItem]);
+      setNewExportRow(null);
+      toast.success("Export item added to watchlist!");
+    } else {
+      toast.error(
+        "Please fill in all required fields (Product, HS Code, Destination)"
+      );
+    }
+  };
+
+  const handleCancelNewRow = (type) => {
+    if (type === "import") {
+      setNewImportRow(null);
+    } else {
+      setNewExportRow(null);
+    }
+  };
+
+  const handleNewRowChange = (type, field, value) => {
+    if (type === "import") {
+      setNewImportRow((prev) => ({ ...prev, [field]: value }));
+    } else {
+      setNewExportRow((prev) => ({ ...prev, [field]: value }));
+    }
   };
 
   return (
@@ -329,6 +419,111 @@ const ProductWatchlist = ({ user }) => {
                     </td>
                   </tr>
                 ))}
+
+                {/* New Import Row */}
+                {newImportRow && (
+                  <tr className="bg-blue-50 border-b border-gray-100">
+                    <td className="px-6 py-4">
+                      <input
+                        type="checkbox"
+                        disabled
+                        className="rounded border-gray-300"
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="text"
+                        value={newImportRow.productName}
+                        onChange={(e) =>
+                          handleNewRowChange(
+                            "import",
+                            "productName",
+                            e.target.value
+                          )
+                        }
+                        placeholder="Product name"
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="text"
+                        value={newImportRow.hsCode}
+                        onChange={(e) =>
+                          handleNewRowChange("import", "hsCode", e.target.value)
+                        }
+                        placeholder="HS Code"
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <select
+                        value={newImportRow.origin}
+                        onChange={(e) =>
+                          handleNewRowChange("import", "origin", e.target.value)
+                        }
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                      >
+                        <option value="">Select origin</option>
+                        {dummyData.countries.map((country) => (
+                          <option key={country.code} value={country.code}>
+                            {country.flag} {country.name}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="number"
+                        value={newImportRow.currentRate}
+                        onChange={(e) =>
+                          handleNewRowChange(
+                            "import",
+                            "currentRate",
+                            e.target.value
+                          )
+                        }
+                        placeholder="Rate"
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                        step="0.1"
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="number"
+                        value={newImportRow.tax}
+                        onChange={(e) =>
+                          handleNewRowChange("import", "tax", e.target.value)
+                        }
+                        placeholder="Tax"
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                        step="0.1"
+                      />
+                    </td>
+                    <td className="px-6 py-4 text-xs text-gray-500">
+                      Will be set automatically
+                    </td>
+                    <td className="px-6 py-4 text-xs text-gray-500">
+                      Will be set automatically
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex space-x-1">
+                        <button
+                          onClick={handleSaveNewImportItem}
+                          className="px-2 py-1 bg-green-600 text-white text-xs rounded-3px hover:bg-green-700"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => handleCancelNewRow("import")}
+                          className="px-2 py-1 bg-gray-600 text-white text-xs rounded-3px hover:bg-gray-700"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
 
@@ -341,10 +536,15 @@ const ProductWatchlist = ({ user }) => {
           </div>
 
           {/* Add Import Item Button */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-3 border-t border-gray-200">
             <button
               onClick={handleAddImportItem}
-              className="w-[15%] bg-gray-50 hover:bg-gray-100 text-gray-700 py-3 px-4 rounded-3px transition-colors flex items-center justify-center space-x-2 border-2 border-dashed border-gray-300 hover:border-gray-400"
+              disabled={newImportRow !== null}
+              className={`w-[150px] py-3 px-2 rounded-3px transition-colors flex items-center justify-center space-x-2 border-2 border-dashed ${
+                newImportRow
+                  ? "bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed"
+                  : "bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-300 hover:border-gray-400"
+              }`}
             >
               <Plus size={20} />
               <span>Add New</span>
@@ -508,6 +708,115 @@ const ProductWatchlist = ({ user }) => {
                     </td>
                   </tr>
                 ))}
+
+                {/* New Export Row */}
+                {newExportRow && (
+                  <tr className="bg-blue-50 border-b border-gray-100">
+                    <td className="px-6 py-4">
+                      <input
+                        type="checkbox"
+                        disabled
+                        className="rounded border-gray-300"
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="text"
+                        value={newExportRow.productName}
+                        onChange={(e) =>
+                          handleNewRowChange(
+                            "export",
+                            "productName",
+                            e.target.value
+                          )
+                        }
+                        placeholder="Product name"
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="text"
+                        value={newExportRow.hsCode}
+                        onChange={(e) =>
+                          handleNewRowChange("export", "hsCode", e.target.value)
+                        }
+                        placeholder="HS Code"
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <select
+                        value={newExportRow.destination}
+                        onChange={(e) =>
+                          handleNewRowChange(
+                            "export",
+                            "destination",
+                            e.target.value
+                          )
+                        }
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                      >
+                        <option value="">Select destination</option>
+                        {dummyData.countries.map((country) => (
+                          <option key={country.code} value={country.code}>
+                            {country.flag} {country.name}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="number"
+                        value={newExportRow.currentRate}
+                        onChange={(e) =>
+                          handleNewRowChange(
+                            "export",
+                            "currentRate",
+                            e.target.value
+                          )
+                        }
+                        placeholder="Rate"
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                        step="0.1"
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="number"
+                        value={newExportRow.tax}
+                        onChange={(e) =>
+                          handleNewRowChange("export", "tax", e.target.value)
+                        }
+                        placeholder="Tax"
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                        step="0.1"
+                      />
+                    </td>
+                    <td className="px-6 py-4 text-xs text-gray-500">
+                      Will be set automatically
+                    </td>
+                    <td className="px-6 py-4 text-xs text-gray-500">
+                      Will be set automatically
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex space-x-1">
+                        <button
+                          onClick={handleSaveNewExportItem}
+                          className="px-2 py-1 bg-green-600 text-white text-xs rounded-3px hover:bg-green-700"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => handleCancelNewRow("export")}
+                          className="px-2 py-1 bg-gray-600 text-white text-xs rounded-3px hover:bg-gray-700"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
 
@@ -520,10 +829,15 @@ const ProductWatchlist = ({ user }) => {
           </div>
 
           {/* Add Export Item Button */}
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-3 border-t border-gray-200">
             <button
               onClick={handleAddExportItem}
-              className="w-[15%] bg-gray-50 hover:bg-gray-100 text-gray-700 py-3 px-4 rounded-3px transition-colors flex items-center justify-center space-x-2 border-2 border-dashed border-gray-300 hover:border-gray-400"
+              disabled={newExportRow !== null}
+              className={`w-[150px] py-3 px-2 rounded-3px transition-colors flex items-center justify-center space-x-2 border-2 border-dashed ${
+                newExportRow
+                  ? "bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed"
+                  : "bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-300 hover:border-gray-400"
+              }`}
             >
               <Plus size={20} />
               <span>Add New</span>
