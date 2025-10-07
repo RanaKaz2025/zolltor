@@ -15,6 +15,30 @@ const HSCodeDetails = () => {
   const [hsCodeData, setHsCodeData] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
 
+  // Calculate CAGR (Compound Annual Growth Rate)
+  const calculateCAGR = (startValue, endValue, years) => {
+    return ((endValue / startValue) ** (1 / years) - 1) * 100;
+  };
+
+  // Calculate total for each year
+  const calculateYearTotal = (year) => {
+    if (!hsCodeData) return 0;
+    return hsCodeData.historicalTrends.reduce(
+      (sum, country) => sum + country[year],
+      0
+    );
+  };
+
+  // Colors for different countries in the chart
+  const countryColors = {
+    China: "#ef4444",
+    USA: "#3b82f6",
+    Vietnam: "#10b981",
+    Japan: "#f59e0b",
+    Turkey: "#8b5cf6",
+    Other: "#6b7280",
+  };
+
   useEffect(() => {
     // In a real app, this would fetch data from an API
     const mockHsCodeData = {
@@ -29,10 +53,12 @@ const HSCodeDetails = () => {
       }. These products are subject to various trade regulations, documentation requirements, and tariff classifications depending on the country of origin and destination.`,
       plainLanguageExplanation: `This product category includes items that are commonly traded internationally. Import/export of these products requires proper documentation and may be subject to specific trade agreements, quotas, or special duty rates depending on the trading partners involved.`,
       historicalTrends: [
-        { year: 2021, volume: 1250000, value: 2500000000, growth: 5.2 },
-        { year: 2022, volume: 1340000, value: 2750000000, growth: 7.2 },
-        { year: 2023, volume: 1425000, value: 3100000000, growth: 6.3 },
-        { year: 2024, volume: 1520000, value: 3450000000, growth: 6.7 },
+        { origin: "China", 2021: 850, 2022: 920, 2023: 980, 2024: 1050 },
+        { origin: "USA", 2021: 650, 2022: 680, 2023: 720, 2024: 750 },
+        { origin: "Vietnam", 2021: 320, 2022: 380, 2023: 450, 2024: 520 },
+        { origin: "Japan", 2021: 280, 2022: 290, 2023: 310, 2024: 330 },
+        { origin: "Turkey", 2021: 180, 2022: 200, 2023: 220, 2024: 240 },
+        { origin: "Other", 2021: 220, 2022: 230, 2023: 240, 2024: 250 },
       ],
       topCountries: [
         { country: "CN", volume: 456000, value: 1035000000, share: 30.0 },
@@ -170,333 +196,312 @@ const HSCodeDetails = () => {
           {activeTab === "trends" && (
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Import Trend Analysis
+                Annual Imports of {code} to the EU by country (€M):
               </h3>
 
-              {/* Data Table */}
-              <div className="bg-white rounded-3px border border-gray-200 overflow-hidden">
-                <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
-                  <h4 className="text-md font-medium text-gray-800">
-                    Detailed Data
-                  </h4>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200 bg-gray-50">
-                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
-                          Year
-                        </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
-                          Volume (Units)
-                        </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
-                          Value (USD)
-                        </th>
-                        <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
-                          Growth Rate
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {hsCodeData.historicalTrends.map((trend, index) => (
-                        <tr
-                          key={index}
-                          className="border-b border-gray-100 hover:bg-gray-50"
-                        >
-                          <td className="py-3 px-4 text-sm text-gray-900 font-medium">
-                            {trend.year}
-                          </td>
-                          <td className="py-3 px-4 text-sm text-gray-900">
-                            {trend.volume.toLocaleString()}
-                          </td>
-                          <td className="py-3 px-4 text-sm text-gray-900">
-                            ${trend.value.toLocaleString()}
-                          </td>
-                          <td
-                            className={`py-3 px-4 text-sm font-medium ${
-                              trend.growth > 0
-                                ? "text-green-600"
-                                : "text-red-600"
-                            }`}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Table */}
+                <div className="bg-white rounded-3px border border-gray-200 overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-gray-200 bg-gray-50">
+                          <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
+                            Origin
+                          </th>
+                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
+                            2021
+                          </th>
+                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
+                            2022
+                          </th>
+                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
+                            2023
+                          </th>
+                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
+                            2024
+                          </th>
+                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
+                            CAGR
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {hsCodeData.historicalTrends.map((country, index) => (
+                          <tr
+                            key={index}
+                            className="border-b border-gray-100 hover:bg-gray-50"
                           >
-                            {trend.growth > 0 ? "+" : ""}
-                            {trend.growth}%
+                            <td className="py-3 px-4 text-sm text-gray-900 font-medium">
+                              <div className="flex items-center space-x-2">
+                                <div
+                                  className="w-3 h-3 rounded-full"
+                                  style={{
+                                    backgroundColor:
+                                      countryColors[country.origin],
+                                  }}
+                                ></div>
+                                <span>{country.origin}</span>
+                              </div>
+                            </td>
+                            <td className="text-center py-3 px-2 text-sm text-gray-900">
+                              €{country[2021]}M
+                            </td>
+                            <td className="text-center py-3 px-2 text-sm text-gray-900">
+                              €{country[2022]}M
+                            </td>
+                            <td className="text-center py-3 px-2 text-sm text-gray-900">
+                              €{country[2023]}M
+                            </td>
+                            <td className="text-center py-3 px-2 text-sm text-gray-900">
+                              €{country[2024]}M
+                            </td>
+                            <td className="text-center py-3 px-2 text-sm font-medium">
+                              <span
+                                className={`${
+                                  calculateCAGR(
+                                    country[2021],
+                                    country[2024],
+                                    3
+                                  ) > 0
+                                    ? "text-green-600"
+                                    : "text-red-600"
+                                }`}
+                              >
+                                {calculateCAGR(
+                                  country[2021],
+                                  country[2024],
+                                  3
+                                ) > 0
+                                  ? "+"
+                                  : ""}
+                                {calculateCAGR(
+                                  country[2021],
+                                  country[2024],
+                                  3
+                                ).toFixed(1)}
+                                %
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                        {/* Total Row */}
+                        <tr className="border-t-2 border-gray-300 bg-gray-50 font-semibold">
+                          <td className="py-3 px-4 text-sm text-gray-900">
+                            Total
+                          </td>
+                          <td className="text-center py-3 px-2 text-sm text-gray-900">
+                            €{calculateYearTotal(2021)}M
+                          </td>
+                          <td className="text-center py-3 px-2 text-sm text-gray-900">
+                            €{calculateYearTotal(2022)}M
+                          </td>
+                          <td className="text-center py-3 px-2 text-sm text-gray-900">
+                            €{calculateYearTotal(2023)}M
+                          </td>
+                          <td className="text-center py-3 px-2 text-sm text-gray-900">
+                            €{calculateYearTotal(2024)}M
+                          </td>
+                          <td className="text-center py-3 px-2 text-sm">
+                            <span
+                              className={`${
+                                calculateCAGR(
+                                  calculateYearTotal(2021),
+                                  calculateYearTotal(2024),
+                                  3
+                                ) > 0
+                                  ? "text-green-600"
+                                  : "text-red-600"
+                              }`}
+                            >
+                              {calculateCAGR(
+                                calculateYearTotal(2021),
+                                calculateYearTotal(2024),
+                                3
+                              ) > 0
+                                ? "+"
+                                : ""}
+                              {calculateCAGR(
+                                calculateYearTotal(2021),
+                                calculateYearTotal(2024),
+                                3
+                              ).toFixed(1)}
+                              %
+                            </span>
                           </td>
                         </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Stacked Area Chart */}
+                <div className="bg-white rounded-3px ">
+                  <svg
+                    width="100%"
+                    height="400"
+                    viewBox="0 0 500 400"
+                    className="border rounded"
+                  >
+                    <defs>
+                      {Object.entries(countryColors).map(([country, color]) => (
+                        <linearGradient
+                          key={country}
+                          id={`gradient-${country}`}
+                          x1="0%"
+                          y1="0%"
+                          x2="0%"
+                          y2="100%"
+                        >
+                          <stop
+                            offset="0%"
+                            style={{ stopColor: color, stopOpacity: 0.8 }}
+                          />
+                          <stop
+                            offset="100%"
+                            style={{ stopColor: color, stopOpacity: 0.3 }}
+                          />
+                        </linearGradient>
                       ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {/* Charts Section */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8 mb-8">
-                {/* Volume Trend Chart */}
-                <div className="bg-gray-50 p-4 rounded-3px">
-                  <h4 className="text-md font-medium text-gray-800 mb-3">
-                    Volume Trend (Units)
-                  </h4>
-                  <svg
-                    width="100%"
-                    height="200"
-                    viewBox="0 0 400 200"
-                    className="border rounded"
-                  >
-                    <defs>
-                      <linearGradient
-                        id="volumeGradient"
-                        x1="0%"
-                        y1="0%"
-                        x2="0%"
-                        y2="100%"
-                      >
-                        <stop
-                          offset="0%"
-                          style={{ stopColor: "#0d9488", stopOpacity: 0.3 }}
-                        />
-                        <stop
-                          offset="100%"
-                          style={{ stopColor: "#0d9488", stopOpacity: 0.1 }}
-                        />
-                      </linearGradient>
                     </defs>
 
                     {/* Grid lines */}
-                    {[0, 1, 2, 3, 4].map((i) => (
+                    {[0, 1, 2, 3, 4, 5].map((i) => (
                       <line
                         key={i}
-                        x1="50"
-                        y1={40 + i * 32}
-                        x2="380"
-                        y2={40 + i * 32}
+                        x1="80"
+                        y1={50 + i * 50}
+                        x2="450"
+                        y2={50 + i * 50}
                         stroke="#e5e7eb"
                         strokeWidth="1"
                       />
                     ))}
 
-                    {/* Volume line and area */}
-                    <path
-                      d="M 50 140 L 160 120 L 270 100 L 380 80"
-                      stroke="#0d9488"
-                      strokeWidth="3"
-                      fill="none"
-                    />
-                    <path
-                      d="M 50 140 L 160 120 L 270 100 L 380 80 L 380 168 L 50 168 Z"
-                      fill="url(#volumeGradient)"
-                    />
-
-                    {/* Data points */}
-                    {hsCodeData.historicalTrends.map((trend, index) => (
-                      <circle
-                        key={index}
-                        cx={50 + index * 110}
-                        cy={168 - (trend.volume - 1200000) / 10000}
-                        r="4"
-                        fill="#0d9488"
-                      />
-                    ))}
-
                     {/* Y-axis labels */}
-                    <text
-                      x="40"
-                      y="45"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      1.6M
-                    </text>
-                    <text
-                      x="40"
-                      y="77"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      1.5M
-                    </text>
-                    <text
-                      x="40"
-                      y="109"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      1.4M
-                    </text>
-                    <text
-                      x="40"
-                      y="141"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      1.3M
-                    </text>
-                    <text
-                      x="40"
-                      y="173"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      1.2M
-                    </text>
-
-                    {/* X-axis labels */}
-                    {hsCodeData.historicalTrends.map((trend, index) => (
+                    {[3000, 2500, 2000, 1500, 1000, 500].map((value, i) => (
                       <text
-                        key={index}
-                        x={50 + index * 110}
-                        y="185"
-                        fontSize="10"
-                        fill="#6b7280"
-                        textAnchor="middle"
-                      >
-                        {trend.year}
-                      </text>
-                    ))}
-                  </svg>
-                </div>
-
-                {/* Value Trend Chart */}
-                <div className="bg-gray-50 p-4 rounded-3px">
-                  <h4 className="text-md font-medium text-gray-800 mb-3">
-                    Value Trend (USD)
-                  </h4>
-                  <svg
-                    width="100%"
-                    height="200"
-                    viewBox="0 0 400 200"
-                    className="border rounded"
-                  >
-                    <defs>
-                      <linearGradient
-                        id="valueGradient"
-                        x1="0%"
-                        y1="0%"
-                        x2="0%"
-                        y2="100%"
-                      >
-                        <stop
-                          offset="0%"
-                          style={{ stopColor: "#14b8a6", stopOpacity: 0.3 }}
-                        />
-                        <stop
-                          offset="100%"
-                          style={{ stopColor: "#14b8a6", stopOpacity: 0.1 }}
-                        />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Grid lines */}
-                    {[0, 1, 2, 3, 4].map((i) => (
-                      <line
                         key={i}
-                        x1="50"
-                        y1={40 + i * 32}
-                        x2="380"
-                        y2={40 + i * 32}
-                        stroke="#e5e7eb"
-                        strokeWidth="1"
-                      />
+                        x="70"
+                        y={55 + i * 50}
+                        fontSize="12"
+                        fill="#6b7280"
+                        textAnchor="end"
+                      >
+                        €{value}M
+                      </text>
                     ))}
 
-                    {/* Value line and area */}
-                    <path
-                      d="M 50 140 L 160 115 L 270 85 L 380 60"
-                      stroke="#14b8a6"
-                      strokeWidth="3"
-                      fill="none"
-                    />
-                    <path
-                      d="M 50 140 L 160 115 L 270 85 L 380 60 L 380 168 L 50 168 Z"
-                      fill="url(#valueGradient)"
-                    />
+                    {/* Stacked areas */}
+                    {hsCodeData.historicalTrends.map(
+                      (country, countryIndex) => {
+                        const years = [2021, 2022, 2023, 2024];
+                        let cumulativeValues = [0, 0, 0, 0];
 
-                    {/* Data points */}
-                    {hsCodeData.historicalTrends.map((trend, index) => (
-                      <circle
-                        key={index}
-                        cx={50 + index * 110}
-                        cy={168 - (trend.value - 2400000000) / 10000000}
-                        r="4"
-                        fill="#14b8a6"
-                      />
-                    ))}
+                        // Calculate cumulative values for stacking
+                        for (let i = 0; i <= countryIndex; i++) {
+                          years.forEach((year, yearIndex) => {
+                            cumulativeValues[yearIndex] +=
+                              hsCodeData.historicalTrends[i][year];
+                          });
+                        }
 
-                    {/* Y-axis labels */}
-                    <text
-                      x="40"
-                      y="45"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      $3.5B
-                    </text>
-                    <text
-                      x="40"
-                      y="77"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      $3.2B
-                    </text>
-                    <text
-                      x="40"
-                      y="109"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      $2.9B
-                    </text>
-                    <text
-                      x="40"
-                      y="141"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      $2.6B
-                    </text>
-                    <text
-                      x="40"
-                      y="173"
-                      fontSize="10"
-                      fill="#6b7280"
-                      textAnchor="end"
-                    >
-                      $2.3B
-                    </text>
+                        let previousCumulativeValues = [0, 0, 0, 0];
+                        if (countryIndex > 0) {
+                          for (let i = 0; i < countryIndex; i++) {
+                            years.forEach((year, yearIndex) => {
+                              previousCumulativeValues[yearIndex] +=
+                                hsCodeData.historicalTrends[i][year];
+                            });
+                          }
+                        }
+
+                        const pathTop = years
+                          .map((year, i) => {
+                            const x = 80 + i * 123.33;
+                            const y = 300 - (cumulativeValues[i] / 3000) * 250;
+                            return `${i === 0 ? "M" : "L"} ${x} ${y}`;
+                          })
+                          .join(" ");
+
+                        const pathBottom = years
+                          .map((year, i) => {
+                            const x = 80 + (3 - i) * 123.33;
+                            const y =
+                              300 -
+                              (previousCumulativeValues[3 - i] / 3000) * 250;
+                            return `L ${x} ${y}`;
+                          })
+                          .join(" ");
+
+                        return (
+                          <path
+                            key={country.origin}
+                            d={`${pathTop} ${pathBottom} Z`}
+                            fill={`url(#gradient-${country.origin})`}
+                            stroke={countryColors[country.origin]}
+                            strokeWidth="2"
+                          />
+                        );
+                      }
+                    )}
 
                     {/* X-axis labels */}
-                    {hsCodeData.historicalTrends.map((trend, index) => (
+                    {[2021, 2022, 2023, 2024].map((year, index) => (
                       <text
-                        key={index}
-                        x={50 + index * 110}
-                        y="185"
-                        fontSize="10"
+                        key={year}
+                        x={80 + index * 123.33}
+                        y="330"
+                        fontSize="12"
                         fill="#6b7280"
                         textAnchor="middle"
                       >
-                        {trend.year}
+                        {year}
                       </text>
                     ))}
+
+                    {/* Legend */}
+                    <g transform="translate(80, 350)">
+                      {hsCodeData.historicalTrends.map((country, index) => (
+                        <g
+                          key={country.origin}
+                          transform={`translate(${index * 60}, 0)`}
+                        >
+                          <rect
+                            x="0"
+                            y="0"
+                            width="12"
+                            height="12"
+                            fill={countryColors[country.origin]}
+                          />
+                          <text x="16" y="9" fontSize="10" fill="#374151">
+                            {country.origin}
+                          </text>
+                        </g>
+                      ))}
+                    </g>
                   </svg>
                 </div>
               </div>
 
               <div className="mt-6 bg-yellow-50 p-4 rounded-3px border border-yellow-200">
-                <p className="text-yellow-800">
-                  <strong>Market Insight:</strong> This product category shows
-                  consistent growth over the past 4 years, indicating strong
-                  market demand and stable trade conditions.
-                </p>
+                <h4 className="text-yellow-800 font-semibold mb-2">
+                  Notes on Import Trends:
+                </h4>
+                <ul className="text-yellow-800 space-y-1 list-disc pl-5">
+                  <li>
+                    Vietnam's rapid increase reflects preferential access under
+                    EVFTA.
+                  </li>
+                  <li>
+                    China remains the dominant supplier despite anti-dumping
+                    risks.
+                  </li>
+                  <li>
+                    Growth is steady across countries due to increased
+                    automation and machinery demand in the EU.
+                  </li>
+                </ul>
               </div>
             </div>
           )}

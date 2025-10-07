@@ -1,15 +1,49 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Search, List, CircleUserRound, LogOut, Home } from "lucide-react";
+import {
+  Search,
+  List,
+  CircleUserRound,
+  LogOut,
+  Home,
+  Settings,
+  ChevronDown,
+} from "lucide-react";
 
 const Header = ({ isAuthenticated, user, onLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleLogout = () => {
     onLogout();
     navigate("/");
+    setShowDropdown(false);
   };
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profile");
+    setShowDropdown(false);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
@@ -61,20 +95,42 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
                 {/* <span className="text-sm text-gray-700">
                   Welcome, {user?.name || user?.email}
                 </span> */}
-                <Link
-                  to="/profile"
-                  className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors"
-                >
-                  <CircleUserRound size={18} />
-                  <span className="hidden sm:inline">CEO</span>
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center space-x-1 text-gray-700 hover:text-red-600 transition-colors"
-                >
-                  <LogOut size={18} />
-                  <span className="hidden sm:inline">Logout</span>
-                </button>
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={toggleDropdown}
+                    className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors focus:outline-none"
+                  >
+                    <CircleUserRound size={18} />
+                    <span className="hidden sm:inline">CEO</span>
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform ${
+                        showDropdown ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {showDropdown && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                      <button
+                        onClick={handleProfileClick}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                      >
+                        <Settings size={16} />
+                        <span>Profile Settings</span>
+                      </button>
+                      <hr className="border-gray-200 my-1" />
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2"
+                      >
+                        <LogOut size={16} />
+                        <span>Logout</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             ) : (
               <Link

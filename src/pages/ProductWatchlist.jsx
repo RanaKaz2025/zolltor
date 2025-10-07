@@ -9,6 +9,7 @@ import {
   Minus,
   Eye,
   Plus,
+  X,
 } from "lucide-react";
 import { useToast } from "../components/ToastProvider";
 import dummyData from "../data/dummyData.json";
@@ -21,7 +22,38 @@ const ProductWatchlist = ({ user }) => {
   const [activeTab, setActiveTab] = useState("import");
   const [newImportRow, setNewImportRow] = useState(null);
   const [newExportRow, setNewExportRow] = useState(null);
+  const [showChangeDialog, setShowChangeDialog] = useState(false);
+  const [selectedChangeInfo, setSelectedChangeInfo] = useState(null);
   const toast = useToast();
+
+  // Function to format date to MMM YYYY format
+  const formatDate = (dateString) => {
+    if (!dateString || dateString === "TBD") return dateString;
+
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString; // Return original if invalid date
+
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+
+      return `${months[date.getMonth()]} ${date.getFullYear()}`;
+    } catch (error) {
+      return dateString; // Return original if parsing fails
+    }
+  };
 
   const handleSelectAllImport = (e) => {
     if (e.target.checked) {
@@ -29,6 +61,59 @@ const ProductWatchlist = ({ user }) => {
     } else {
       setSelectedImportItems([]);
     }
+  };
+
+  // Function to get detailed reason for tariff changes
+  const getChangeReason = (changeType, description, origin, destination) => {
+    const reasons = {
+      "FTA rate reduction": `Tariffs for this good in the EU-${
+        origin === "JP" ? "Japan" : origin
+      } FTA decline to 0% on 1 February 2026`,
+      "Anti-dumping duties": `Anti-dumping duties of 10% will be applied to ${
+        origin === "CN" ? "Chinese" : origin
+      } imports starting 1 December 2026`,
+      "Safeguard measures": `Temporary safeguard measures of 15% will be imposed on imports from ${origin} effective 15 March 2026`,
+      "GSP suspension": `Generalized System of Preferences benefits will be suspended for ${origin} starting 1 June 2026`,
+      "Trade agreement": `New bilateral trade agreement with ${origin} reduces tariffs to 2.5% from 1 September 2026`,
+      "WTO ruling": `Following WTO dispute settlement, tariffs on this product will be adjusted to 5% from 1 November 2026`,
+      default:
+        description.includes("reduction") || description.includes("decrease")
+          ? `Tariffs for this good in the EU-${origin} trade agreement decline to 0% on the specified date`
+          : `Anti-dumping duties will be applied to imports from ${origin} starting on the specified date`,
+    };
+
+    // Try to match the description with known patterns
+    for (const [key, reason] of Object.entries(reasons)) {
+      if (
+        description.toLowerCase().includes(key.toLowerCase()) ||
+        description.toLowerCase().includes(key.split(" ")[0].toLowerCase())
+      ) {
+        return reason;
+      }
+    }
+
+    return reasons.default;
+  };
+
+  // Handle clicking on change information
+  const handleChangeClick = (item, changeType) => {
+    const change = changeType === "last" ? item.lastChange : item.nextChange;
+    const detailedReason = getChangeReason(
+      changeType,
+      change.description,
+      item.origin || item.destination,
+      item.destination || item.origin
+    );
+
+    setSelectedChangeInfo({
+      type: changeType,
+      date: change.date,
+      description: change.description,
+      detailedReason: detailedReason,
+      productName: item.productName,
+      hsCode: item.hsCode,
+    });
+    setShowChangeDialog(true);
   };
 
   const handleSelectAllExport = (e) => {
@@ -136,6 +221,7 @@ const ProductWatchlist = ({ user }) => {
       newImportRow.hsCode &&
       newImportRow.origin
     ) {
+      const currentDate = new Date();
       const newItem = {
         ...newImportRow,
         id: Date.now(), // Generate unique ID
@@ -143,7 +229,7 @@ const ProductWatchlist = ({ user }) => {
         currentRate: parseFloat(newImportRow.currentRate) || 0,
         tax: parseFloat(newImportRow.tax) || 0,
         lastChange: {
-          date: new Date().toLocaleDateString(),
+          date: currentDate.toISOString().split("T")[0], // Use YYYY-MM-DD format for consistency
           description: "Added to watchlist",
         },
         nextChange: {
@@ -167,6 +253,7 @@ const ProductWatchlist = ({ user }) => {
       newExportRow.hsCode &&
       newExportRow.destination
     ) {
+      const currentDate = new Date();
       const newItem = {
         ...newExportRow,
         id: Date.now(), // Generate unique ID
@@ -174,7 +261,7 @@ const ProductWatchlist = ({ user }) => {
         currentRate: parseFloat(newExportRow.currentRate) || 0,
         tax: parseFloat(newExportRow.tax) || 0,
         lastChange: {
-          date: new Date().toLocaleDateString(),
+          date: currentDate.toISOString().split("T")[0], // Use YYYY-MM-DD format for consistency
           description: "Added to watchlist",
         },
         nextChange: {
@@ -321,7 +408,7 @@ const ProductWatchlist = ({ user }) => {
                     />
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                    Product
+                    Product Type
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                     HS Code
@@ -330,7 +417,7 @@ const ProductWatchlist = ({ user }) => {
                     Origin
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                    Current Rate
+                    Duty Rate
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                     Tax
@@ -376,12 +463,12 @@ const ProductWatchlist = ({ user }) => {
                     <td className="px-6 py-4 text-sm text-gray-900">
                       {
                         dummyData.countries.find((c) => c.code === item.origin)
-                          ?.flag
+                          ?.name
                       }{" "}
-                      {item.origin}
+                      ({item.origin})
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900 font-semibold">
-                      {item.currentRate}%
+                      {item.currentRate}% (MFN + AD)
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-700">
                       <div className="font-medium">{item.tax}%</div>
@@ -390,23 +477,37 @@ const ProductWatchlist = ({ user }) => {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
-                      <div>{item.lastChange.date}</div>
-                      <div className="text-xs text-gray-500">
-                        {item.lastChange.description}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm">
-                      <div className="flex items-center space-x-1">
-                        {getChangeIcon(item.nextChange.description)}
+                      <button
+                        onClick={() => handleChangeClick(item, "last")}
+                        className="text-left  transition-colors focus:outline-none"
+                      >
                         <div>
-                          <div className="text-gray-900">
-                            {item.nextChange.date}
+                          <div className="underline text-primary-600 hover:text-primary-700">
+                            {formatDate(item.lastChange.date)}:
                           </div>
-                          <div className="text-xs text-gray-500">
-                            {item.nextChange.description}
+                          <div className="text-sm text-gray-500">
+                            {item.lastChange.description}
                           </div>
                         </div>
-                      </div>
+                      </button>
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      <button
+                        onClick={() => handleChangeClick(item, "next")}
+                        className="text-left  transition-colors focus:outline-none"
+                      >
+                        <div className="flex items-center space-x-1">
+                          {getChangeIcon(item.nextChange.description)}
+                          <div>
+                            <div className="underline text-primary-600 hover:text-primary-700">
+                              {formatDate(item.nextChange.date)}:
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {item.nextChange.description}
+                            </div>
+                          </div>
+                        </div>
+                      </button>
                     </td>
                     <td className="px-6 py-4 text-sm">
                       <Link
@@ -609,7 +710,7 @@ const ProductWatchlist = ({ user }) => {
                     />
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                    Product
+                    Product Type
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                     HS Code
@@ -618,7 +719,7 @@ const ProductWatchlist = ({ user }) => {
                     Destination
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                    Current Rate
+                    Duty Rate
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
                     Tax
@@ -665,12 +766,12 @@ const ProductWatchlist = ({ user }) => {
                       {
                         dummyData.countries.find(
                           (c) => c.code === item.destination
-                        )?.flag
+                        )?.name
                       }{" "}
-                      {item.destination}
+                      ({item.destination})
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900 font-semibold">
-                      {item.currentRate}%
+                      {item.currentRate}% (CU)
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-700">
                       <div className="font-medium">{item.tax}%</div>
@@ -679,23 +780,37 @@ const ProductWatchlist = ({ user }) => {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
-                      <div>{item.lastChange.date}</div>
-                      <div className="text-xs text-gray-500">
-                        {item.lastChange.description}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm">
-                      <div className="flex items-center space-x-1">
-                        {getChangeIcon(item.nextChange.description)}
+                      <button
+                        onClick={() => handleChangeClick(item, "last")}
+                        className="text-left transition-colors focus:outline-none"
+                      >
                         <div>
-                          <div className="text-gray-900">
-                            {item.nextChange.date}
+                          <div className="underline text-primary-600 hover:text-primary-700">
+                            {formatDate(item.lastChange.date)}:
                           </div>
-                          <div className="text-xs text-gray-500">
-                            {item.nextChange.description}
+                          <div className="text-sm text-gray-500">
+                            {item.lastChange.description}
                           </div>
                         </div>
-                      </div>
+                      </button>
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      <button
+                        onClick={() => handleChangeClick(item, "next")}
+                        className="text-left transition-colors focus:outline-none"
+                      >
+                        <div className="flex items-center space-x-1">
+                          {getChangeIcon(item.nextChange.description)}
+                          <div>
+                            <div className="underline text-primary-600 hover:text-primary-700">
+                              {formatDate(item.nextChange.date)}:
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {item.nextChange.description}
+                            </div>
+                          </div>
+                        </div>
+                      </button>
                     </td>
                     <td className="px-6 py-4 text-sm">
                       <Link
@@ -842,6 +957,61 @@ const ProductWatchlist = ({ user }) => {
               <Plus size={20} />
               <span>Add New</span>
             </button>
+          </div>
+        </div>
+      )}
+      {/* Change Detail Dialog */}
+      {showChangeDialog && selectedChangeInfo && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="text-xl font-semibold text-gray-900">
+                  {selectedChangeInfo.type === "last"
+                    ? "Last Change Details"
+                    : "Next Change Details"}
+                </h3>
+                <button
+                  onClick={() => setShowChangeDialog(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center space-x-6 text-sm">
+                  <div>
+                    <span className="text-gray-600">HS Code:</span>
+                    <span className="ml-2 font-mono font-medium">
+                      {selectedChangeInfo.hsCode}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600">Change Date:</span>
+                    <span className="ml-2 font-medium">
+                      {formatDate(selectedChangeInfo.date)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="pt-3">
+                  <p className="text-sm text-gray-700">
+                    Anti-dumping duties of 10% will be applied to Chinese
+                    imports starting 1 December 2026
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex justify-end mt-6">
+                <button
+                  onClick={() => setShowChangeDialog(false)}
+                  className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
