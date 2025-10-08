@@ -24,6 +24,7 @@ const ProductWatchlist = ({ user }) => {
   const [newExportRow, setNewExportRow] = useState(null);
   const [showChangeDialog, setShowChangeDialog] = useState(false);
   const [selectedChangeInfo, setSelectedChangeInfo] = useState(null);
+  const [selectedTimePeriod, setSelectedTimePeriod] = useState("Past Week");
   const toast = useToast();
 
   // Function to format date to MMM YYYY format
@@ -52,6 +53,20 @@ const ProductWatchlist = ({ user }) => {
       return `${months[date.getMonth()]} ${date.getFullYear()}`;
     } catch (error) {
       return dateString; // Return original if parsing fails
+    }
+  };
+
+  // Function to get changes text based on selected time period
+  const getChangesText = (timePeriod) => {
+    switch (timePeriod) {
+      case "Past Week":
+        return "In the past week, tariffs on Smartphones (HS 8517.12.00) from China increased by 5% due to new anti-dumping measures implemented on January 15, 2025.";
+      case "Past Month":
+        return "In the past month, two changes affected your imports: 1) Smartphones from China increased 5% due to anti-dumping measures, 2) Cotton fabric from India reduced to 2.5% under revised trade agreement.";
+      case "Past 3 Months":
+        return "In the past 3 months, three changes affected your imports: 1) Smartphones from China increased 5%, 2) Cotton fabric from India reduced to 0% under GSP renewal, 3) Hydraulic pumps from Vietnam became duty-free under EVFTA.";
+      default:
+        return "No changes found for the selected time period.";
     }
   };
 
@@ -303,9 +318,31 @@ const ProductWatchlist = ({ user }) => {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               Product Watchlist
             </h1>
-            <p className="text-gray-600">
-              Monitor tariff changes for your critical trade routes
-            </p>
+          </div>
+
+          <div className="flex justify-center mb-8">
+            <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-1 flex">
+              <button
+                onClick={() => setActiveTab("import")}
+                className={`px-6 py-3 rounded-3px transition-colors ${
+                  activeTab === "import"
+                    ? "bg-teal-700 text-white"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                Import Watchlist
+              </button>
+              <button
+                onClick={() => setActiveTab("export")}
+                className={`px-6 py-3 rounded-3px transition-colors ${
+                  activeTab === "export"
+                    ? "bg-teal-700 text-white"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                Export Watchlist
+              </button>
+            </div>
           </div>
 
           <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-4">
@@ -326,31 +363,49 @@ const ProductWatchlist = ({ user }) => {
           </div>
         </div>
       </div>
-      {/* Bulk Actions */} {/* Tab Navigation */}
-      <div className="flex justify-center mb-8">
-        <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-1 flex">
-          <button
-            onClick={() => setActiveTab("import")}
-            className={`px-6 py-3 rounded-3px transition-colors ${
-              activeTab === "import"
-                ? "bg-teal-700 text-white"
-                : "text-gray-600 hover:text-gray-900"
-            }`}
-          >
-            Import Watchlist
-          </button>
-          <button
-            onClick={() => setActiveTab("export")}
-            className={`px-6 py-3 rounded-3px transition-colors ${
-              activeTab === "export"
-                ? "bg-teal-700 text-white"
-                : "text-gray-600 hover:text-gray-900"
-            }`}
-          >
-            Export Watchlist
-          </button>
+
+      {/* Changes Overview Section */}
+      <div className="mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          {/* What Has Changed Section */}
+          <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6">
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold text-gray-900">
+                  What Has Changed
+                </h2>
+                <select
+                  value={selectedTimePeriod}
+                  onChange={(e) => setSelectedTimePeriod(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                >
+                  <option value="Past Week">Past Week</option>
+                  <option value="Past Month">Past Month</option>
+                  <option value="Past 3 Months">Past 3 Months</option>
+                </select>
+              </div>
+
+              <p className="text-sm text-gray-700 leading-relaxed">
+                {getChangesText(selectedTimePeriod)}
+              </p>
+            </div>
+          </div>
+
+          {/* Upcoming Changes Section */}
+          <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Upcoming Changes
+            </h2>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              In the next 3 months, three changes might affect your imports: 1)
+              Smartphones from China increased 33%, 2) Cotton fabric from India
+              reduced to 7% under GSP renewal, 3) Hydraulic pumps from Vietnam
+              became duty-free under EVFTA.
+            </p>
+          </div>
         </div>
       </div>
+
       {/* Import Watchlist */}
       {activeTab === "import" && (
         <div className="bg-white rounded-3px shadow-sm border border-gray-200 mb-8">
