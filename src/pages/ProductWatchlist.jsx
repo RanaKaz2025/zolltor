@@ -27,35 +27,6 @@ const ProductWatchlist = ({ user }) => {
   const [selectedTimePeriod, setSelectedTimePeriod] = useState("Past Week");
   const toast = useToast();
 
-  // Function to format date to MMM YYYY format
-  const formatDate = (dateString) => {
-    if (!dateString || dateString === "TBD") return dateString;
-
-    try {
-      const date = new Date(dateString);
-      if (isNaN(date.getTime())) return dateString; // Return original if invalid date
-
-      const months = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ];
-
-      return `${months[date.getMonth()]} ${date.getFullYear()}`;
-    } catch (error) {
-      return dateString; // Return original if parsing fails
-    }
-  };
-
   // Function to get changes text based on selected time period
   const getChangesText = (timePeriod) => {
     switch (timePeriod) {
@@ -178,18 +149,18 @@ const ProductWatchlist = ({ user }) => {
     } else if (description.toLowerCase().includes("increase")) {
       return <TrendingUp className="w-4 h-4 text-red-500" />;
     }
-    return <Minus className="w-4 h-4 text-gray-500" />;
+    // return <Minus className="w-4 h-4 text-gray-500" />;
   };
 
   const getRowColor = (description) => {
-    if (
-      description.toLowerCase().includes("reduction") ||
-      description.toLowerCase().includes("decrease")
-    ) {
-      return "bg-green-50";
-    } else if (description.toLowerCase().includes("increase")) {
-      return "bg-red-50";
-    }
+    // if (
+    //   description.toLowerCase().includes("reduction") ||
+    //   description.toLowerCase().includes("decrease")
+    // ) {
+    //   return "bg-green-50";
+    // } else if (description.toLowerCase().includes("increase")) {
+    //   return "bg-red-50";
+    // }
     return "bg-white";
   };
 
@@ -231,18 +202,16 @@ const ProductWatchlist = ({ user }) => {
   };
 
   const handleSaveNewImportItem = () => {
-    if (
-      newImportRow.productName &&
-      newImportRow.hsCode &&
-      newImportRow.origin
-    ) {
+    if (newImportRow.hsCode && newImportRow.origin) {
       const currentDate = new Date();
       const newItem = {
         ...newImportRow,
         id: Date.now(), // Generate unique ID
         type: "import",
-        currentRate: parseFloat(newImportRow.currentRate) || 0,
-        tax: parseFloat(newImportRow.tax) || 0,
+        productName:
+          newImportRow.productName || `Product ${newImportRow.hsCode}`,
+        currentRate: 0, // Default to 0
+        tax: 0, // Default to 0
         lastChange: {
           date: currentDate.toISOString().split("T")[0], // Use YYYY-MM-DD format for consistency
           description: "Added to watchlist",
@@ -256,25 +225,21 @@ const ProductWatchlist = ({ user }) => {
       setNewImportRow(null);
       toast.success("Import item added to watchlist!");
     } else {
-      toast.error(
-        "Please fill in all required fields (Product, HS Code, Origin)"
-      );
+      toast.error("Please fill in HS Code and Origin");
     }
   };
 
   const handleSaveNewExportItem = () => {
-    if (
-      newExportRow.productName &&
-      newExportRow.hsCode &&
-      newExportRow.destination
-    ) {
+    if (newExportRow.hsCode && newExportRow.destination) {
       const currentDate = new Date();
       const newItem = {
         ...newExportRow,
         id: Date.now(), // Generate unique ID
         type: "export",
-        currentRate: parseFloat(newExportRow.currentRate) || 0,
-        tax: parseFloat(newExportRow.tax) || 0,
+        productName:
+          newExportRow.productName || `Product ${newExportRow.hsCode}`,
+        currentRate: 0, // Default to 0
+        tax: 0, // Default to 0
         lastChange: {
           date: currentDate.toISOString().split("T")[0], // Use YYYY-MM-DD format for consistency
           description: "Added to watchlist",
@@ -288,9 +253,7 @@ const ProductWatchlist = ({ user }) => {
       setNewExportRow(null);
       toast.success("Export item added to watchlist!");
     } else {
-      toast.error(
-        "Please fill in all required fields (Product, HS Code, Destination)"
-      );
+      toast.error("Please fill in HS Code and Destination");
     }
   };
 
@@ -408,7 +371,7 @@ const ProductWatchlist = ({ user }) => {
 
       {/* Import Watchlist */}
       {activeTab === "import" && (
-        <div className="bg-white rounded-3px shadow-sm border border-gray-200 mb-8">
+        <div className="px-3 bg-white rounded-3px shadow-sm border border-gray-200 mb-8">
           <div className="p-[16px] border-b border-gray-200 flex justify-between items-center min-h-[40px]">
             <h2 className="text-xl font-semibold text-gray-900">
               Import Watchlist (Products coming into{" "}
@@ -447,11 +410,11 @@ const ProductWatchlist = ({ user }) => {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-auto max-h-[600px]">
             <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left">
+              <thead className="sticky top-0 bg-white z-10 shadow-sm">
+                <tr className="border-b border-gray-200">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     <input
                       type="checkbox"
                       checked={
@@ -462,28 +425,28 @@ const ProductWatchlist = ({ user }) => {
                       className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                     />
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                    Product Type
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                    Product
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     HS Code
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Origin
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                    Duty Rate
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                    Current Rate
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Tax
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Last Change
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Next Change
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Actions
                   </th>
                 </tr>
@@ -496,7 +459,7 @@ const ProductWatchlist = ({ user }) => {
                       item.nextChange.description
                     )} border-b border-gray-100`}
                   >
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <input
                         type="checkbox"
                         checked={selectedImportItems.includes(item.id)}
@@ -504,10 +467,10 @@ const ProductWatchlist = ({ user }) => {
                         className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                       />
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 font-medium">
+                    <td className="px-6 py-3 text-[16px] text-gray-900 font-medium">
                       {item.productName}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <Link
                         to={`/hscode/${item.hsCode}`}
                         className="text-primary-600 hover:text-primary-800 font-mono"
@@ -515,30 +478,33 @@ const ProductWatchlist = ({ user }) => {
                         {item.hsCode}
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       {
                         dummyData.countries.find((c) => c.code === item.origin)
                           ?.name
                       }{" "}
                       ({item.origin})
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 font-semibold">
-                      {item.currentRate}% (MFN + AD)
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
+                      <div className="font-semibold">{item.currentRate}%</div>
+                      {item.currentRateOrigin && (
+                        <div>{item.currentRateOrigin}</div>
+                      )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
+                    <td className="px-6 py-3 text-[16px] text-gray-700">
                       <div className="font-medium">{item.tax}%</div>
                       <div className="text-xs text-gray-500">
                         (VAT+Other Tax)
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-6 py-3 text-[16px] text-gray-600">
                       <button
                         onClick={() => handleChangeClick(item, "last")}
                         className="text-left  transition-colors focus:outline-none"
                       >
                         <div>
                           <div className="underline text-primary-600 hover:text-primary-700">
-                            {formatDate(item.lastChange.date)}:
+                            {item.lastChange.date}:
                           </div>
                           <div className="text-sm text-gray-500">
                             {item.lastChange.description}
@@ -546,25 +512,30 @@ const ProductWatchlist = ({ user }) => {
                         </div>
                       </button>
                     </td>
-                    <td className="px-6 py-4 text-sm">
+                    <td className="px-6 py-3 text-[16px]">
                       <button
                         onClick={() => handleChangeClick(item, "next")}
                         className="text-left  transition-colors focus:outline-none"
                       >
                         <div className="flex items-center space-x-1">
-                          {getChangeIcon(item.nextChange.description)}
+                          {item.nextChange.date !== "TBD" &&
+                            getChangeIcon(item.nextChange.description)}
                           <div>
-                            <div className="underline text-primary-600 hover:text-primary-700">
-                              {formatDate(item.nextChange.date)}:
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {item.nextChange.description}
-                            </div>
+                            {item.nextChange.date !== "TBD" && (
+                              <>
+                                <div className="underline text-primary-600 hover:text-primary-700">
+                                  {item.nextChange.date}:
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {item.nextChange.description}
+                                </div>
+                              </>
+                            )}
                           </div>
                         </div>
                       </button>
                     </td>
-                    <td className="px-6 py-4 text-sm">
+                    <td className="px-6 py-3 text-[16px]">
                       <Link
                         to={`/hscode/${item.hsCode}`}
                         className="text-primary-600 hover:text-primary-800 flex items-center space-x-1"
@@ -579,29 +550,17 @@ const ProductWatchlist = ({ user }) => {
                 {/* New Import Row */}
                 {newImportRow && (
                   <tr className="bg-blue-50 border-b border-gray-100">
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <input
                         type="checkbox"
                         disabled
                         className="rounded border-gray-300"
                       />
                     </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="text"
-                        value={newImportRow.productName}
-                        onChange={(e) =>
-                          handleNewRowChange(
-                            "import",
-                            "productName",
-                            e.target.value
-                          )
-                        }
-                        placeholder="Product name"
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
-                      />
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
+                      {/* Product column - blank */}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <input
                         type="text"
                         value={newImportRow.hsCode}
@@ -612,7 +571,7 @@ const ProductWatchlist = ({ user }) => {
                         className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
                       />
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <select
                         value={newImportRow.origin}
                         onChange={(e) =>
@@ -628,41 +587,19 @@ const ProductWatchlist = ({ user }) => {
                         ))}
                       </select>
                     </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="number"
-                        value={newImportRow.currentRate}
-                        onChange={(e) =>
-                          handleNewRowChange(
-                            "import",
-                            "currentRate",
-                            e.target.value
-                          )
-                        }
-                        placeholder="Rate"
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
-                        step="0.1"
-                      />
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
+                      {/* Current Rate column - blank */}
                     </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="number"
-                        value={newImportRow.tax}
-                        onChange={(e) =>
-                          handleNewRowChange("import", "tax", e.target.value)
-                        }
-                        placeholder="Tax"
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
-                        step="0.1"
-                      />
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
+                      {/* Tax column - blank */}
                     </td>
-                    <td className="px-6 py-4 text-xs text-gray-500">
-                      Will be set automatically
+                    <td className="px-6 py-3 text-xs text-gray-500">
+                      {/* Last Change column - blank */}
                     </td>
-                    <td className="px-6 py-4 text-xs text-gray-500">
-                      Will be set automatically
+                    <td className="px-6 py-3 text-xs text-gray-500">
+                      {/* Next Change column - blank */}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <div className="flex space-x-1">
                         <button
                           onClick={handleSaveNewImportItem}
@@ -710,7 +647,7 @@ const ProductWatchlist = ({ user }) => {
       )}
       {/* Export Watchlist */}
       {activeTab === "export" && (
-        <div className="bg-white rounded-3px shadow-sm border border-gray-200">
+        <div className="px-3 bg-white rounded-3px shadow-sm border border-gray-200">
           <div className="p-[16px] border-b border-gray-200 flex justify-between items-center min-h-[40px]">
             <h2 className="text-xl font-semibold text-gray-900">
               Export Watchlist (Products going from{" "}
@@ -749,11 +686,11 @@ const ProductWatchlist = ({ user }) => {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-auto max-h-[600px]">
             <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left">
+              <thead className="sticky top-0 bg-white z-10 shadow-sm">
+                <tr className="border-b border-gray-200">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     <input
                       type="checkbox"
                       checked={
@@ -764,28 +701,28 @@ const ProductWatchlist = ({ user }) => {
                       className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                     />
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                    Product Type
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                    Product
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     HS Code
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Destination
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                    Duty Rate
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                    Current Rate
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Tax
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Last Change
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Next Change
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
+                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
                     Actions
                   </th>
                 </tr>
@@ -798,7 +735,7 @@ const ProductWatchlist = ({ user }) => {
                       item.nextChange.description
                     )} border-b border-gray-100`}
                   >
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <input
                         type="checkbox"
                         checked={selectedExportItems.includes(item.id)}
@@ -806,10 +743,10 @@ const ProductWatchlist = ({ user }) => {
                         className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
                       />
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 font-medium">
+                    <td className="px-6 py-3 text-[16px] text-gray-900 font-medium">
                       {item.productName}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <Link
                         to={`/hscode/${item.hsCode}`}
                         className="text-primary-600 hover:text-primary-800 font-mono"
@@ -817,7 +754,7 @@ const ProductWatchlist = ({ user }) => {
                         {item.hsCode}
                       </Link>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       {
                         dummyData.countries.find(
                           (c) => c.code === item.destination
@@ -825,23 +762,26 @@ const ProductWatchlist = ({ user }) => {
                       }{" "}
                       ({item.destination})
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 font-semibold">
-                      {item.currentRate}% (CU)
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
+                      <div className="font-semibold">{item.currentRate}%</div>
+                      {item.currentRateOrigin && (
+                        <div>{item.currentRateOrigin}</div>
+                      )}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
+                    <td className="px-6 py-3 text-[16px] text-gray-700">
                       <div className="font-medium">{item.tax}%</div>
                       <div className="text-xs text-gray-500">
                         (VAT+Other Tax)
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-6 py-3 text-[16px] text-gray-600">
                       <button
                         onClick={() => handleChangeClick(item, "last")}
                         className="text-left transition-colors focus:outline-none"
                       >
                         <div>
                           <div className="underline text-primary-600 hover:text-primary-700">
-                            {formatDate(item.lastChange.date)}:
+                            {item.lastChange.date}:
                           </div>
                           <div className="text-sm text-gray-500">
                             {item.lastChange.description}
@@ -849,25 +789,30 @@ const ProductWatchlist = ({ user }) => {
                         </div>
                       </button>
                     </td>
-                    <td className="px-6 py-4 text-sm">
+                    <td className="px-6 py-3 text-[16px]">
                       <button
                         onClick={() => handleChangeClick(item, "next")}
                         className="text-left transition-colors focus:outline-none"
                       >
                         <div className="flex items-center space-x-1">
-                          {getChangeIcon(item.nextChange.description)}
+                          {item.nextChange.date !== "TBD" &&
+                            getChangeIcon(item.nextChange.description)}
                           <div>
-                            <div className="underline text-primary-600 hover:text-primary-700">
-                              {formatDate(item.nextChange.date)}:
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {item.nextChange.description}
-                            </div>
+                            {item.nextChange.date !== "TBD" && (
+                              <>
+                                <div className="underline text-primary-600 hover:text-primary-700">
+                                  {item.nextChange.date}:
+                                </div>
+                                <div className="text-sm text-gray-500">
+                                  {item.nextChange.description}
+                                </div>
+                              </>
+                            )}
                           </div>
                         </div>
                       </button>
                     </td>
-                    <td className="px-6 py-4 text-sm">
+                    <td className="px-6 py-3 text-[16px]">
                       <Link
                         to={`/hscode/${item.hsCode}`}
                         className="text-primary-600 hover:text-primary-800 flex items-center space-x-1"
@@ -882,29 +827,17 @@ const ProductWatchlist = ({ user }) => {
                 {/* New Export Row */}
                 {newExportRow && (
                   <tr className="bg-blue-50 border-b border-gray-100">
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <input
                         type="checkbox"
                         disabled
                         className="rounded border-gray-300"
                       />
                     </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="text"
-                        value={newExportRow.productName}
-                        onChange={(e) =>
-                          handleNewRowChange(
-                            "export",
-                            "productName",
-                            e.target.value
-                          )
-                        }
-                        placeholder="Product name"
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
-                      />
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
+                      {/* Product column - blank */}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <input
                         type="text"
                         value={newExportRow.hsCode}
@@ -915,7 +848,7 @@ const ProductWatchlist = ({ user }) => {
                         className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
                       />
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <select
                         value={newExportRow.destination}
                         onChange={(e) =>
@@ -935,41 +868,19 @@ const ProductWatchlist = ({ user }) => {
                         ))}
                       </select>
                     </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="number"
-                        value={newExportRow.currentRate}
-                        onChange={(e) =>
-                          handleNewRowChange(
-                            "export",
-                            "currentRate",
-                            e.target.value
-                          )
-                        }
-                        placeholder="Rate"
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
-                        step="0.1"
-                      />
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
+                      {/* Current Rate column - blank */}
                     </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="number"
-                        value={newExportRow.tax}
-                        onChange={(e) =>
-                          handleNewRowChange("export", "tax", e.target.value)
-                        }
-                        placeholder="Tax"
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
-                        step="0.1"
-                      />
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
+                      {/* Tax column - blank */}
                     </td>
-                    <td className="px-6 py-4 text-xs text-gray-500">
-                      Will be set automatically
+                    <td className="px-6 py-3 text-xs text-gray-500">
+                      {/* Last Change column - blank */}
                     </td>
-                    <td className="px-6 py-4 text-xs text-gray-500">
-                      Will be set automatically
+                    <td className="px-6 py-3 text-xs text-gray-500">
+                      {/* Next Change column - blank */}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-3 text-[16px] text-gray-900">
                       <div className="flex space-x-1">
                         <button
                           onClick={handleSaveNewExportItem}
@@ -1045,7 +956,7 @@ const ProductWatchlist = ({ user }) => {
                   <div>
                     <span className="text-gray-600">Change Date:</span>
                     <span className="ml-2 font-medium">
-                      {formatDate(selectedChangeInfo.date)}
+                      {selectedChangeInfo.date}
                     </span>
                   </div>
                 </div>

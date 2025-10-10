@@ -128,6 +128,8 @@ const TariffLookup = () => {
         return "bg-red-50 text-red-700";
       case "decrease":
         return "bg-green-50 text-green-700";
+      case "not-sure":
+        return "bg-yellow-100 text-yellow-700";
       default:
         return "bg-gray-50 text-gray-700";
     }
@@ -285,7 +287,11 @@ const TariffLookup = () => {
                     <div className="flex justify-between">
                       <span className="text-[16px] text-gray-600">VAT:</span>
                       <span className="text-[16px] font-medium text-gray-900">
-                        {searchResults.vat || 4}%
+                        {searchResults.vat
+                          ? typeof searchResults.vat === "number"
+                            ? searchResults.vat + "%"
+                            : searchResults.vat
+                          : "--"}
                       </span>
                     </div>
 
@@ -310,10 +316,10 @@ const TariffLookup = () => {
                       <p className="text-xs text-gray-500">
                         Source:{" "}
                         <span className="text-primary-600 hover:text-primary-700 cursor-pointer">
-                          {searchResults.detailedSource ||
+                          {searchResults.source ||
                             "TARIC Entry – Regulation 2023/1191"}
                         </span>{" "}
-                        retrieved 01.06.2025
+                        retrieved 2025-10-01
                       </p>
                     </div>
                   </div>
@@ -328,7 +334,7 @@ const TariffLookup = () => {
 
                 <div className="prose prose-sm text-gray-700 leading-relaxed">
                   <p>
-                    {searchResults.detailedInfo ||
+                    {searchResults.additionalInfo ||
                       "Woven cotton fabrics (HS 5208.52) imported from India into Germany are eligible for a reduced 3.2% tariff under the EU's GSP. To use this benefit, the goods must meet origin rules and include valid documentation. Importers should also ensure that fabrics comply with EU chemical safety standards and product labeling rules. While no quota is currently active, high import volumes are monitored and could trigger safeguards in future."}
                   </p>
                 </div>
@@ -389,16 +395,16 @@ const TariffLookup = () => {
                       Origin Country
                     </th>
                     <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
-                      Total (€B)
+                      Total (€M)
                     </th>
                     <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
                       % of Total
                     </th>
                     <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
-                      Quantity
+                      Volume
                     </th>
                     <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
-                      Avg Duty
+                      Current Duty
                     </th>
                   </tr>
                 </thead>
@@ -415,7 +421,7 @@ const TariffLookup = () => {
                         {intel.marketShare}%
                       </td>
                       <td className="py-3 text-[16px] text-gray-900">
-                        {intel.volume.toLocaleString()}
+                        {intel.volume.toLocaleString()} t
                       </td>
                       <td
                         className={`py-3 text-[16px] font-medium ${

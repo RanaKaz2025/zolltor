@@ -49,6 +49,81 @@
       "code": "BR",
       "name": "Brazil",
       "flag": "🇧🇷"
+    },
+    {
+      "code": "CZ",
+      "name": "Czech Republic",
+      "flag": "🇨🇿"
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "flag": "🇵🇱"
+    },
+    {
+      "code": "TR",
+      "name": "Turkey",
+      "flag": "🇹🇷"
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "flag": "🇮🇹"
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "flag": "🇪🇸"
+    },
+    {
+      "code": "MX",
+      "name": "Mexico",
+      "flag": "🇲🇽"
+    },
+    {
+      "code": "KR",
+      "name": "South Korea",
+      "flag": "🇰🇷"
+    },
+    {
+      "code": "TW",
+      "name": "Taiwan",
+      "flag": "🇹🇼"
+    },
+    {
+      "code": "MA",
+      "name": "Morocco",
+      "flag": "🇲🇦"
+    },
+    {
+      "code": "TN",
+      "name": "Tunisia",
+      "flag": "🇹🇳"
+    },
+    {
+      "code": "RS",
+      "name": "Serbia",
+      "flag": "🇷🇸"
+    },
+    {
+      "code": "MY",
+      "name": "Malaysia",
+      "flag": "🇲🇾"
+    },
+    {
+      "code": "KZ",
+      "name": "Kazakhstan",
+      "flag": "🇰🇿"
+    },
+    {
+      "code": "NO",
+      "name": "Norway",
+      "flag": "🇳🇴"
+    },
+    {
+      "code": "CH",
+      "name": "Switzerland",
+      "flag": "🇨🇭"
     }
   ],
   "hsCodes": [
@@ -76,6 +151,21 @@
       "code": "8471.30.01",
       "description": "Portable automatic data processing machines",
       "category": "Electronics"
+    },
+    {
+      "code": "8536.69",
+      "description": "Electrical connectors and plug assemblies for vehicles and machinery",
+      "category": "Electronics"
+    },
+    {
+      "code": "7604.21",
+      "description": "Aluminium profile stock for automotive and industrial assemblies",
+      "category": "Metals"
+    },
+    {
+      "code": "8538.90",
+      "description": "Parts suitable for electrical apparatus, switches, and control systems",
+      "category": "Electronics"
     }
   ],
   "tariffRates": [
@@ -95,28 +185,28 @@
       ],
       "marketIntelligence": [
         {
-          "country": "CN",
+          "country": "China",
           "total": 276000,
           "marketShare": 45.2,
           "volume": 125000,
           "avgDuty": 25.0
         },
         {
-          "country": "IN",
+          "country": "India",
           "total": 187000,
           "marketShare": 18.7,
           "volume": 52000,
           "avgDuty": 12.5
         },
         {
-          "country": "DE",
+          "country": "Germany",
           "total": 150000,
           "marketShare": 12.3,
           "volume": 34000,
           "avgDuty": 8.2
         },
         {
-          "country": "JP",
+          "country": "Japan",
           "total": 120000,
           "marketShare": 8.9,
           "volume": 24500,
@@ -141,28 +231,28 @@
       ],
       "marketIntelligence": [
         {
-          "country": "IN",
+          "country": "India",
           "total": 276000,
           "marketShare": 32.1,
           "volume": 89000,
           "avgDuty": 8.5
         },
         {
-          "country": "CN",
+          "country": "China",
           "total": 187000,
           "marketShare": 28.4,
           "volume": 78500,
           "avgDuty": 12.0
         },
         {
-          "country": "BR",
+          "country": "Brazil",
           "total": 43200,
           "marketShare": 15.6,
           "volume": 43200,
           "avgDuty": 9.8
         },
         {
-          "country": "JP",
+          "country": "Japan",
           "total": 27600,
           "marketShare": 11.2,
           "volume": 31000,
@@ -170,42 +260,597 @@
         }
       ],
       "additionalInfo": "EU-India trade agreement negotiations may reduce tariffs significantly by Q2 2025."
+    },
+    {
+      "hsCode": "8536.69",
+      "origin": "JP",
+      "destination": "DE",
+      "currentRate": 1.0,
+      "mfnRate": 3.7,
+      "preferentialRate": 1.0,
+      "vat": "N/A (recoverable)",
+      "rateType": "Preferential (EU-Japan EPA)",
+      "effectiveDate": "2025-10-01",
+      "source": "TARIC Entry – Regulation 2023/1191",
+      "status": "No restrictions",
+      "projections": [
+        { "quarter": "Q3 2025", "rate": 1.0, "change": "stable" },
+        { "quarter": "Q4 2025", "rate": 1.0, "change": "stable" },
+        { "quarter": "Q1 2026", "rate": 0.0, "change": "decrease" },
+        { "quarter": "Q2 2026", "rate": 0.0, "change": "stable" }
+      ],
+      "keyDates": [
+        {
+          "date": "2026-02-01",
+          "description": "Rate ↓ to 0%",
+          "type": "rate_decrease"
+        }
+      ],
+      "marketIntelligence": [
+        {
+          "country": "China",
+          "total": 690000000,
+          "marketShare": 17.0,
+          "volume": 11400,
+          "avgDuty": 3.7,
+          "rank": 1
+        },
+        {
+          "country": "Czech Republic",
+          "total": 275000000,
+          "marketShare": 9.0,
+          "volume": 5800,
+          "avgDuty": 0.0,
+          "rank": 2
+        },
+        {
+          "country": "United States",
+          "total": 220000000,
+          "marketShare": 8.0,
+          "volume": 5100,
+          "avgDuty": 3.7,
+          "rank": 3
+        },
+        {
+          "country": "Poland",
+          "total": 215000000,
+          "marketShare": 6.0,
+          "volume": 3900,
+          "avgDuty": 0.0,
+          "rank": 4
+        },
+        {
+          "country": "Japan",
+          "total": 180000000,
+          "marketShare": 5.0,
+          "volume": 3200,
+          "avgDuty": 1.0,
+          "rank": 5
+        }
+      ],
+      "additionalInfo": "Electrical connectors from Japan currently qualify for a 1% import duty under the EU-Japan trade agreement. To qualify for the lower rate, the product must be made or significantly processed in Japan. Your Japanese supplier must provide a short \"statement of origin\" on the invoice that proves this. The preferential rate will fall to 0% on 2025-02-01 as part of the EU-Japan free trade agreement. No quotas or trade restrictions apply to these parts."
+    },
+    {
+      "hsCode": "7604.21",
+      "origin": "CN",
+      "destination": "DE",
+      "currentRate": 32.5,
+      "mfnRate": 7.5,
+      "antiDumpingDuty": 25.0,
+      "preferentialRate": null,
+      "vat": "N/A (recoverable)",
+      "rateType": "MFN + Anti-Dumping",
+      "effectiveDate": "2025-10-01",
+      "source": "TARIC Entry – Regulation 2023/1191",
+      "status": "Subject of EU anti-dumping review",
+      "projections": [
+        { "quarter": "Q3 2025", "rate": 32.5, "change": "stable" },
+        { "quarter": "Q4 2025", "rate": 32.5, "change": "stable" },
+        { "quarter": "Q1 2026", "rate": 32.5, "change": "not-sure" },
+        { "quarter": "Q2 2026", "rate": 32.5, "change": "not-sure" }
+      ],
+      "keyDates": [
+        {
+          "date": "2025-12-01",
+          "description": "Possible ↑↓ after December 2025 review",
+          "type": "anti_dumping_review"
+        }
+      ],
+      "marketIntelligence": [
+        {
+          "country": "China",
+          "total": 420000000,
+          "marketShare": 18.0,
+          "volume": 72000,
+          "avgDuty": 32.5,
+          "rank": 1
+        },
+        {
+          "country": "Turkey",
+          "total": 390000000,
+          "marketShare": 17.0,
+          "volume": 68000,
+          "avgDuty": 0.0,
+          "rank": 2
+        },
+        {
+          "country": "Italy",
+          "total": 340000000,
+          "marketShare": 15.0,
+          "volume": 63000,
+          "avgDuty": 0.0,
+          "rank": 3
+        },
+        {
+          "country": "Spain",
+          "total": 275000000,
+          "marketShare": 12.0,
+          "volume": 50000,
+          "avgDuty": 0.0,
+          "rank": 4
+        },
+        {
+          "country": "Poland",
+          "total": 250000000,
+          "marketShare": 11.0,
+          "volume": 46000,
+          "avgDuty": 0.0,
+          "rank": 5
+        }
+      ],
+      "additionalInfo": "Imports of aluminium profiles from China face a 7.5% tariff plus a 25% anti-dumping duty, totaling 32.5%. The EU has renewed these measures several times, so they are a long-term structural cost when sourcing from China. The next review of these measures is December 2025, after which the rates may increase or decrease. For now, costs will remain high. Consider shifting part of your sourcing to Turkey or EU suppliers, which benefit from zero tariffs under the EU-Turkey Customs Union."
+    },
+    {
+      "hsCode": "8538.90",
+      "origin": "DE",
+      "destination": "US",
+      "currentRate": 15.0,
+      "mfnRate": 2.5,
+      "preferentialRate": null,
+      "vat": null,
+      "rateType": "Automotive Tariff",
+      "effectiveDate": "2025-08-01",
+      "source": "USTR",
+      "status": "Subject of EU-US trade negotiations",
+      "projections": [
+        { "quarter": "Q3 2025", "rate": 15.0, "change": "decrease" },
+        { "quarter": "Q4 2025", "rate": 15.0, "change": "stable" },
+        { "quarter": "Q1 2026", "rate": 15.0, "change": "stable" },
+        { "quarter": "Q2 2026", "rate": 15.0, "change": "stable" }
+      ],
+      "keyDates": [
+        {
+          "date": "2025-05-03",
+          "description": "Rate ↑ to 27.5% (automotive tariffs)",
+          "type": "rate_increase"
+        },
+        {
+          "date": "2025-08-01",
+          "description": "Rate ↓ from 27.5% to 15.0% (trade negotiations)",
+          "type": "rate_decrease"
+        }
+      ],
+      "marketIntelligence": [
+        {
+          "country": "China",
+          "total": 3150000000,
+          "marketShare": 38.0,
+          "volume": 96000,
+          "avgDuty": 58.5,
+          "rank": 1
+        },
+        {
+          "country": "Mexico",
+          "total": 2450000000,
+          "marketShare": 30.0,
+          "volume": 72000,
+          "avgDuty": 28.5,
+          "rank": 2
+        },
+        {
+          "country": "Germany",
+          "total": 980000000,
+          "marketShare": 12.0,
+          "volume": 26000,
+          "avgDuty": 15.0,
+          "rank": 3
+        },
+        {
+          "country": "Japan",
+          "total": 720000000,
+          "marketShare": 9.0,
+          "volume": 21000,
+          "avgDuty": 15.0,
+          "rank": 4
+        },
+        {
+          "country": "South Korea",
+          "total": 460000000,
+          "marketShare": 6.0,
+          "volume": 14000,
+          "avgDuty": 18.5,
+          "rank": 5
+        }
+      ],
+      "additionalInfo": "U.S. import duty on German sensor sub-assemblies rose from 2.5% MFN rate to 27.5% effective 2025-05-03 as part of new US tariffs on automobiles and auto parts. In September 2025 this rate was reduced to 15% (effective 2025-08-01) as part of trade negotiations between the EU and US. There is no free-trade agreement to offset this rate, which is expected to remain through 2026. U.S. buyers now face higher landed costs, so you may need to adjust pricing or consider partial production in a lower-tariff region."
     }
   ],
   "watchlist": [
     {
       "id": 1,
-      "productName": "Smartphones",
-      "hsCode": "8517.12.00",
+      "productName": "Aluminium profiles, extruded",
+      "hsCode": "7604.21",
       "origin": "CN",
-      "destination": "US",
-      "currentRate": 25.0,
-      "tax": 5.0,
+      "currentRate": 7.5,
+      "currentRateOrigin": "+ AD 25% (select suppliers)",
+      "tax": 10.0,
       "lastChange": {
-        "date": "2024-01-15",
-        "description": "Trade policy adjustment"
+        "date": "2025-09-18",
+        "description": "Interim review of existing anti-dumping measures"
       },
       "nextChange": {
-        "date": "2025-04-01",
-        "description": "Expected reduction to 22.5%"
+        "date": "2025-12-01",
+        "description": "Rate ↑ to ~32.5% total where AD applies"
       },
       "type": "import"
     },
     {
       "id": 2,
-      "productName": "Leather Footwear",
-      "hsCode": "6403.99.10",
-      "origin": "IN",
-      "destination": "DE",
-      "currentRate": 8.5,
-      "tax": 3.0,
+      "productName": "Cold-rolled steel sheet",
+      "hsCode": "7209.16",
+      "origin": "TR",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU–TR Customs Union",
+      "tax": 9.0,
       "lastChange": {
-        "date": "2024-03-10",
-        "description": "Standard MFN rate applied"
+        "date": "2024-07-01",
+        "description": "TARIC consolidation; no rate change"
       },
       "nextChange": {
-        "date": "2025-06-01",
-        "description": "Potential reduction under new trade agreement"
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 3,
+      "productName": "Cold-rolled steel sheet",
+      "hsCode": "7209.16",
+      "origin": "IN",
+      "currentRate": 2.0,
+      "currentRateOrigin": "",
+      "tax": 12.0,
+      "lastChange": {
+        "date": "2025-05-10",
+        "description": "TARIC line reclassification (no net change)"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 4,
+      "productName": "High-tensile bolts/screws",
+      "hsCode": "7318.15",
+      "origin": "TW",
+      "currentRate": 3.7,
+      "currentRateOrigin": "",
+      "tax": 4.0,
+      "lastChange": {
+        "date": "2025-06-20",
+        "description": "Annual CN update; no net change"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 5,
+      "productName": "Wiring harness cable",
+      "hsCode": "8544.30",
+      "origin": "MA",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU–MA FTA*",
+      "tax": 13.0,
+      "lastChange": {
+        "date": "2025-09-25",
+        "description": "Protocol update notice published"
+      },
+      "nextChange": {
+        "date": "2026-01-01",
+        "description": "RoO tightening (rate unchanged if qualified)"
+      },
+      "type": "import"
+    },
+    {
+      "id": 6,
+      "productName": "Wiring harness cable",
+      "hsCode": "8544.30",
+      "origin": "TN",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU–TN FTA*",
+      "tax": 9.0,
+      "lastChange": {
+        "date": "2025-08-30",
+        "description": "Periodic preference renewal"
+      },
+      "nextChange": {
+        "date": "2026-03-01",
+        "description": "Documentation format update"
+      },
+      "type": "import"
+    },
+    {
+      "id": 7,
+      "productName": "Plastic clips and fasteners",
+      "hsCode": "3926.30",
+      "origin": "CN",
+      "currentRate": 6.5,
+      "currentRateOrigin": "",
+      "tax": 5.0,
+      "lastChange": {
+        "date": "2024-12-01",
+        "description": "Annual MFN roll-over"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 8,
+      "productName": "Electrical connectors",
+      "hsCode": "8536.69",
+      "origin": "JP",
+      "currentRate": 1.0,
+      "currentRateOrigin": "EU–JP EPA*",
+      "tax": 2.0,
+      "lastChange": {
+        "date": "2025-09-15",
+        "description": "EPA review cycle opened (no rate change)"
+      },
+      "nextChange": {
+        "date": "2026-02-01",
+        "description": "Rate ↓ to 0%"
+      },
+      "type": "import"
+    },
+    {
+      "id": 9,
+      "productName": "Electrical connectors",
+      "hsCode": "8536.69",
+      "origin": "MX",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU–MX agreement*",
+      "tax": 11.0,
+      "lastChange": {
+        "date": "2025-03-10",
+        "description": "Transitional preference roll-forward"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 10,
+      "productName": "Rubber grommets/seals",
+      "hsCode": "4016.93",
+      "origin": "RS",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU–RS SAA",
+      "tax": 2.0,
+      "lastChange": {
+        "date": "2024-10-01",
+        "description": "SAA schedule refresh"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 11,
+      "productName": "Rubber grommets/seals",
+      "hsCode": "4016.93",
+      "origin": "MY",
+      "currentRate": 2.7,
+      "currentRateOrigin": "",
+      "tax": 17.0,
+      "lastChange": {
+        "date": "2025-01-01",
+        "description": "Annual MFN roll-over"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 12,
+      "productName": "Copper wire / stranded conductor",
+      "hsCode": "7408.19",
+      "origin": "KZ",
+      "currentRate": 4.0,
+      "currentRateOrigin": "",
+      "tax": 10.0,
+      "lastChange": {
+        "date": "2025-09-29",
+        "description": "Opening of anti-circumvention inquiry (no rate change yet)"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 13,
+      "productName": "Machined steel fittings",
+      "hsCode": "7326.90",
+      "origin": "TR",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU–TR Customs Union",
+      "tax": 19.0,
+      "lastChange": {
+        "date": "2024-07-01",
+        "description": "TARIC consolidation"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 14,
+      "productName": "Machined steel fittings",
+      "hsCode": "7326.90",
+      "origin": "UK",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU-UK TCA (if UK origin - 2.7% if not)",
+      "tax": 8.0,
+      "lastChange": {
+        "date": "2025-05-01",
+        "description": "RoO guidance update"
+      },
+      "nextChange": {
+        "date": "2026-01-01",
+        "description": "RoO tightening (rate unchanged if qualified)"
+      },
+      "type": "import"
+    },
+    {
+      "id": 15,
+      "productName": "Zinc die-cast housings",
+      "hsCode": "7907.00",
+      "origin": "CN",
+      "currentRate": 5.0,
+      "currentRateOrigin": "",
+      "tax": 18.0,
+      "lastChange": {
+        "date": "2025-02-15",
+        "description": "Annual MFN roll-over"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
+      },
+      "type": "import"
+    },
+    {
+      "id": 16,
+      "productName": "Wiring harness assemblies",
+      "hsCode": "8544.30",
+      "destination": "UK",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU–UK TCA",
+      "tax": 20.0,
+      "lastChange": {
+        "date": "2025-09-15",
+        "description": "UK customs guidance update on RoO proof formats"
+      },
+      "nextChange": {
+        "date": "2026-01-01",
+        "description": "Documentation tightening (rate unchanged if qualified)"
+      },
+      "type": "export"
+    },
+    {
+      "id": 17,
+      "productName": "Wiring harness assemblies",
+      "hsCode": "8544.30",
+      "destination": "US",
+      "currentRate": 15.0,
+      "currentRateOrigin": "",
+      "tax": 8.5,
+      "lastChange": {
+        "date": "2025-08-01",
+        "description": "New US tariffs on auto parts from EU"
+      },
+      "nextChange": {
+        "date": "2026-09-01",
+        "description": "Expected ↓ rate from new EU-USA agreement"
+      },
+      "type": "export"
+    },
+    {
+      "id": 18,
+      "productName": "Wiring harness assemblies",
+      "hsCode": "8544.30",
+      "destination": "NO",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EEA Agreement*",
+      "tax": 25.0,
+      "lastChange": {
+        "date": "2024-11-01",
+        "description": "EEA RoO form revision"
+      },
+      "nextChange": {
+        "date": "2026-01-15",
+        "description": "Documentation update (EUR.1 replacement form)"
+      },
+      "type": "export"
+    },
+    {
+      "id": 19,
+      "productName": "Sensor mounting sub-assemblies",
+      "hsCode": "8538.90",
+      "destination": "UK",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU–UK TCA",
+      "tax": 20.0,
+      "lastChange": {
+        "date": "2025-07-05",
+        "description": "UK customs rule clarification (dual-use coverage)"
+      },
+      "nextChange": {
+        "date": "2026-04-01",
+        "description": "MFN ↑ to 2.5% for non-originating goods"
+      },
+      "type": "export"
+    },
+    {
+      "id": 20,
+      "productName": "Sensor mounting sub-assemblies",
+      "hsCode": "8538.90",
+      "destination": "US",
+      "currentRate": 15.0,
+      "currentRateOrigin": "",
+      "tax": 8.5,
+      "lastChange": {
+        "date": "2025-08-01",
+        "description": "New US tariffs on auto parts from EU"
+      },
+      "nextChange": {
+        "date": "2026-09-01",
+        "description": "Expected ↓ rate from new EU-USA agreement"
+      },
+      "type": "export"
+    },
+    {
+      "id": 21,
+      "productName": "Sensor mounting sub-assemblies",
+      "hsCode": "8538.90",
+      "destination": "CH",
+      "currentRate": 0.0,
+      "currentRateOrigin": "EU–CH FTA*",
+      "tax": 7.7,
+      "lastChange": {
+        "date": "2025-08-01",
+        "description": "FTA maintenance update (no rate change)"
+      },
+      "nextChange": {
+        "date": "TBD",
+        "description": "No changes scheduled"
       },
       "type": "export"
     }
@@ -219,6 +864,33 @@
       "date": "2025-03-15",
       "read": false,
       "productId": 1
+    },
+    {
+      "id": 2,
+      "type": "rate_change",
+      "title": "EU-Japan EPA Tariff Elimination",
+      "message": "Electrical connectors (HS 8536.69) from Japan to Germany will become duty-free on February 1, 2026",
+      "date": "2025-10-01",
+      "read": false,
+      "productId": 3
+    },
+    {
+      "id": 3,
+      "type": "review_alert",
+      "title": "Anti-Dumping Review Alert",
+      "message": "EU anti-dumping measures on aluminium profiles (HS 7604.21) from China scheduled for review in December 2025. Current 32.5% duty may change.",
+      "date": "2025-10-01",
+      "read": false,
+      "productId": 4
+    },
+    {
+      "id": 4,
+      "type": "trade_negotiation",
+      "title": "EU-US Trade Negotiation Update",
+      "message": "Electrical apparatus parts (HS 8538.90) from Germany to US: tariff reduced from 27.5% to 15% effective August 1, 2025. Further negotiations ongoing.",
+      "date": "2025-08-01",
+      "read": false,
+      "productId": 5
     }
   ],
   "user": {
