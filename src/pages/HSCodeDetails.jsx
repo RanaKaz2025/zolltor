@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import {
   ArrowLeft,
   BookOpen,
@@ -12,6 +12,7 @@ import dummyData from "../data/dummyData.json";
 
 const HSCodeDetails = () => {
   const { code } = useParams();
+  const location = useLocation();
   const [hsCodeData, setHsCodeData] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -93,6 +94,13 @@ const HSCodeDetails = () => {
 
     setHsCodeData(mockHsCodeData);
   }, [code]);
+
+  // Handle activeTab from navigation state
+  useEffect(() => {
+    if (location.state?.activeTab) {
+      setActiveTab(location.state.activeTab);
+    }
+  }, [location.state]);
 
   if (!hsCodeData) {
     return (

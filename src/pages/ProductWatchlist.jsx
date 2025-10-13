@@ -25,20 +25,108 @@ const ProductWatchlist = ({ user }) => {
   const [showChangeDialog, setShowChangeDialog] = useState(false);
   const [selectedChangeInfo, setSelectedChangeInfo] = useState(null);
   const [selectedTimePeriod, setSelectedTimePeriod] = useState("Past Week");
+  const [showSeeMoreModal, setShowSeeMoreModal] = useState(false);
+  const [seeMoreTimePeriod, setSeeMoreTimePeriod] = useState("Past Week");
+  const [showUpcomingSeeMoreModal, setShowUpcomingSeeMoreModal] =
+    useState(false);
   const toast = useToast();
 
   // Function to get changes text based on selected time period
   const getChangesText = (timePeriod) => {
+    const changes =
+      activeTab === "import"
+        ? dummyData.changesData[timePeriod]
+        : dummyData.exportChangesData[timePeriod];
+    if (!changes || changes.length === 0) {
+      return [
+        {
+          title: "No changes found",
+          description: "No changes found for the selected time period.",
+        },
+      ];
+    }
+
+    return changes;
+  };
+
+  // Function to get export changes text based on selected time period
+  const getExportChangesText = (timePeriod) => {
+    const changes = dummyData.exportChangesData[timePeriod];
+    if (!changes || changes.length === 0) {
+      return [
+        {
+          title: "No changes found",
+          description: "No changes found for the selected time period.",
+        },
+      ];
+    }
+
+    return changes;
+  };
+
+  // Function to get detailed changes text for See More modal
+  const getDetailedChangesText = (timePeriod) => {
+    const changes =
+      activeTab === "import"
+        ? dummyData.changesData[timePeriod]
+        : dummyData.exportChangesData[timePeriod];
+    if (!changes || changes.length === 0) {
+      return "No detailed changes found for the selected time period.";
+    }
+
+    let timeHeader = "";
     switch (timePeriod) {
       case "Past Week":
-        return "In the past week, tariffs on Smartphones (HS 8517.12.00) from China increased by 5% due to new anti-dumping measures implemented on January 15, 2025.";
+        timeHeader = "Past Week (Oct 1 – Oct 8, 2025)";
+        break;
       case "Past Month":
-        return "In the past month, two changes affected your imports: 1) Smartphones from China increased 5% due to anti-dumping measures, 2) Cotton fabric from India reduced to 2.5% under revised trade agreement.";
+        timeHeader = "Past Month (Sept 8 – Oct 8, 2025)";
+        break;
       case "Past 3 Months":
-        return "In the past 3 months, three changes affected your imports: 1) Smartphones from China increased 5%, 2) Cotton fabric from India reduced to 0% under GSP renewal, 3) Hydraulic pumps from Vietnam became duty-free under EVFTA.";
-      default:
-        return "No changes found for the selected time period.";
+        timeHeader = "Past 3 Months (July 8 – Oct 8, 2025)";
+        break;
+      case "Past Year":
+        timeHeader = "Past Year (Oct 2024 – Oct 2025)";
+        break;
     }
+
+    let content = `**${timeHeader}**\n\n`;
+
+    changes.forEach((change, index) => {
+      content += `**${index + 1}. ${change.title}**\n`;
+      content += `${change.description}\n\n`;
+    });
+
+    // Add strategic recommendations for longer periods
+    if (timePeriod === "Past 3 Months" || timePeriod === "Past Year") {
+      content += `**STRATEGIC RECOMMENDATIONS:**\n`;
+      if (activeTab === "export") {
+        content += `- Review export documentation requirements\n`;
+        content += `- Update supplier origin declarations\n`;
+        content += `- Monitor U.S. and UK trade policy developments\n`;
+        content += `- Prepare for digital certificate transitions\n`;
+        content += `- Strengthen compliance with FTA requirements`;
+      } else {
+        content += `- Monitor ongoing trade policy developments\n`;
+        content += `- Review supplier diversification strategies\n`;
+        content += `- Prepare for upcoming regulatory changes\n`;
+        content += `- Consider forward contracting for price stability\n`;
+        content += `- Strengthen compliance documentation procedures`;
+      }
+    }
+
+    return content;
+  };
+
+  // Handle opening See More modal
+  const handleSeeMore = () => {
+    setSeeMoreTimePeriod(selectedTimePeriod);
+    setShowSeeMoreModal(true);
+  };
+
+  // Handle opening Upcoming See More modal
+  const handleUpcomingSeeMore = () => {
+    setShowUpcomingSeeMoreModal(true);
   };
 
   const handleSelectAllImport = (e) => {
@@ -331,40 +419,93 @@ const ProductWatchlist = ({ user }) => {
       <div className="mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-2">
           {/* What Has Changed Section */}
-          <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6">
-            <div className="mb-4">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">
-                  What Has Changed
-                </h2>
-                <select
-                  value={selectedTimePeriod}
-                  onChange={(e) => setSelectedTimePeriod(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                >
-                  <option value="Past Week">Past Week</option>
-                  <option value="Past Month">Past Month</option>
-                  <option value="Past 3 Months">Past 3 Months</option>
-                </select>
-              </div>
+          <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6 h-[220px] overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold text-gray-900">
+                What Has Changed
+              </h2>
+              <select
+                value={selectedTimePeriod}
+                onChange={(e) => setSelectedTimePeriod(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              >
+                <option value="Past Week">
+                  Past Week (Oct 1 – Oct 8, 2025)
+                </option>
+                <option value="Past Month">
+                  Past Month (Sept 8 – Oct 8, 2025)
+                </option>
+                <option value="Past 3 Months">
+                  Past 3 Months (July 8 – Oct 8, 2025)
+                </option>
+                <option value="Past Year">
+                  Past Year (Oct 2024 – Oct 2025)
+                </option>
+              </select>
+            </div>
 
-              <p className="text-sm text-gray-700 leading-relaxed">
-                {getChangesText(selectedTimePeriod)}
-              </p>
+            <div className="flex-1 overflow-hidden">
+              <div className="space-y-4">
+                {getChangesText(selectedTimePeriod).map((change, index) => (
+                  <div key={index} className="pt-2">
+                    <h4 className="font-semibold text-gray-900 text-sm mb-1">
+                      {change.title}
+                    </h4>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      {change.description}...
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex justify-start">
+              <button
+                onClick={handleSeeMore}
+                className="mt-4 text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors"
+              >
+                See More
+              </button>
             </div>
           </div>
 
           {/* Upcoming Changes Section */}
-          <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6">
+          <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6 h-[220px] overflow-hidden flex flex-col">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Upcoming Changes
             </h2>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              In the next 3 months, three changes might affect your imports: 1)
-              Smartphones from China increased 33%, 2) Cotton fabric from India
-              reduced to 7% under GSP renewal, 3) Hydraulic pumps from Vietnam
-              became duty-free under EVFTA.
-            </p>
+
+            <div className="flex-1 overflow-hidden">
+              <div className="space-y-3">
+                {(activeTab === "import"
+                  ? dummyData.upcomingChangesData
+                  : dummyData.exportUpcomingChangesData
+                )
+                  .slice(0, 2)
+                  .map((change, index) => (
+                    <div key={index} className="pt-1">
+                      <div className="text-xs font-medium text-gray-500 mb-1">
+                        {change.type}
+                      </div>
+                      <h4 className="font-semibold text-gray-900 text-sm mb-1">
+                        {change.title}
+                      </h4>
+                      <p className="text-sm text-gray-700 leading-relaxed">
+                        {change.description}...
+                      </p>
+                    </div>
+                  ))}
+              </div>
+            </div>
+
+            <div className="flex justify-start">
+              <button
+                onClick={handleUpcomingSeeMore}
+                className="mt-4 text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors"
+              >
+                See More
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -976,6 +1117,143 @@ const ProductWatchlist = ({ user }) => {
                 >
                   Close
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* See More Modal */}
+      {showSeeMoreModal && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={(e) => {
+            // Close modal on backdrop click
+            if (e.target === e.currentTarget) {
+              setShowSeeMoreModal(false);
+            }
+          }}
+        >
+          <div className="bg-white rounded-3px max-w-2xl w-full max-h-[70vh] flex flex-col">
+            {/* Header */}
+            <div className="flex justify-between items-start p-4 ">
+              <h2 className="text-xl font-semibold text-gray-900">
+                What has Changed
+              </h2>
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <select
+                    value={seeMoreTimePeriod}
+                    onChange={(e) => setSeeMoreTimePeriod(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm min-w-[200px] appearance-none bg-white pr-8"
+                  >
+                    <option value="Past Week">
+                      Past Week (Oct 1 – Oct 8, 2025)
+                    </option>
+                    <option value="Past Month">
+                      Past Month (Sept 8 – Oct 8, 2025)
+                    </option>
+                    <option value="Past 3 Months">
+                      Past 3 Months (July 8 – Oct 8, 2025)
+                    </option>
+                    <option value="Past Year">
+                      Past Year (Oct 2024 – Oct 2025)
+                    </option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Scrollable content area */}
+            <div className="flex-1 overflow-y-auto px-4 py-2">
+              <div className="space-y-4">
+                {(activeTab === "import"
+                  ? dummyData.changesData[seeMoreTimePeriod]
+                  : dummyData.exportChangesData[seeMoreTimePeriod]
+                )?.map((change, index) => (
+                  <div key={index} className="py-2">
+                    <h4 className="font-semibold text-gray-900 mb-2 text-sm">
+                      {change.title}
+                    </h4>
+                    <p className="text-gray-700 leading-relaxed text-sm">
+                      {change.description}
+                    </p>
+                  </div>
+                )) || (
+                  <div className="text-gray-500 text-center py-8">
+                    No changes found for the selected time period.
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Upcoming Changes Modal */}
+      {showUpcomingSeeMoreModal && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={(e) => {
+            // Close modal on backdrop click
+            if (e.target === e.currentTarget) {
+              setShowUpcomingSeeMoreModal(false);
+            }
+          }}
+        >
+          <div className="bg-white rounded-3px max-w-2xl w-full max-h-[70vh] flex flex-col">
+            {/* Header */}
+            <div className="flex justify-between items-start p-4">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Upcoming Changes
+              </h2>
+            </div>
+
+            {/* Scrollable content area */}
+            <div className="flex-1 overflow-y-auto px-4 py-2">
+              <div className="space-y-4">
+                {(activeTab === "import"
+                  ? dummyData.upcomingChangesData
+                  : dummyData.exportUpcomingChangesData
+                ).map((change, index) => (
+                  <div key={index} className="py-2">
+                    <div className="text-xs font-medium text-gray-500 mb-1">
+                      {change.type}
+                    </div>
+                    <h4 className="font-semibold text-gray-900 mb-2 text-sm">
+                      {change.title}
+                    </h4>
+                    <p className="text-gray-700 leading-relaxed text-sm mb-3">
+                      {change.description}
+                    </p>
+                    <div className="space-y-2">
+                      <div className="bg-gray-50 px-3 py-0 rounded-3px">
+                        <p className="text-xs text-gray-700 mt-1">
+                          <span className="text-xs font-medium text-gray-600 italic pr-2">
+                            Impact:
+                          </span>
+                          {change.impact}
+                        </p>
+
+                        <p className="text-xs text-gray-700 mt-1">
+                          <span className="text-xs font-medium text-gray-600 italic pr-2">
+                            Timing:
+                          </span>
+                          {change.timing}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

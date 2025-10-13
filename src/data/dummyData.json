@@ -903,5 +903,217 @@
       "email": "john.smith@example.com",
       "frequency": "immediate"
     }
-  }
+  },
+  "changesData": {
+    "Past Week": [
+      {
+        "title": "Aluminium profiles (HS 7604.21 – China)",
+        "description": "EU Official Journal confirmed that the anti-dumping duty review will close on Dec 1 2025 with rates expected to remain unchanged (≈ 25 %). No immediate cost change, but signals continuity through 2026."
+      },
+      {
+        "title": "Electrical connectors (HS 8536.69 – Japan)",
+        "description": "EU–Japan EPA Secretariat issued an advisory notice clarifying supplier statement wording ahead of the final 0 % duty step-down on 1 Feb 2025. Importers should check invoices already use the new text."
+      },
+      {
+        "title": "Steel bolts/screws (HS 7318.15 – Taiwan)",
+        "description": "DG Trade opened a public consultation on proposed safeguard quotas. Not binding yet, but if adopted could lift duties from 3.7 → 5 %."
+      }
+    ],
+    "Past Month": [
+      {
+        "title": "Copper wire (HS 7408.19 – Kazakhstan)",
+        "description": "Anti-circumvention inquiry launched by the Commission to test whether KZ exports contain Russian content. Could add +2 % duty from Mar 2026 if confirmed."
+      },
+      {
+        "title": "Wiring harness cable (HS 8544.30 – Morocco)",
+        "description": "EU–Morocco trade committee published revised origin thresholds (value-added rising to 60 %). Takes effect Jan 2026; qualifying suppliers unaffected."
+      },
+      {
+        "title": "Cold-rolled steel sheet (HS 7209.16 – India)",
+        "description": "Safeguard proposal filed to double MFN rate from 2 → 4 % by Nov 2025. Still at \"proposed\" stage."
+      }
+    ],
+    "Past 3 Months": [
+      {
+        "title": "EU–Japan EPA (HS 8536.69 etc.)",
+        "description": "Mid-term EPA review formally opened. Confirms that all electrical parts under 8536 will become duty-free on 1 Feb 2025."
+      },
+      {
+        "title": "EU–Morocco & Tunisia FTAs",
+        "description": "Both agreements updated administrative rules for origin documentation; no duty change, but new supplier-statement templates effective Q1 2026."
+      },
+      {
+        "title": "Aluminium & steel measures",
+        "description": "EU extended surveillance on semi-finished metals imports from China, India, Vietnam — tighter reporting but not new duties yet."
+      },
+      {
+        "title": "CBAM phase-in",
+        "description": "EU published the 2026 CBAM reporting list, confirming aluminium products (HS 76) will be covered from Jan 2026 — adds emissions-reporting obligation, not a tariff."
+      }
+    ],
+    "Past Year": [
+      {
+        "title": "Anti-dumping renewals",
+        "description": "Aluminium profiles from China remained under 25 % AD duty, extended for another five years (through 2030)."
+      },
+      {
+        "title": "Tariff reductions under FTAs",
+        "description": "Multiple staged cuts under EU–Japan, EU–Vietnam, and EU–UK agreements reached their 2025 rate milestones (e.g., 8536 from 1 % → 0 %)."
+      },
+      {
+        "title": "CBAM implementation (pilot phase)",
+        "description": "Importers of iron, steel, aluminium began quarterly carbon reporting in Oct 2024; no monetary charge yet but groundwork for 2026 levy."
+      },
+      {
+        "title": "Trade defense climate",
+        "description": "EU initiated or renewed 11 anti-dumping cases on metals, fasteners, and cables since late 2024 — confirming a tougher stance that's unlikely to reverse soon."
+      }
+    ]
+  },
+  "exportChangesData": {
+    "Past Week": [
+      {
+        "title": "UK (EU–UK TCA)",
+        "description": "The UK government published a new template for supplier origin declarations, valid from January 2026. This replaces the 2021 version but keeps the same 0% duty treatment for qualifying EU goods."
+      },
+      {
+        "title": "U.S.",
+        "description": "USTR confirmed review hearings for the new 15% tariffs on EU industrial goods will begin February 2026, establishing the next policy milestone."
+      }
+    ],
+    "Past Month": [
+      {
+        "title": "UK",
+        "description": "HMRC issued guidance reminding importers that statements of origin older than 12 months will no longer be accepted from January 2026."
+      },
+      {
+        "title": "U.S.",
+        "description": "The U.S.–EU Reciprocal Tariff Framework officially entered into the Federal Register, confirming the 15% rate effective 1 Aug 2025 for auto-related goods (including HS 8538 / 8544)."
+      },
+      {
+        "title": "Switzerland",
+        "description": "Swiss customs announced a 2026 rollout of e-origin certification, allowing digital proof of origin under the EU–CH FTA."
+      }
+    ],
+    "Past 3 Months": [
+      {
+        "title": "UK",
+        "description": "The EU and UK trade committees formally reviewed TCA implementation for automotive parts. While no rule changes were made, both sides endorsed digitalisation of RoO records for 2026."
+      },
+      {
+        "title": "U.S.",
+        "description": "Implementation of the 15% tariff (effective August 1) replaced the prior 2.6% MFN rate for EU-made industrial components."
+      },
+      {
+        "title": "Norway",
+        "description": "The EFTA Secretariat published draft rules for electronic EUR.1 certificates, to be adopted across EEA members in early 2026."
+      },
+      {
+        "title": "Switzerland",
+        "description": "Bilateral working group approved updates to FTA administrative annexes, paving the way for e-certificates and simplified audits."
+      }
+    ],
+    "Past Year": [
+      {
+        "title": "U.S.",
+        "description": "The U.S. imposed 15% tariffs on EU autos and industrial parts (incl. 8538 / 8544) under the new reciprocal trade framework. This is the most significant change affecting HanseAuto's U.S. sales."
+      },
+      {
+        "title": "UK",
+        "description": "The EU–UK TCA \"transition phase\" for simplified origin proofs ended in mid-2025. Starting 2026, the UK requires stricter origin statements with specific validity windows."
+      },
+      {
+        "title": "Norway / Switzerland",
+        "description": "Both FTA partners confirmed participation in the EU's 2026 digital certificate initiative, harmonising e-origin processes across the region."
+      }
+    ]
+  },
+  "upcomingChangesData": [
+    {
+      "type": "Metals and structural materials",
+      "title": "Aluminium profiles (HS 7604.21 – China)",
+      "description": "The EU's anti-dumping review closes in December 2025. The current 25% surcharge is widely expected to continue, possibly with minor adjustments.",
+      "impact": "No cost relief; keep exploring EU or Turkish sources.",
+      "timing": "December 2025 decision; new rates (if any) from January 2026."
+    },
+    {
+      "type": "Metals and structural materials",
+      "title": "Cold-rolled steel sheet (HS 7209.16 – India)",
+      "description": "A safeguard proposal could double the duty from 2% → 4%.",
+      "impact": "Cost increase of roughly €20 per ton if approved.",
+      "timing": "Proposal under DG Trade review; outcome expected November 2025."
+    },
+    {
+      "type": "Metals and structural materials",
+      "title": "Copper wire (HS 7408.19 – Kazakhstan)",
+      "description": "The EU's anti-circumvention probe continues; potential +2% duty if Russian-origin material confirmed.",
+      "impact": "Additional costs if circumvention found.",
+      "timing": "March 2026 earliest; decision window Q1 2026."
+    },
+    {
+      "type": "Components and electrical goods",
+      "title": "Electrical connectors (HS 8536.69 – Japan)",
+      "description": "Final EU–Japan tariff cut to 0% takes effect 1 February 2025, completing the EPA phase-in.",
+      "impact": "Small but permanent savings; confirm supplier origin documentation before year-end.",
+      "timing": "1 February 2025."
+    },
+    {
+      "type": "Components and electrical goods",
+      "title": "Wiring harness cable (HS 8544.30 – Morocco/Tunisia)",
+      "description": "Revised rules of origin come into force in early 2026, requiring slightly higher local content for 0% duty.",
+      "impact": "No duty change if suppliers are compliant, but paperwork must follow the new template.",
+      "timing": "January–March 2026."
+    },
+    {
+      "type": "Components and electrical goods",
+      "title": "Plastic fasteners (HS 3926.30 – China)",
+      "description": "EU Trade Defence Service has flagged this category for a potential safeguard screening in mid-2026.",
+      "impact": "Low probability of action, but under monitoring.",
+      "timing": "Mid-2026 screening."
+    },
+    {
+      "type": "Policy and compliance environment",
+      "title": "CBAM (Carbon Border Adjustment Mechanism)",
+      "description": "From January 2026, importers of aluminium and steel products must start emissions reporting under CBAM.",
+      "impact": "Administrative only in 2026, but financial charges start in 2027; early data collection recommended.",
+      "timing": "January 2026 reporting; 2027 financial charges."
+    },
+    {
+      "type": "Policy and compliance environment",
+      "title": "Origin documentation refresh",
+      "description": "Several FTAs (Japan, Morocco, UK) have new supplier statement formats effective in early 2026.",
+      "impact": "Low; ensure procurement teams receive updated templates.",
+      "timing": "Early 2026."
+    }
+  ],
+  "exportUpcomingChangesData": [
+    {
+      "type": "Policy and compliance environment",
+      "title": "United Kingdom (EU–UK TCA)",
+      "description": "The UK and EU are tightening the rules-of-origin process for all goods traded duty-free under the Trade and Cooperation Agreement. New declaration formats and expiry periods for supplier statements take effect January 2026.",
+      "impact": "No tariff change, but missing or outdated paperwork would trigger UK MFN rates (2–3%). Automotive and electronics parts like wiring harnesses and sensor assemblies remain 0% duty if origin proofs are valid.",
+      "timing": "Refresh origin documentation with suppliers by December 2025 to keep duty-free status."
+    },
+    {
+      "type": "Policy and compliance environment",
+      "title": "United States",
+      "description": "The 15% U.S. import tariff on EU industrial goods is expected to remain in place through at least 2027, but Washington and Brussels are due to review the framework in mid-2026. USTR has also hinted that some components may be recategorized under a new 'essential industrial goods' list.",
+      "impact": "No change to current pricing in 2025, but a policy window in 2026 could open for partial rollback or product-specific exclusions. Specific subheadings such as electrical parts (HS 8538, 8544) might see lower rates.",
+      "timing": "Track the 2026 review timetable and maintain dialogue with U.S. distributors about requesting exclusion status for low-risk automotive parts."
+    },
+    {
+      "type": "Components and electrical goods",
+      "title": "Norway (EEA Agreement)",
+      "description": "The EEA digital certificate rollout will replace the paper EUR.1 origin form in Q1 2026. No duty change; Norway continues to apply 0% tariff on EU-origin goods.",
+      "impact": "Only administrative—ensure export paperwork migrates to the new format.",
+      "timing": "Update ERP templates and train the shipping team before March 2026."
+    },
+    {
+      "type": "Components and electrical goods",
+      "title": "Switzerland (EU–CH FTA)",
+      "description": "The EU–Switzerland trade modernization program introduces new supplier statement templates and e-certification options in early 2026. Duty stays 0% with origin proof.",
+      "impact": "Minimal, but incorrect documents could delay clearance.",
+      "timing": "Adopt the new statement wording in Q1 2026."
+    }
+  ]
 }
