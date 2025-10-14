@@ -129,6 +129,18 @@ const ProductWatchlist = ({ user }) => {
     setShowUpcomingSeeMoreModal(true);
   };
 
+  // Function to group upcoming changes by type
+  const groupUpcomingChangesByType = (changes) => {
+    const grouped = {};
+    changes.forEach((change) => {
+      if (!grouped[change.type]) {
+        grouped[change.type] = [];
+      }
+      grouped[change.type].push(change);
+    });
+    return grouped;
+  };
+
   const handleSelectAllImport = (e) => {
     if (e.target.checked) {
       setSelectedImportItems(importItems.map((item) => item.id));
@@ -429,18 +441,10 @@ const ProductWatchlist = ({ user }) => {
                 onChange={(e) => setSelectedTimePeriod(e.target.value)}
                 className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
               >
-                <option value="Past Week">
-                  Past Week (Oct 1 – Oct 8, 2025)
-                </option>
-                <option value="Past Month">
-                  Past Month (Sept 8 – Oct 8, 2025)
-                </option>
-                <option value="Past 3 Months">
-                  Past 3 Months (July 8 – Oct 8, 2025)
-                </option>
-                <option value="Past Year">
-                  Past Year (Oct 2024 – Oct 2025)
-                </option>
+                <option value="Past Week">Past Week</option>
+                <option value="Past Month">Past Month</option>
+                <option value="Past 3 Months">Past 3 Months</option>
+                <option value="Past Year">Past Year</option>
               </select>
             </div>
 
@@ -1126,7 +1130,7 @@ const ProductWatchlist = ({ user }) => {
       {/* See More Modal */}
       {showSeeMoreModal && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end z-50 p-4 pt-[10%] pr-[50%]"
           onClick={(e) => {
             // Close modal on backdrop click
             if (e.target === e.currentTarget) {
@@ -1147,18 +1151,10 @@ const ProductWatchlist = ({ user }) => {
                     onChange={(e) => setSeeMoreTimePeriod(e.target.value)}
                     className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm min-w-[200px] appearance-none bg-white pr-8"
                   >
-                    <option value="Past Week">
-                      Past Week (Oct 1 – Oct 8, 2025)
-                    </option>
-                    <option value="Past Month">
-                      Past Month (Sept 8 – Oct 8, 2025)
-                    </option>
-                    <option value="Past 3 Months">
-                      Past 3 Months (July 8 – Oct 8, 2025)
-                    </option>
-                    <option value="Past Year">
-                      Past Year (Oct 2024 – Oct 2025)
-                    </option>
+                    <option value="Past Week">Past Week</option>
+                    <option value="Past Month">Past Month</option>
+                    <option value="Past 3 Months">Past 3 Months</option>
+                    <option value="Past Year">Past Year</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg
@@ -1171,6 +1167,20 @@ const ProductWatchlist = ({ user }) => {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Selected Time Period Tag */}
+            <div className="px-4 py-2 border-b border-gray-100">
+              <span className="inline-flex items-center rounded-full text-sm font-medium">
+                {seeMoreTimePeriod === "Past Week" &&
+                  "Past Week (Oct 1 – Oct 8, 2025)"}
+                {seeMoreTimePeriod === "Past Month" &&
+                  "Past Month (Sept 8 – Oct 8, 2025)"}
+                {seeMoreTimePeriod === "Past 3 Months" &&
+                  "Past 3 Months (July 8 – Oct 8, 2025)"}
+                {seeMoreTimePeriod === "Past Year" &&
+                  "Past Year (Oct 2024 – Oct 2025)"}
+              </span>
             </div>
 
             {/* Scrollable content area */}
@@ -1202,7 +1212,7 @@ const ProductWatchlist = ({ user }) => {
       {/* Upcoming Changes Modal */}
       {showUpcomingSeeMoreModal && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-start z-50 p-4 pt-[10%] pl-[50%]"
           onClick={(e) => {
             // Close modal on backdrop click
             if (e.target === e.currentTarget) {
@@ -1221,39 +1231,63 @@ const ProductWatchlist = ({ user }) => {
             {/* Scrollable content area */}
             <div className="flex-1 overflow-y-auto px-4 py-2">
               <div className="space-y-4">
-                {(activeTab === "import"
-                  ? dummyData.upcomingChangesData
-                  : dummyData.exportUpcomingChangesData
-                ).map((change, index) => (
-                  <div key={index} className="py-2">
-                    <div className="text-xs font-medium text-gray-500 mb-1">
-                      {change.type}
-                    </div>
-                    <h4 className="font-semibold text-gray-900 mb-2 text-sm">
-                      {change.title}
-                    </h4>
-                    <p className="text-gray-700 leading-relaxed text-sm mb-3">
-                      {change.description}
-                    </p>
-                    <div className="space-y-2">
-                      <div className="bg-gray-50 px-3 py-0 rounded-3px">
-                        <p className="text-xs text-gray-700 mt-1">
-                          <span className="text-xs font-medium text-gray-600 italic pr-2">
-                            Impact:
-                          </span>
-                          {change.impact}
-                        </p>
+                {(() => {
+                  const changes =
+                    activeTab === "import"
+                      ? dummyData.upcomingChangesData
+                      : dummyData.exportUpcomingChangesData;
+                  const groupedChanges = groupUpcomingChangesByType(changes);
+                  const groups = Object.keys(groupedChanges);
 
-                        <p className="text-xs text-gray-700 mt-1">
-                          <span className="text-xs font-medium text-gray-600 italic pr-2">
-                            Timing:
-                          </span>
-                          {change.timing}
-                        </p>
+                  return groups.map((type, groupIndex) => (
+                    <div key={type}>
+                      {/* Type header */}
+                      <div className="py-2 ">
+                        <h3 className="text-[13px] font-semibold text-gray-800 px-3 capitalize">
+                          {type}
+                        </h3>
                       </div>
+
+                      {/* Changes in this type */}
+                      <div className="space-y-4 mb-4">
+                        {groupedChanges[type].map((change, index) => (
+                          <div key={index} className="py-2 pl-4">
+                            <h4 className="font-semibold text-gray-900 mb-2 text-sm">
+                              {change.title}
+                            </h4>
+                            <p className="text-gray-700 leading-relaxed text-sm mb-3">
+                              {change.description}
+                            </p>
+                            <div className="space-y-2">
+                              <div className="bg-gray-50 px-3 py-0 rounded-3px">
+                                <p className="text-xs text-gray-700 mt-1">
+                                  <span className="text-xs font-medium text-gray-600 italic pr-2">
+                                    Impact:
+                                  </span>
+                                  {change.impact}
+                                </p>
+
+                                <p className="text-xs text-gray-700 mt-1">
+                                  <span className="text-xs font-medium text-gray-600 italic pr-2">
+                                    Timing:
+                                  </span>
+                                  {change.timing}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Horizontal line between groups (except for the last group) */}
+                      {groupIndex < groups.length - 1 && (
+                        <div className="my-6">
+                          <hr className="border-gray-300" />
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  ));
+                })()}
               </div>
             </div>
           </div>

@@ -3,13 +3,14 @@ import { Eye, EyeOff, Mail, Lock, User, Globe } from "lucide-react";
 import dummyData from "../data/dummyData.json";
 
 const AuthPage = ({ onLogin }) => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true); // Start with login (sign in)
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
     email: "ceo@gmail.com",
     password: "123456",
-    country: "",
+    country: "DE",
+    language: "english",
+    role: "ceo",
   });
   const [errors, setErrors] = useState({});
 
@@ -179,28 +180,6 @@ const AuthPage = ({ onLogin }) => {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {!isLogin && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Name (Optional)
-              </label>
-              <div className="relative">
-                <User
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                  placeholder="Your name"
-                />
-              </div>
-            </div>
-          )}
-
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email Address *
@@ -261,39 +240,159 @@ const AuthPage = ({ onLogin }) => {
           </div>
 
           {!isLogin && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Country of Operation *
-              </label>
-              <div className="relative">
-                <Globe
-                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  size={18}
-                />
-                <select
-                  name="country"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  className={`w-full pl-10 pr-3 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
-                    errors.country ? "border-red-300" : "border-gray-300"
-                  }`}
-                  required={!isLogin}
-                >
-                  <option value="">Select your country</option>
-                  {dummyData.countries.map((country) => (
-                    <option key={country.code} value={country.code}>
-                      {country.flag} {country.name}
-                    </option>
-                  ))}
-                </select>
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Language Preference *
+                </label>
+                <div className="flex space-x-6">
+                  <div className="flex items-center">
+                    <input
+                      id="language-english"
+                      name="language"
+                      type="radio"
+                      value="english"
+                      checked={formData.language === "english"}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                    />
+                    <label
+                      htmlFor="language-english"
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      English
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      id="language-german"
+                      name="language"
+                      type="radio"
+                      value="german"
+                      checked={formData.language === "german"}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                    />
+                    <label
+                      htmlFor="language-german"
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      German
+                    </label>
+                  </div>
+                </div>
               </div>
-              {errors.country && (
-                <p className="mt-1 text-sm text-red-600">{errors.country}</p>
-              )}
-              <p className="mt-1 text-xs text-gray-500">
-                This helps us personalize your trade data perspective
-              </p>
-            </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Role *
+                </label>
+                <div className="flex flex-wrap gap-6">
+                  <div className="flex items-center">
+                    <input
+                      id="role-ceo"
+                      name="role"
+                      type="radio"
+                      value="ceo"
+                      checked={formData.role === "ceo"}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                    />
+                    <label
+                      htmlFor="role-ceo"
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      CEO
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      id="role-cfo"
+                      name="role"
+                      type="radio"
+                      value="cfo"
+                      checked={formData.role === "cfo"}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                    />
+                    <label
+                      htmlFor="role-cfo"
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      CFO
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      id="role-supply-chain"
+                      name="role"
+                      type="radio"
+                      value="supply-chain"
+                      checked={formData.role === "supply-chain"}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                    />
+                    <label
+                      htmlFor="role-supply-chain"
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      Supply Chain Manager
+                    </label>
+                  </div>
+                  <div className="flex items-center">
+                    <input
+                      id="role-other"
+                      name="role"
+                      type="radio"
+                      value="other"
+                      checked={formData.role === "other"}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                    />
+                    <label
+                      htmlFor="role-other"
+                      className="ml-2 text-sm text-gray-700"
+                    >
+                      Other
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Country of Operation *
+                </label>
+                <div className="relative">
+                  <Globe
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    size={18}
+                  />
+                  <select
+                    name="country"
+                    value={formData.country}
+                    onChange={handleInputChange}
+                    className={`w-full pl-10 pr-3 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                      errors.country ? "border-red-300" : "border-gray-300"
+                    }`}
+                    required={!isLogin}
+                  >
+                    <option value="">Select your country</option>
+                    {dummyData.countries.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.flag} {country.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {errors.country && (
+                  <p className="mt-1 text-sm text-red-600">{errors.country}</p>
+                )}
+                <p className="mt-1 text-xs text-gray-500">
+                  This helps us personalize your trade data perspective
+                </p>
+              </div>
+            </>
           )}
 
           <button
@@ -312,7 +411,22 @@ const AuthPage = ({ onLogin }) => {
               onClick={() => {
                 setIsLogin(!isLogin);
                 setErrors({});
-                setFormData({ name: "", email: "", password: "", country: "" });
+                if (isLogin) {
+                  // Switching to signup - set defaults for signup
+                  setFormData({
+                    email: "",
+                    password: "",
+                    country: "DE",
+                    language: "english",
+                    role: "ceo",
+                  });
+                } else {
+                  // Switching to login - set defaults for login
+                  setFormData({
+                    email: "ceo@gmail.com",
+                    password: "123456",
+                  });
+                }
               }}
               className="ml-1 text-primary-600 hover:text-primary-800 font-medium"
             >
@@ -332,7 +446,7 @@ const AuthPage = ({ onLogin }) => {
       </div>
 
       {/* Information Box */}
-      <div className="mt-6 bg-blue-50 border border-blue-200 rounded-3px p-4">
+      {/* <div className="mt-6 bg-blue-50 border border-blue-200 rounded-3px p-4">
         <h3 className="text-sm font-medium text-blue-900 mb-2">
           Why create an account?
         </h3>
@@ -343,7 +457,7 @@ const AuthPage = ({ onLogin }) => {
           <li>• Export your watchlist data as CSV</li>
           <li>• Get personalized AI-powered recommendations</li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };
