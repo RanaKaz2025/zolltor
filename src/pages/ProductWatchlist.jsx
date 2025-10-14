@@ -436,16 +436,43 @@ const ProductWatchlist = ({ user }) => {
               <h2 className="text-xl font-semibold text-gray-900">
                 What Has Changed
               </h2>
-              <select
-                value={selectedTimePeriod}
-                onChange={(e) => setSelectedTimePeriod(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              >
-                <option value="Past Week">Past Week</option>
-                <option value="Past Month">Past Month</option>
-                <option value="Past 3 Months">Past 3 Months</option>
-                <option value="Past Year">Past Year</option>
-              </select>
+              <div className="flex items-center space-x-4">
+                <select
+                  value={selectedTimePeriod}
+                  onChange={(e) => setSelectedTimePeriod(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                >
+                  <option value="Past Week">Past Week</option>
+                  <option value="Past Month">Past Month</option>
+                  <option value="Past 3 Months">Past 3 Months</option>
+                  <option value="Past Year">Past Year</option>
+                </select>
+                <div className="relative group">
+                  <img
+                    src="/search-icon.svg"
+                    alt="Search Icon"
+                    width={22}
+                    height={22}
+                    className="cursor-pointer"
+                  />
+                  <div className="absolute bottom-full right-0 mr-1 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                    Generate Insights
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span className="inline-flex items-center rounded-full text-sm font-medium">
+                {seeMoreTimePeriod === "Past Week" &&
+                  "Past Week (Oct 1 – Oct 8, 2025)"}
+                {seeMoreTimePeriod === "Past Month" &&
+                  "Past Month (Sept 8 – Oct 8, 2025)"}
+                {seeMoreTimePeriod === "Past 3 Months" &&
+                  "Past 3 Months (July 8 – Oct 8, 2025)"}
+                {seeMoreTimePeriod === "Past Year" &&
+                  "Past Year (Oct 2024 – Oct 2025)"}
+              </span>
             </div>
 
             <div className="flex-1 overflow-hidden">
@@ -475,10 +502,23 @@ const ProductWatchlist = ({ user }) => {
 
           {/* Upcoming Changes Section */}
           <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6 h-[220px] overflow-hidden flex flex-col">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Upcoming Changes
-            </h2>
-
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Upcoming Changes
+              </h2>
+              <div className="relative group">
+                <img
+                  src="/search-icon.svg"
+                  alt="Search Icon"
+                  width={22}
+                  height={22}
+                  className="cursor-pointer"
+                />
+                <div className="absolute bottom-full right-0 mr-1 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                  Generate Insights
+                </div>
+              </div>
+            </div>
             <div className="flex-1 overflow-hidden">
               <div className="space-y-3">
                 {(activeTab === "import"
@@ -1170,7 +1210,7 @@ const ProductWatchlist = ({ user }) => {
             </div>
 
             {/* Selected Time Period Tag */}
-            <div className="px-4 py-2 border-b border-gray-100">
+            <div className="px-4">
               <span className="inline-flex items-center rounded-full text-sm font-medium">
                 {seeMoreTimePeriod === "Past Week" &&
                   "Past Week (Oct 1 – Oct 8, 2025)"}
