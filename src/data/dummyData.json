@@ -166,6 +166,46 @@
       "code": "8538.90",
       "description": "Parts suitable for electrical apparatus, switches, and control systems",
       "category": "Electronics"
+    },
+    {
+      "code": "7209.16",
+      "description": "Cold-rolled steel sheet",
+      "category": "Metals"
+    },
+    {
+      "code": "7318.15",
+      "description": "High-tensile bolts and screws",
+      "category": "Metals"
+    },
+    {
+      "code": "8544.30",
+      "description": "Wiring harness cable and automotive wiring sets",
+      "category": "Electronics"
+    },
+    {
+      "code": "3926.30",
+      "description": "Plastic clips, fasteners and fittings for furniture and vehicles",
+      "category": "Plastics"
+    },
+    {
+      "code": "4016.93",
+      "description": "Rubber grommets, seals and gaskets for automotive use",
+      "category": "Rubber"
+    },
+    {
+      "code": "7408.19",
+      "description": "Copper wire and stranded conductors",
+      "category": "Metals"
+    },
+    {
+      "code": "7326.90",
+      "description": "Machined steel fittings and other steel articles",
+      "category": "Metals"
+    },
+    {
+      "code": "7907.00",
+      "description": "Zinc die-cast housings and other zinc articles",
+      "category": "Metals"
     }
   ],
   "tariffRates": [

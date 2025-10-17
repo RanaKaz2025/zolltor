@@ -10,6 +10,9 @@ import {
   Eye,
   Plus,
   X,
+  List,
+  FileText,
+  Calendar,
 } from "lucide-react";
 import { useToast } from "../components/ToastProvider";
 import dummyData from "../data/dummyData.json";
@@ -19,22 +22,19 @@ const ProductWatchlist = ({ user }) => {
   const [selectedImportItems, setSelectedImportItems] = useState([]);
   const [selectedExportItems, setSelectedExportItems] = useState([]);
   const [watchlistData, setWatchlistData] = useState(dummyData.watchlist);
-  const [activeTab, setActiveTab] = useState("import");
+  const [activeTab, setActiveTab] = useState("watchlist");
+  const [watchlistType, setWatchlistType] = useState("import");
   const [newImportRow, setNewImportRow] = useState(null);
   const [newExportRow, setNewExportRow] = useState(null);
   const [showChangeDialog, setShowChangeDialog] = useState(false);
   const [selectedChangeInfo, setSelectedChangeInfo] = useState(null);
   const [selectedTimePeriod, setSelectedTimePeriod] = useState("Past Week");
-  const [showSeeMoreModal, setShowSeeMoreModal] = useState(false);
-  const [seeMoreTimePeriod, setSeeMoreTimePeriod] = useState("Past Week");
-  const [showUpcomingSeeMoreModal, setShowUpcomingSeeMoreModal] =
-    useState(false);
   const toast = useToast();
 
   // Function to get changes text based on selected time period
   const getChangesText = (timePeriod) => {
     const changes =
-      activeTab === "import"
+      watchlistType === "import"
         ? dummyData.changesData[timePeriod]
         : dummyData.exportChangesData[timePeriod];
     if (!changes || changes.length === 0) {
@@ -47,86 +47,6 @@ const ProductWatchlist = ({ user }) => {
     }
 
     return changes;
-  };
-
-  // Function to get export changes text based on selected time period
-  const getExportChangesText = (timePeriod) => {
-    const changes = dummyData.exportChangesData[timePeriod];
-    if (!changes || changes.length === 0) {
-      return [
-        {
-          title: "No changes found",
-          description: "No changes found for the selected time period.",
-        },
-      ];
-    }
-
-    return changes;
-  };
-
-  // Function to get detailed changes text for See More modal
-  const getDetailedChangesText = (timePeriod) => {
-    const changes =
-      activeTab === "import"
-        ? dummyData.changesData[timePeriod]
-        : dummyData.exportChangesData[timePeriod];
-    if (!changes || changes.length === 0) {
-      return "No detailed changes found for the selected time period.";
-    }
-
-    let timeHeader = "";
-    switch (timePeriod) {
-      case "Past Week":
-        timeHeader = "Past Week (Oct 1 – Oct 8, 2025)";
-        break;
-      case "Past Month":
-        timeHeader = "Past Month (Sept 8 – Oct 8, 2025)";
-        break;
-      case "Past 3 Months":
-        timeHeader = "Past 3 Months (July 8 – Oct 8, 2025)";
-        break;
-      case "Past Year":
-        timeHeader = "Past Year (Oct 2024 – Oct 2025)";
-        break;
-    }
-
-    let content = `**${timeHeader}**\n\n`;
-
-    changes.forEach((change, index) => {
-      content += `**${index + 1}. ${change.title}**\n`;
-      content += `${change.description}\n\n`;
-    });
-
-    // Add strategic recommendations for longer periods
-    if (timePeriod === "Past 3 Months" || timePeriod === "Past Year") {
-      content += `**STRATEGIC RECOMMENDATIONS:**\n`;
-      if (activeTab === "export") {
-        content += `- Review export documentation requirements\n`;
-        content += `- Update supplier origin declarations\n`;
-        content += `- Monitor U.S. and UK trade policy developments\n`;
-        content += `- Prepare for digital certificate transitions\n`;
-        content += `- Strengthen compliance with FTA requirements`;
-      } else {
-        content += `- Monitor ongoing trade policy developments\n`;
-        content += `- Review supplier diversification strategies\n`;
-        content += `- Prepare for upcoming regulatory changes\n`;
-        content += `- Consider forward contracting for price stability\n`;
-        content += `- Strengthen compliance documentation procedures`;
-      }
-    }
-
-    return content;
-  };
-
-  // Handle opening See More modal
-  const handleSeeMore = () => {
-    setSeeMoreTimePeriod(selectedTimePeriod);
-    setShowSeeMoreModal(true);
-  };
-
-  // Handle opening Upcoming See More modal
-  const handleUpcomingSeeMore = () => {
-    setShowUpcomingSeeMoreModal(true);
   };
 
   // Function to group upcoming changes by type
@@ -249,26 +169,22 @@ const ProductWatchlist = ({ user }) => {
     } else if (description.toLowerCase().includes("increase")) {
       return <TrendingUp className="w-4 h-4 text-red-500" />;
     }
-    // return <Minus className="w-4 h-4 text-gray-500" />;
   };
 
   const getRowColor = (description) => {
-    // if (
-    //   description.toLowerCase().includes("reduction") ||
-    //   description.toLowerCase().includes("decrease")
-    // ) {
-    //   return "bg-green-50";
-    // } else if (description.toLowerCase().includes("increase")) {
-    //   return "bg-red-50";
-    // }
     return "bg-white";
   };
 
   const importItems = watchlistData.filter((item) => item.type === "import");
   const exportItems = watchlistData.filter((item) => item.type === "export");
 
+  const tabs = [
+    { id: "watchlist", label: "Watchlist" },
+    { id: "whatHasChanged", label: "What Has Changed" },
+    { id: "upcomingChanges", label: "Upcoming Changes" },
+  ];
+
   const handleCSVUpload = () => {
-    // In a real app, you would parse the CSV file here
     toast.warning(
       "CSV upload functionality would be implemented in production",
       4000
@@ -306,14 +222,14 @@ const ProductWatchlist = ({ user }) => {
       const currentDate = new Date();
       const newItem = {
         ...newImportRow,
-        id: Date.now(), // Generate unique ID
+        id: Date.now(),
         type: "import",
         productName:
           newImportRow.productName || `Product ${newImportRow.hsCode}`,
-        currentRate: 0, // Default to 0
-        tax: 0, // Default to 0
+        currentRate: 0,
+        tax: 0,
         lastChange: {
-          date: currentDate.toISOString().split("T")[0], // Use YYYY-MM-DD format for consistency
+          date: currentDate.toISOString().split("T")[0],
           description: "Added to watchlist",
         },
         nextChange: {
@@ -334,14 +250,14 @@ const ProductWatchlist = ({ user }) => {
       const currentDate = new Date();
       const newItem = {
         ...newExportRow,
-        id: Date.now(), // Generate unique ID
+        id: Date.now(),
         type: "export",
         productName:
           newExportRow.productName || `Product ${newExportRow.hsCode}`,
-        currentRate: 0, // Default to 0
-        tax: 0, // Default to 0
+        currentRate: 0,
+        tax: 0,
         lastChange: {
-          date: currentDate.toISOString().split("T")[0], // Use YYYY-MM-DD format for consistency
+          date: currentDate.toISOString().split("T")[0],
           description: "Added to watchlist",
         },
         nextChange: {
@@ -375,7 +291,7 @@ const ProductWatchlist = ({ user }) => {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="mb-8">
+      <div className="mb-4">
         <div className="flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -383,12 +299,13 @@ const ProductWatchlist = ({ user }) => {
             </h1>
           </div>
 
-          <div className="flex justify-center mb-8">
+          {/* Import/Export Selector */}
+          <div className="flex justify-center">
             <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-1 flex">
               <button
-                onClick={() => setActiveTab("import")}
+                onClick={() => setWatchlistType("import")}
                 className={`px-6 py-3 rounded-3px transition-colors ${
-                  activeTab === "import"
+                  watchlistType === "import"
                     ? "bg-teal-700 text-white"
                     : "text-gray-600 hover:text-gray-900"
                 }`}
@@ -396,9 +313,9 @@ const ProductWatchlist = ({ user }) => {
                 Import Watchlist
               </button>
               <button
-                onClick={() => setActiveTab("export")}
+                onClick={() => setWatchlistType("export")}
                 className={`px-6 py-3 rounded-3px transition-colors ${
-                  activeTab === "export"
+                  watchlistType === "export"
                     ? "bg-teal-700 text-white"
                     : "text-gray-600 hover:text-gray-900"
                 }`}
@@ -427,690 +344,763 @@ const ProductWatchlist = ({ user }) => {
         </div>
       </div>
 
-      {/* Changes Overview Section */}
-      <div className="mb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          {/* What Has Changed Section */}
-          <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6 h-[220px] overflow-hidden flex flex-col">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">
-                What Has Changed
-              </h2>
-              <div className="flex items-center space-x-4">
-                <select
-                  value={selectedTimePeriod}
-                  onChange={(e) => setSelectedTimePeriod(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+      {/* Tabs */}
+      <div className="bg-white rounded-3px shadow-sm border border-gray-200">
+        <div className="border-b border-gray-200">
+          <nav className="flex">
+            {tabs.map((tab) => {
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center space-x-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
+                    activeTab === tab.id
+                      ? "border-primary-500 text-primary-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
                 >
-                  <option value="Past Week">Past Week</option>
-                  <option value="Past Month">Past Month</option>
-                  <option value="Past 3 Months">Past 3 Months</option>
-                  <option value="Past Year">Past Year</option>
-                </select>
-                <div className="relative group">
-                  <img
-                    src="/search-icon.svg"
-                    alt="Search Icon"
-                    width={22}
-                    height={22}
-                    className="cursor-pointer"
-                  />
-                  <div className="absolute bottom-full right-0 mr-1 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                    Generate Insights
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+
+        <div>
+          {/* Watchlist Tab */}
+          {activeTab === "watchlist" && (
+            <div>
+              {/* Import Watchlist */}
+              {watchlistType === "import" && (
+                <div className="px-3 bg-white rounded-3px shadow-sm border border-gray-200">
+                  <div className="p-[16px] border-b border-gray-200 flex justify-between items-center min-h-[40px]">
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      Import Watchlist (Products coming into{" "}
+                      {
+                        dummyData.countries.find((c) => c.code === baseCountry)
+                          ?.name
+                      }
+                      )
+                    </h2>
+                    <div className="flex items-center gap-2 h-10">
+                      {selectedImportItems.length > 0 ? (
+                        <button
+                          onClick={handleRemoveSelectedImport}
+                          className="bg-red-600 text-white px-4 py-2 rounded-3px hover:bg-red-700 transition-colors flex items-center space-x-2"
+                        >
+                          <Trash2 size={16} />
+                          <span>
+                            Remove Selected ({selectedImportItems.length})
+                          </span>
+                        </button>
+                      ) : (
+                        <div className="w-0 h-10"></div>
+                      )}
+                      <div className="rounded-3px">
+                        <div className="flex flex-wrap items-center justify-end gap-4">
+                          <div className="flex items-center space-x-4">
+                            <div
+                              className="flex items-center space-x-2"
+                              onClick={handleCSVUpload}
+                            >
+                              <label
+                                htmlFor="csv-upload"
+                                className="bg-gray-600 text-white px-4 py-2 rounded-3px hover:bg-gray-700 transition-colors cursor-pointer flex items-center space-x-2"
+                              >
+                                <Upload size={16} />
+                                <span>Upload CSV</span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="overflow-auto max-h-[600px]">
+                    <table className="w-full">
+                      <thead className="sticky top-0 bg-white z-10 shadow-sm">
+                        <tr className="border-b border-gray-200">
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            <input
+                              type="checkbox"
+                              checked={
+                                selectedImportItems.length ===
+                                  importItems.length && importItems.length > 0
+                              }
+                              onChange={handleSelectAllImport}
+                              className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                            />
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Product
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            HS Code
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Origin
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Current Rate
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Tax
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Last Change
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Next Change
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {importItems.map((item) => (
+                          <tr
+                            key={item.id}
+                            className={`${getRowColor(
+                              item.nextChange.description
+                            )} border-b border-gray-100`}
+                          >
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <input
+                                type="checkbox"
+                                checked={selectedImportItems.includes(item.id)}
+                                onChange={() => handleSelectImportItem(item.id)}
+                                className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                              />
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900 font-medium">
+                              {item.productName}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <Link
+                                to={`/hscode/${item.hsCode}`}
+                                className="text-primary-600 hover:text-primary-800 font-mono"
+                              >
+                                {item.hsCode}
+                              </Link>
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              {
+                                dummyData.countries.find(
+                                  (c) => c.code === item.origin
+                                )?.name
+                              }{" "}
+                              ({item.origin})
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <div className="font-semibold">
+                                {item.currentRate}%
+                              </div>
+                              {item.currentRateOrigin && (
+                                <div>{item.currentRateOrigin}</div>
+                              )}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-700">
+                              <div className="font-medium">{item.tax}%</div>
+                              <div className="text-xs text-gray-500">
+                                (VAT+Other Tax)
+                              </div>
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-600">
+                              <button
+                                onClick={() => handleChangeClick(item, "last")}
+                                className="text-left  transition-colors focus:outline-none"
+                              >
+                                <div>
+                                  <div className="underline text-primary-600 hover:text-primary-700">
+                                    {item.lastChange.date}:
+                                  </div>
+                                  <div className="text-sm text-gray-500">
+                                    {item.lastChange.description}
+                                  </div>
+                                </div>
+                              </button>
+                            </td>
+                            <td className="px-6 py-3 text-[16px]">
+                              <button
+                                onClick={() => handleChangeClick(item, "next")}
+                                className="text-left  transition-colors focus:outline-none"
+                              >
+                                <div className="flex items-center space-x-1">
+                                  {item.nextChange.date !== "TBD" &&
+                                    getChangeIcon(item.nextChange.description)}
+                                  <div>
+                                    {item.nextChange.date !== "TBD" && (
+                                      <>
+                                        <div className="underline text-primary-600 hover:text-primary-700">
+                                          {item.nextChange.date}:
+                                        </div>
+                                        <div className="text-sm text-gray-500">
+                                          {item.nextChange.description}
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                              </button>
+                            </td>
+                            <td className="px-6 py-3 text-[16px]">
+                              <Link
+                                to={`/hscode/${item.hsCode}`}
+                                className="text-primary-600 hover:text-primary-800 flex items-center space-x-1"
+                              >
+                                <Eye size={16} />
+                                <span>Details</span>
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+
+                        {/* New Import Row */}
+                        {newImportRow && (
+                          <tr className="bg-blue-50 border-b border-gray-100">
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <input
+                                type="checkbox"
+                                disabled
+                                className="rounded border-gray-300"
+                              />
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              {/* Product column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <input
+                                type="text"
+                                value={newImportRow.hsCode}
+                                onChange={(e) =>
+                                  handleNewRowChange(
+                                    "import",
+                                    "hsCode",
+                                    e.target.value
+                                  )
+                                }
+                                placeholder="HS Code"
+                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
+                              />
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <select
+                                value={newImportRow.origin}
+                                onChange={(e) =>
+                                  handleNewRowChange(
+                                    "import",
+                                    "origin",
+                                    e.target.value
+                                  )
+                                }
+                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                              >
+                                <option value="">Select origin</option>
+                                {dummyData.countries.map((country) => (
+                                  <option
+                                    key={country.code}
+                                    value={country.code}
+                                  >
+                                    {country.flag} {country.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              {/* Current Rate column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              {/* Tax column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-xs text-gray-500">
+                              {/* Last Change column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-xs text-gray-500">
+                              {/* Next Change column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <div className="flex space-x-1">
+                                <button
+                                  onClick={handleSaveNewImportItem}
+                                  className="px-2 py-1 bg-green-600 text-white text-xs rounded-3px hover:bg-green-700"
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={() => handleCancelNewRow("import")}
+                                  className="px-2 py-1 bg-gray-600 text-white text-xs rounded-3px hover:bg-gray-700"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+
+                    {importItems.length === 0 && (
+                      <div className="text-center py-8 text-gray-500">
+                        No import items in your watchlist yet. Start by
+                        searching for tariffs and adding them to your watchlist.
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Add Import Item Button */}
+                  <div className="p-3 border-t border-gray-200">
+                    <button
+                      onClick={handleAddImportItem}
+                      disabled={newImportRow !== null}
+                      className={`w-[150px] py-3 px-2 rounded-3px transition-colors flex items-center justify-center space-x-2 border-2 border-dashed ${
+                        newImportRow
+                          ? "bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed"
+                          : "bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-300 hover:border-gray-400"
+                      }`}
+                    >
+                      <Plus size={20} />
+                      <span>Add New</span>
+                    </button>
                   </div>
                 </div>
+              )}
+
+              {/* Export Watchlist */}
+              {watchlistType === "export" && (
+                <div className="px-3 bg-white rounded-3px shadow-sm border border-gray-200">
+                  <div className="p-[16px] border-b border-gray-200 flex justify-between items-center min-h-[40px]">
+                    <h2 className="text-xl font-semibold text-gray-900">
+                      Export Watchlist (Products going from{" "}
+                      {
+                        dummyData.countries.find((c) => c.code === baseCountry)
+                          ?.name
+                      }
+                      )
+                    </h2>
+                    <div className="flex items-center gap-2 h-10">
+                      {selectedExportItems.length > 0 ? (
+                        <button
+                          onClick={handleRemoveSelectedExport}
+                          className="bg-red-600 text-white px-4 py-2 rounded-3px hover:bg-red-700 transition-colors flex items-center space-x-2"
+                        >
+                          <Trash2 size={16} />
+                          <span>
+                            Remove Selected ({selectedExportItems.length})
+                          </span>
+                        </button>
+                      ) : (
+                        <div className="w-0 h-10"></div>
+                      )}
+                      <div className="rounded-3px">
+                        <div className="flex flex-wrap items-center justify-end gap-4">
+                          <div className="flex items-center space-x-4">
+                            <div
+                              className="flex items-center space-x-2"
+                              onClick={handleCSVUpload}
+                            >
+                              <label
+                                htmlFor="csv-upload"
+                                className="bg-gray-600 text-white px-4 py-2 rounded-3px hover:bg-gray-700 transition-colors cursor-pointer flex items-center space-x-2"
+                              >
+                                <Upload size={16} />
+                                <span>Upload CSV</span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="overflow-auto max-h-[600px]">
+                    <table className="w-full">
+                      <thead className="sticky top-0 bg-white z-10 shadow-sm">
+                        <tr className="border-b border-gray-200">
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            <input
+                              type="checkbox"
+                              checked={
+                                selectedExportItems.length ===
+                                  exportItems.length && exportItems.length > 0
+                              }
+                              onChange={handleSelectAllExport}
+                              className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                            />
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Product
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            HS Code
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Destination
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Current Rate
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Tax
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Last Change
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Next Change
+                          </th>
+                          <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {exportItems.map((item) => (
+                          <tr
+                            key={item.id}
+                            className={`${getRowColor(
+                              item.nextChange.description
+                            )} border-b border-gray-100`}
+                          >
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <input
+                                type="checkbox"
+                                checked={selectedExportItems.includes(item.id)}
+                                onChange={() => handleSelectExportItem(item.id)}
+                                className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                              />
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900 font-medium">
+                              {item.productName}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <Link
+                                to={`/hscode/${item.hsCode}`}
+                                className="text-primary-600 hover:text-primary-800 font-mono"
+                              >
+                                {item.hsCode}
+                              </Link>
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              {
+                                dummyData.countries.find(
+                                  (c) => c.code === item.destination
+                                )?.name
+                              }{" "}
+                              ({item.destination})
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <div className="font-semibold">
+                                {item.currentRate}%
+                              </div>
+                              {item.currentRateOrigin && (
+                                <div>{item.currentRateOrigin}</div>
+                              )}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-700">
+                              <div className="font-medium">{item.tax}%</div>
+                              <div className="text-xs text-gray-500">
+                                (VAT+Other Tax)
+                              </div>
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-600">
+                              <button
+                                onClick={() => handleChangeClick(item, "last")}
+                                className="text-left transition-colors focus:outline-none"
+                              >
+                                <div>
+                                  <div className="underline text-primary-600 hover:text-primary-700">
+                                    {item.lastChange.date}:
+                                  </div>
+                                  <div className="text-sm text-gray-500">
+                                    {item.lastChange.description}
+                                  </div>
+                                </div>
+                              </button>
+                            </td>
+                            <td className="px-6 py-3 text-[16px]">
+                              <button
+                                onClick={() => handleChangeClick(item, "next")}
+                                className="text-left transition-colors focus:outline-none"
+                              >
+                                <div className="flex items-center space-x-1">
+                                  {item.nextChange.date !== "TBD" &&
+                                    getChangeIcon(item.nextChange.description)}
+                                  <div>
+                                    {item.nextChange.date !== "TBD" && (
+                                      <>
+                                        <div className="underline text-primary-600 hover:text-primary-700">
+                                          {item.nextChange.date}:
+                                        </div>
+                                        <div className="text-sm text-gray-500">
+                                          {item.nextChange.description}
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                              </button>
+                            </td>
+                            <td className="px-6 py-3 text-[16px]">
+                              <Link
+                                to={`/hscode/${item.hsCode}`}
+                                className="text-primary-600 hover:text-primary-800 flex items-center space-x-1"
+                              >
+                                <Eye size={16} />
+                                <span>Details</span>
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+
+                        {/* New Export Row */}
+                        {newExportRow && (
+                          <tr className="bg-blue-50 border-b border-gray-100">
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <input
+                                type="checkbox"
+                                disabled
+                                className="rounded border-gray-300"
+                              />
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              {/* Product column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <input
+                                type="text"
+                                value={newExportRow.hsCode}
+                                onChange={(e) =>
+                                  handleNewRowChange(
+                                    "export",
+                                    "hsCode",
+                                    e.target.value
+                                  )
+                                }
+                                placeholder="HS Code"
+                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
+                              />
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <select
+                                value={newExportRow.destination}
+                                onChange={(e) =>
+                                  handleNewRowChange(
+                                    "export",
+                                    "destination",
+                                    e.target.value
+                                  )
+                                }
+                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                              >
+                                <option value="">Select destination</option>
+                                {dummyData.countries.map((country) => (
+                                  <option
+                                    key={country.code}
+                                    value={country.code}
+                                  >
+                                    {country.flag} {country.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              {/* Current Rate column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              {/* Tax column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-xs text-gray-500">
+                              {/* Last Change column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-xs text-gray-500">
+                              {/* Next Change column - blank */}
+                            </td>
+                            <td className="px-6 py-3 text-[16px] text-gray-900">
+                              <div className="flex space-x-1">
+                                <button
+                                  onClick={handleSaveNewExportItem}
+                                  className="px-2 py-1 bg-green-600 text-white text-xs rounded-3px hover:bg-green-700"
+                                >
+                                  Save
+                                </button>
+                                <button
+                                  onClick={() => handleCancelNewRow("export")}
+                                  className="px-2 py-1 bg-gray-600 text-white text-xs rounded-3px hover:bg-gray-700"
+                                >
+                                  Cancel
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+
+                    {exportItems.length === 0 && (
+                      <div className="text-center py-8 text-gray-500">
+                        No export items in your watchlist yet. Start by
+                        searching for tariffs and adding them to your watchlist.
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Add Export Item Button */}
+                  <div className="p-3 border-t border-gray-200">
+                    <button
+                      onClick={handleAddExportItem}
+                      disabled={newExportRow !== null}
+                      className={`w-[150px] py-3 px-2 rounded-3px transition-colors flex items-center justify-center space-x-2 border-2 border-dashed ${
+                        newExportRow
+                          ? "bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed"
+                          : "bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-300 hover:border-gray-400"
+                      }`}
+                    >
+                      <Plus size={20} />
+                      <span>Add New</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* What Has Changed Tab */}
+          {activeTab === "whatHasChanged" && (
+            <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold text-gray-900">
+                  What Has Changed
+                </h2>
+                <div className="flex items-center space-x-4">
+                  <select
+                    value={selectedTimePeriod}
+                    onChange={(e) => setSelectedTimePeriod(e.target.value)}
+                    className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  >
+                    <option value="Past Week">Past Week</option>
+                    <option value="Past Month">Past Month</option>
+                    <option value="Past 3 Months">Past 3 Months</option>
+                    <option value="Past Year">Past Year</option>
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div>
-              <span className="inline-flex items-center rounded-full text-sm font-medium">
-                {seeMoreTimePeriod === "Past Week" &&
-                  "Past Week (Oct 1 – Oct 8, 2025)"}
-                {seeMoreTimePeriod === "Past Month" &&
-                  "Past Month (Sept 8 – Oct 8, 2025)"}
-                {seeMoreTimePeriod === "Past 3 Months" &&
-                  "Past 3 Months (July 8 – Oct 8, 2025)"}
-                {seeMoreTimePeriod === "Past Year" &&
-                  "Past Year (Oct 2024 – Oct 2025)"}
-              </span>
-            </div>
+              {/* Time Period Header */}
+              <div className="pb-1">
+                <span className="inline-flex items-center rounded-full text-sm font-medium">
+                  {selectedTimePeriod === "Past Week" &&
+                    "Past Week (Oct 1 – Oct 8, 2025)"}
+                  {selectedTimePeriod === "Past Month" &&
+                    "Past Month (Sept 8 – Oct 8, 2025)"}
+                  {selectedTimePeriod === "Past 3 Months" &&
+                    "Past 3 Months (July 8 – Oct 8, 2025)"}
+                  {selectedTimePeriod === "Past Year" &&
+                    "Past Year (Oct 2024 – Oct 2025)"}
+                </span>
+              </div>
 
-            <div className="flex-1 overflow-hidden">
-              <div className="space-y-4">
+              {/* Changes Content */}
+              <div>
                 {getChangesText(selectedTimePeriod).map((change, index) => (
-                  <div key={index} className="pt-2">
-                    <h4 className="font-semibold text-gray-900 text-sm mb-1">
+                  <div
+                    key={index}
+                    className="py-4 border-b border-gray-100 last:border-b-0"
+                  >
+                    <h4 className="font-semibold text-gray-900 text-sm mb-2">
                       {change.title}
                     </h4>
-                    <p className="text-sm text-gray-700 leading-relaxed">
-                      {change.description}...
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      {change.description}
                     </p>
                   </div>
                 ))}
               </div>
             </div>
+          )}
 
-            <div className="flex justify-start">
-              <button
-                onClick={handleSeeMore}
-                className="mt-4 text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors"
-              >
-                See More
-              </button>
-            </div>
-          </div>
-
-          {/* Upcoming Changes Section */}
-          <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6 h-[220px] overflow-hidden flex flex-col">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                Upcoming Changes
-              </h2>
-              <div className="relative group">
-                <img
-                  src="/search-icon.svg"
-                  alt="Search Icon"
-                  width={22}
-                  height={22}
-                  className="cursor-pointer"
-                />
-                <div className="absolute bottom-full right-0 mr-1 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                  Generate Insights
-                </div>
+          {/* Upcoming Changes Tab */}
+          {activeTab === "upcomingChanges" && (
+            <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-xl font-semibold text-gray-900">
+                  Upcoming Changes
+                </h2>
               </div>
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <div className="space-y-3">
-                {(activeTab === "import"
-                  ? dummyData.upcomingChangesData
-                  : dummyData.exportUpcomingChangesData
-                )
-                  .slice(0, 2)
-                  .map((change, index) => (
-                    <div key={index} className="pt-1">
-                      <div className="text-xs font-medium text-gray-500 mb-1">
-                        {change.type}
+
+              {/* Upcoming Changes Content */}
+              <div className="space-y-6">
+                {(() => {
+                  const changes =
+                    watchlistType === "import"
+                      ? dummyData.upcomingChangesData
+                      : dummyData.exportUpcomingChangesData;
+                  const groupedChanges = groupUpcomingChangesByType(changes);
+                  const groups = Object.keys(groupedChanges);
+
+                  return groups.map((type, groupIndex) => (
+                    <div key={type}>
+                      {/* Type header */}
+                      <div className="pb-4">
+                        <h3 className="text-[13px] font-semibold text-gray-800 rounded-3px">
+                          {type}
+                        </h3>
                       </div>
-                      <h4 className="font-semibold text-gray-900 text-sm mb-1">
-                        {change.title}
-                      </h4>
-                      <p className="text-sm text-gray-700 leading-relaxed">
-                        {change.description}...
-                      </p>
+
+                      {/* Changes in this type */}
+                      <div className="space-y-6 mb-6">
+                        {groupedChanges[type].map((change, index) => (
+                          <div key={index}>
+                            <h4 className="font-semibold text-gray-900 mb-3 text-sm">
+                              {change.title}
+                            </h4>
+                            <p className="text-gray-700 leading-relaxed mb-4 text-sm">
+                              {change.description}
+                            </p>
+                            <div className="">
+                              <div className="bg-gray-50 px-4 py-3 rounded-3px">
+                                <p className="text-xs text-gray-700">
+                                  <span className="italic font-medium text-gray-800 block mb-1">
+                                    Impact:
+                                  </span>
+                                  {change.impact}
+                                </p>
+                                <p className="text-xs text-gray-700 pt-2">
+                                  <span className="italic font-medium text-gray-800 block mb-1">
+                                    Timing:
+                                  </span>
+                                  {change.timing}
+                                </p>
+                              </div>
+                              {/* <div className="bg-green-50 px-4 py-3 rounded-3px">
+                                <p className="text-xs text-gray-700">
+                                  <span className="italic font-medium text-gray-800 block mb-1">
+                                    Timing:
+                                  </span>
+                                  {change.timing}
+                                </p>
+                              </div> */}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Horizontal line between groups (except for the last group) */}
+                      {groupIndex < groups.length - 1 && (
+                        <div className="my-8">
+                          <hr className="border-gray-300" />
+                        </div>
+                      )}
                     </div>
-                  ))}
+                  ));
+                })()}
               </div>
             </div>
-
-            <div className="flex justify-start">
-              <button
-                onClick={handleUpcomingSeeMore}
-                className="mt-4 text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors"
-              >
-                See More
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 
-      {/* Import Watchlist */}
-      {activeTab === "import" && (
-        <div className="px-3 bg-white rounded-3px shadow-sm border border-gray-200 mb-8">
-          <div className="p-[16px] border-b border-gray-200 flex justify-between items-center min-h-[40px]">
-            <h2 className="text-xl font-semibold text-gray-900">
-              Import Watchlist (Products coming into{" "}
-              {dummyData.countries.find((c) => c.code === baseCountry)?.name})
-            </h2>
-            <div className="flex items-center gap-2 h-10">
-              {selectedImportItems.length > 0 ? (
-                <button
-                  onClick={handleRemoveSelectedImport}
-                  className="bg-red-600 text-white px-4 py-2 rounded-3px hover:bg-red-700 transition-colors flex items-center space-x-2"
-                >
-                  <Trash2 size={16} />
-                  <span>Remove Selected ({selectedImportItems.length})</span>
-                </button>
-              ) : (
-                <div className="w-0 h-10"></div>
-              )}
-              <div className="rounded-3px">
-                <div className="flex flex-wrap items-center justify-end gap-4">
-                  <div className="flex items-center space-x-4">
-                    <div
-                      className="flex items-center space-x-2"
-                      onClick={handleCSVUpload}
-                    >
-                      <label
-                        htmlFor="csv-upload"
-                        className="bg-gray-600 text-white px-4 py-2 rounded-3px hover:bg-gray-700 transition-colors cursor-pointer flex items-center space-x-2"
-                      >
-                        <Upload size={16} />
-                        <span>Upload CSV</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="overflow-auto max-h-[600px]">
-            <table className="w-full">
-              <thead className="sticky top-0 bg-white z-10 shadow-sm">
-                <tr className="border-b border-gray-200">
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    <input
-                      type="checkbox"
-                      checked={
-                        selectedImportItems.length === importItems.length &&
-                        importItems.length > 0
-                      }
-                      onChange={handleSelectAllImport}
-                      className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                    />
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Product
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    HS Code
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Origin
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Current Rate
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Tax
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Last Change
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Next Change
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {importItems.map((item) => (
-                  <tr
-                    key={item.id}
-                    className={`${getRowColor(
-                      item.nextChange.description
-                    )} border-b border-gray-100`}
-                  >
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <input
-                        type="checkbox"
-                        checked={selectedImportItems.includes(item.id)}
-                        onChange={() => handleSelectImportItem(item.id)}
-                        className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                      />
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900 font-medium">
-                      {item.productName}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <Link
-                        to={`/hscode/${item.hsCode}`}
-                        className="text-primary-600 hover:text-primary-800 font-mono"
-                      >
-                        {item.hsCode}
-                      </Link>
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      {
-                        dummyData.countries.find((c) => c.code === item.origin)
-                          ?.name
-                      }{" "}
-                      ({item.origin})
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <div className="font-semibold">{item.currentRate}%</div>
-                      {item.currentRateOrigin && (
-                        <div>{item.currentRateOrigin}</div>
-                      )}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-700">
-                      <div className="font-medium">{item.tax}%</div>
-                      <div className="text-xs text-gray-500">
-                        (VAT+Other Tax)
-                      </div>
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-600">
-                      <button
-                        onClick={() => handleChangeClick(item, "last")}
-                        className="text-left  transition-colors focus:outline-none"
-                      >
-                        <div>
-                          <div className="underline text-primary-600 hover:text-primary-700">
-                            {item.lastChange.date}:
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {item.lastChange.description}
-                          </div>
-                        </div>
-                      </button>
-                    </td>
-                    <td className="px-6 py-3 text-[16px]">
-                      <button
-                        onClick={() => handleChangeClick(item, "next")}
-                        className="text-left  transition-colors focus:outline-none"
-                      >
-                        <div className="flex items-center space-x-1">
-                          {item.nextChange.date !== "TBD" &&
-                            getChangeIcon(item.nextChange.description)}
-                          <div>
-                            {item.nextChange.date !== "TBD" && (
-                              <>
-                                <div className="underline text-primary-600 hover:text-primary-700">
-                                  {item.nextChange.date}:
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  {item.nextChange.description}
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </button>
-                    </td>
-                    <td className="px-6 py-3 text-[16px]">
-                      <Link
-                        to={`/hscode/${item.hsCode}`}
-                        className="text-primary-600 hover:text-primary-800 flex items-center space-x-1"
-                      >
-                        <Eye size={16} />
-                        <span>Details</span>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-
-                {/* New Import Row */}
-                {newImportRow && (
-                  <tr className="bg-blue-50 border-b border-gray-100">
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <input
-                        type="checkbox"
-                        disabled
-                        className="rounded border-gray-300"
-                      />
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      {/* Product column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <input
-                        type="text"
-                        value={newImportRow.hsCode}
-                        onChange={(e) =>
-                          handleNewRowChange("import", "hsCode", e.target.value)
-                        }
-                        placeholder="HS Code"
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
-                      />
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <select
-                        value={newImportRow.origin}
-                        onChange={(e) =>
-                          handleNewRowChange("import", "origin", e.target.value)
-                        }
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
-                      >
-                        <option value="">Select origin</option>
-                        {dummyData.countries.map((country) => (
-                          <option key={country.code} value={country.code}>
-                            {country.flag} {country.name}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      {/* Current Rate column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      {/* Tax column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-xs text-gray-500">
-                      {/* Last Change column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-xs text-gray-500">
-                      {/* Next Change column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <div className="flex space-x-1">
-                        <button
-                          onClick={handleSaveNewImportItem}
-                          className="px-2 py-1 bg-green-600 text-white text-xs rounded-3px hover:bg-green-700"
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={() => handleCancelNewRow("import")}
-                          className="px-2 py-1 bg-gray-600 text-white text-xs rounded-3px hover:bg-gray-700"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-
-            {importItems.length === 0 && (
-              <div className="text-center py-8 text-gray-500">
-                No import items in your watchlist yet. Start by searching for
-                tariffs and adding them to your watchlist.
-              </div>
-            )}
-          </div>
-
-          {/* Add Import Item Button */}
-          <div className="p-3 border-t border-gray-200">
-            <button
-              onClick={handleAddImportItem}
-              disabled={newImportRow !== null}
-              className={`w-[150px] py-3 px-2 rounded-3px transition-colors flex items-center justify-center space-x-2 border-2 border-dashed ${
-                newImportRow
-                  ? "bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed"
-                  : "bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-300 hover:border-gray-400"
-              }`}
-            >
-              <Plus size={20} />
-              <span>Add New</span>
-            </button>
-          </div>
-        </div>
-      )}
-      {/* Export Watchlist */}
-      {activeTab === "export" && (
-        <div className="px-3 bg-white rounded-3px shadow-sm border border-gray-200">
-          <div className="p-[16px] border-b border-gray-200 flex justify-between items-center min-h-[40px]">
-            <h2 className="text-xl font-semibold text-gray-900">
-              Export Watchlist (Products going from{" "}
-              {dummyData.countries.find((c) => c.code === baseCountry)?.name})
-            </h2>
-            <div className="flex items-center gap-2 h-10">
-              {selectedExportItems.length > 0 ? (
-                <button
-                  onClick={handleRemoveSelectedExport}
-                  className="bg-red-600 text-white px-4 py-2 rounded-3px hover:bg-red-700 transition-colors flex items-center space-x-2"
-                >
-                  <Trash2 size={16} />
-                  <span>Remove Selected ({selectedExportItems.length})</span>
-                </button>
-              ) : (
-                <div className="w-0 h-10"></div>
-              )}
-              <div className="rounded-3px">
-                <div className="flex flex-wrap items-center justify-end gap-4">
-                  <div className="flex items-center space-x-4">
-                    <div
-                      className="flex items-center space-x-2"
-                      onClick={handleCSVUpload}
-                    >
-                      <label
-                        htmlFor="csv-upload"
-                        className="bg-gray-600 text-white px-4 py-2 rounded-3px hover:bg-gray-700 transition-colors cursor-pointer flex items-center space-x-2"
-                      >
-                        <Upload size={16} />
-                        <span>Upload CSV</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="overflow-auto max-h-[600px]">
-            <table className="w-full">
-              <thead className="sticky top-0 bg-white z-10 shadow-sm">
-                <tr className="border-b border-gray-200">
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    <input
-                      type="checkbox"
-                      checked={
-                        selectedExportItems.length === exportItems.length &&
-                        exportItems.length > 0
-                      }
-                      onChange={handleSelectAllExport}
-                      className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                    />
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Product
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    HS Code
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Destination
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Current Rate
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Tax
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Last Change
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Next Change
-                  </th>
-                  <th className="px-6 text-left py-3 text-[16px] font-semibold text-gray-700">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {exportItems.map((item) => (
-                  <tr
-                    key={item.id}
-                    className={`${getRowColor(
-                      item.nextChange.description
-                    )} border-b border-gray-100`}
-                  >
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <input
-                        type="checkbox"
-                        checked={selectedExportItems.includes(item.id)}
-                        onChange={() => handleSelectExportItem(item.id)}
-                        className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                      />
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900 font-medium">
-                      {item.productName}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <Link
-                        to={`/hscode/${item.hsCode}`}
-                        className="text-primary-600 hover:text-primary-800 font-mono"
-                      >
-                        {item.hsCode}
-                      </Link>
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      {
-                        dummyData.countries.find(
-                          (c) => c.code === item.destination
-                        )?.name
-                      }{" "}
-                      ({item.destination})
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <div className="font-semibold">{item.currentRate}%</div>
-                      {item.currentRateOrigin && (
-                        <div>{item.currentRateOrigin}</div>
-                      )}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-700">
-                      <div className="font-medium">{item.tax}%</div>
-                      <div className="text-xs text-gray-500">
-                        (VAT+Other Tax)
-                      </div>
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-600">
-                      <button
-                        onClick={() => handleChangeClick(item, "last")}
-                        className="text-left transition-colors focus:outline-none"
-                      >
-                        <div>
-                          <div className="underline text-primary-600 hover:text-primary-700">
-                            {item.lastChange.date}:
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {item.lastChange.description}
-                          </div>
-                        </div>
-                      </button>
-                    </td>
-                    <td className="px-6 py-3 text-[16px]">
-                      <button
-                        onClick={() => handleChangeClick(item, "next")}
-                        className="text-left transition-colors focus:outline-none"
-                      >
-                        <div className="flex items-center space-x-1">
-                          {item.nextChange.date !== "TBD" &&
-                            getChangeIcon(item.nextChange.description)}
-                          <div>
-                            {item.nextChange.date !== "TBD" && (
-                              <>
-                                <div className="underline text-primary-600 hover:text-primary-700">
-                                  {item.nextChange.date}:
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  {item.nextChange.description}
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </button>
-                    </td>
-                    <td className="px-6 py-3 text-[16px]">
-                      <Link
-                        to={`/hscode/${item.hsCode}`}
-                        className="text-primary-600 hover:text-primary-800 flex items-center space-x-1"
-                      >
-                        <Eye size={16} />
-                        <span>Details</span>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-
-                {/* New Export Row */}
-                {newExportRow && (
-                  <tr className="bg-blue-50 border-b border-gray-100">
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <input
-                        type="checkbox"
-                        disabled
-                        className="rounded border-gray-300"
-                      />
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      {/* Product column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <input
-                        type="text"
-                        value={newExportRow.hsCode}
-                        onChange={(e) =>
-                          handleNewRowChange("export", "hsCode", e.target.value)
-                        }
-                        placeholder="HS Code"
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
-                      />
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <select
-                        value={newExportRow.destination}
-                        onChange={(e) =>
-                          handleNewRowChange(
-                            "export",
-                            "destination",
-                            e.target.value
-                          )
-                        }
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
-                      >
-                        <option value="">Select destination</option>
-                        {dummyData.countries.map((country) => (
-                          <option key={country.code} value={country.code}>
-                            {country.flag} {country.name}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      {/* Current Rate column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      {/* Tax column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-xs text-gray-500">
-                      {/* Last Change column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-xs text-gray-500">
-                      {/* Next Change column - blank */}
-                    </td>
-                    <td className="px-6 py-3 text-[16px] text-gray-900">
-                      <div className="flex space-x-1">
-                        <button
-                          onClick={handleSaveNewExportItem}
-                          className="px-2 py-1 bg-green-600 text-white text-xs rounded-3px hover:bg-green-700"
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={() => handleCancelNewRow("export")}
-                          className="px-2 py-1 bg-gray-600 text-white text-xs rounded-3px hover:bg-gray-700"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-
-            {exportItems.length === 0 && (
-              <div className="text-center py-8 text-gray-500">
-                No export items in your watchlist yet. Start by searching for
-                tariffs and adding them to your watchlist.
-              </div>
-            )}
-          </div>
-
-          {/* Add Export Item Button */}
-          <div className="p-3 border-t border-gray-200">
-            <button
-              onClick={handleAddExportItem}
-              disabled={newExportRow !== null}
-              className={`w-[150px] py-3 px-2 rounded-3px transition-colors flex items-center justify-center space-x-2 border-2 border-dashed ${
-                newExportRow
-                  ? "bg-gray-200 text-gray-400 border-gray-200 cursor-not-allowed"
-                  : "bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-300 hover:border-gray-400"
-              }`}
-            >
-              <Plus size={20} />
-              <span>Add New</span>
-            </button>
-          </div>
-        </div>
-      )}
       {/* Change Detail Dialog */}
       {showChangeDialog && selectedChangeInfo && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -1161,173 +1151,6 @@ const ProductWatchlist = ({ user }) => {
                 >
                   Close
                 </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* See More Modal */}
-      {showSeeMoreModal && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end z-50 p-4 pt-[10%] pr-[50%]"
-          onClick={(e) => {
-            // Close modal on backdrop click
-            if (e.target === e.currentTarget) {
-              setShowSeeMoreModal(false);
-            }
-          }}
-        >
-          <div className="bg-white rounded-3px max-w-2xl w-full max-h-[70vh] flex flex-col">
-            {/* Header */}
-            <div className="flex justify-between items-start p-4 ">
-              <h2 className="text-xl font-semibold text-gray-900">
-                What has Changed
-              </h2>
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <select
-                    value={seeMoreTimePeriod}
-                    onChange={(e) => setSeeMoreTimePeriod(e.target.value)}
-                    className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm min-w-[200px] appearance-none bg-white pr-8"
-                  >
-                    <option value="Past Week">Past Week</option>
-                    <option value="Past Month">Past Month</option>
-                    <option value="Past 3 Months">Past 3 Months</option>
-                    <option value="Past Year">Past Year</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg
-                      className="fill-current h-4 w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Selected Time Period Tag */}
-            <div className="px-4">
-              <span className="inline-flex items-center rounded-full text-sm font-medium">
-                {seeMoreTimePeriod === "Past Week" &&
-                  "Past Week (Oct 1 – Oct 8, 2025)"}
-                {seeMoreTimePeriod === "Past Month" &&
-                  "Past Month (Sept 8 – Oct 8, 2025)"}
-                {seeMoreTimePeriod === "Past 3 Months" &&
-                  "Past 3 Months (July 8 – Oct 8, 2025)"}
-                {seeMoreTimePeriod === "Past Year" &&
-                  "Past Year (Oct 2024 – Oct 2025)"}
-              </span>
-            </div>
-
-            {/* Scrollable content area */}
-            <div className="flex-1 overflow-y-auto px-4 py-2">
-              <div className="space-y-4">
-                {(activeTab === "import"
-                  ? dummyData.changesData[seeMoreTimePeriod]
-                  : dummyData.exportChangesData[seeMoreTimePeriod]
-                )?.map((change, index) => (
-                  <div key={index} className="py-2">
-                    <h4 className="font-semibold text-gray-900 mb-2 text-sm">
-                      {change.title}
-                    </h4>
-                    <p className="text-gray-700 leading-relaxed text-sm">
-                      {change.description}
-                    </p>
-                  </div>
-                )) || (
-                  <div className="text-gray-500 text-center py-8">
-                    No changes found for the selected time period.
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Upcoming Changes Modal */}
-      {showUpcomingSeeMoreModal && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-start z-50 p-4 pt-[10%] pl-[50%]"
-          onClick={(e) => {
-            // Close modal on backdrop click
-            if (e.target === e.currentTarget) {
-              setShowUpcomingSeeMoreModal(false);
-            }
-          }}
-        >
-          <div className="bg-white rounded-3px max-w-2xl w-full max-h-[70vh] flex flex-col">
-            {/* Header */}
-            <div className="flex justify-between items-start p-4">
-              <h2 className="text-xl font-semibold text-gray-900">
-                Upcoming Changes
-              </h2>
-            </div>
-
-            {/* Scrollable content area */}
-            <div className="flex-1 overflow-y-auto px-4 py-2">
-              <div className="space-y-4">
-                {(() => {
-                  const changes =
-                    activeTab === "import"
-                      ? dummyData.upcomingChangesData
-                      : dummyData.exportUpcomingChangesData;
-                  const groupedChanges = groupUpcomingChangesByType(changes);
-                  const groups = Object.keys(groupedChanges);
-
-                  return groups.map((type, groupIndex) => (
-                    <div key={type}>
-                      {/* Type header */}
-                      <div className="py-2 ">
-                        <h3 className="text-[13px] font-semibold text-gray-800 px-3 capitalize">
-                          {type}
-                        </h3>
-                      </div>
-
-                      {/* Changes in this type */}
-                      <div className="space-y-4 mb-4">
-                        {groupedChanges[type].map((change, index) => (
-                          <div key={index} className="py-2 pl-4">
-                            <h4 className="font-semibold text-gray-900 mb-2 text-sm">
-                              {change.title}
-                            </h4>
-                            <p className="text-gray-700 leading-relaxed text-sm mb-3">
-                              {change.description}
-                            </p>
-                            <div className="space-y-2">
-                              <div className="bg-gray-50 px-3 py-0 rounded-3px">
-                                <p className="text-xs text-gray-700 mt-1">
-                                  <span className="text-xs font-medium text-gray-600 italic pr-2">
-                                    Impact:
-                                  </span>
-                                  {change.impact}
-                                </p>
-
-                                <p className="text-xs text-gray-700 mt-1">
-                                  <span className="text-xs font-medium text-gray-600 italic pr-2">
-                                    Timing:
-                                  </span>
-                                  {change.timing}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Horizontal line between groups (except for the last group) */}
-                      {groupIndex < groups.length - 1 && (
-                        <div className="my-6">
-                          <hr className="border-gray-300" />
-                        </div>
-                      )}
-                    </div>
-                  ));
-                })()}
               </div>
             </div>
           </div>
