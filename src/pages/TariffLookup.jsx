@@ -120,8 +120,23 @@ const TariffLookup = () => {
         return "bg-red-50 text-red-700";
       case "decrease":
         return "bg-green-50 text-green-700";
+      case "not-sure":
+        return "bg-yellow-50 text-yellow-700";
       default:
         return "bg-gray-50 text-gray-700";
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "increase":
+        return "text-red-700";
+      case "decrease":
+        return "text-green-700";
+      case "not-sure":
+        return "text-yellow-700";
+      default:
+        return "text-gray-700";
     }
   };
 
@@ -270,14 +285,20 @@ const TariffLookup = () => {
                         onClick={() => setShowRulesDialog(true)}
                         className="text-[16px] underline font-medium text-primary-600 hover:text-primary-700 flex items-center space-x-1 transition-colors"
                       >
-                        <span>{searchResults.preferentialRate || 5}%</span>
+                        {searchResults.preferentialRate && (
+                          <span>{searchResults.preferentialRate}%</span>
+                        )}
                       </button>
                     </div>
 
                     <div className="flex justify-between">
                       <span className="text-[16px] text-gray-600">VAT:</span>
                       <span className="text-[16px] font-medium text-gray-900">
-                        {searchResults.vat || 4}%
+                        {searchResults.vat === "N/A (recoverable)"
+                          ? searchResults.vat
+                          : searchResults.vat !== null
+                          ? `${searchResults.vat}%`
+                          : ""}
                       </span>
                     </div>
 
@@ -302,10 +323,10 @@ const TariffLookup = () => {
                       <p className="text-xs text-gray-500">
                         Source:{" "}
                         <span className="text-primary-600 hover:text-primary-700 cursor-pointer">
-                          {searchResults.detailedSource ||
+                          {searchResults.source ||
                             "TARIC Entry – Regulation 2023/1191"}
                         </span>{" "}
-                        retrieved 01.06.2025
+                        (retrieved 2025-10-01)
                       </p>
                     </div>
                   </div>
@@ -320,8 +341,12 @@ const TariffLookup = () => {
 
                 <div className="prose prose-sm text-gray-700 leading-relaxed">
                   <p>
-                    {searchResults.detailedInfo ||
-                      "Woven cotton fabrics (HS 5208.52) imported from India into Germany are eligible for a reduced 3.2% tariff under the EU's GSP. To use this benefit, the goods must meet origin rules and include valid documentation. Importers should also ensure that fabrics comply with EU chemical safety standards and product labeling rules. While no quota is currently active, high import volumes are monitored and could trigger safeguards in future."}
+                    {searchResults.additionalInfo.split("\n").map((line, i) => (
+                      <React.Fragment key={i}>
+                        {line}
+                        <br />
+                      </React.Fragment>
+                    ))}
                   </p>
                 </div>
               </div>
@@ -371,7 +396,10 @@ const TariffLookup = () => {
           <div className="bg-white rounded-3px  p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
               Annual Imports of {searchResults.hsCode} to{" "}
-              {searchResults.destination} (2024)
+              {dummyData.countries.find(
+                (c) => c.code === searchResults.destination
+              )?.name || searchResults.destination}{" "}
+              (2024)
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -381,16 +409,16 @@ const TariffLookup = () => {
                       Origin Country
                     </th>
                     <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
-                      Total (€B)
+                      Value (€M)
                     </th>
                     <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
                       % of Total
                     </th>
                     <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
-                      Quantity
+                      Volume
                     </th>
                     <th className="text-left py-3 text-[16px] font-semibold text-gray-700">
-                      Avg Duty
+                      Current Duty
                     </th>
                   </tr>
                 </thead>
@@ -407,16 +435,12 @@ const TariffLookup = () => {
                         {intel.marketShare}%
                       </td>
                       <td className="py-3 text-[16px] text-gray-900">
-                        {intel.volume.toLocaleString()}
+                        {intel.volume} t
                       </td>
                       <td
-                        className={`py-3 text-[16px] font-medium ${
-                          intel.avgDuty > searchResults.currentRate
-                            ? "text-red-600"
-                            : intel.avgDuty < searchResults.currentRate
-                            ? "text-green-600"
-                            : "text-gray-900"
-                        }`}
+                        className={`py-3 text-[16px] font-medium ${getStatusColor(
+                          intel.status
+                        )}`}
                       >
                         {intel.avgDuty}%
                       </td>

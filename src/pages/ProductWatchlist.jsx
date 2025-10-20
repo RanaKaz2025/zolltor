@@ -514,7 +514,7 @@ const ProductWatchlist = ({ user }) => {
                               >
                                 <div>
                                   <div className="underline text-primary-600 hover:text-primary-700">
-                                    {item.lastChange.date}:
+                                    {item.lastChange.date}
                                   </div>
                                   <div className="text-sm text-gray-500">
                                     {item.lastChange.description}
@@ -534,7 +534,7 @@ const ProductWatchlist = ({ user }) => {
                                     {item.nextChange.date !== "TBD" && (
                                       <>
                                         <div className="underline text-primary-600 hover:text-primary-700">
-                                          {item.nextChange.date}:
+                                          {item.nextChange.date}
                                         </div>
                                         <div className="text-sm text-gray-500">
                                           {item.nextChange.description}
@@ -811,7 +811,7 @@ const ProductWatchlist = ({ user }) => {
                               >
                                 <div>
                                   <div className="underline text-primary-600 hover:text-primary-700">
-                                    {item.lastChange.date}:
+                                    {item.lastChange.date}
                                   </div>
                                   <div className="text-sm text-gray-500">
                                     {item.lastChange.description}
@@ -831,7 +831,7 @@ const ProductWatchlist = ({ user }) => {
                                     {item.nextChange.date !== "TBD" && (
                                       <>
                                         <div className="underline text-primary-600 hover:text-primary-700">
-                                          {item.nextChange.date}:
+                                          {item.nextChange.date}
                                         </div>
                                         <div className="text-sm text-gray-500">
                                           {item.nextChange.description}
@@ -1060,27 +1060,31 @@ const ProductWatchlist = ({ user }) => {
                             </p>
                             <div className="">
                               <div className="bg-gray-50 px-4 py-3 rounded-3px">
-                                <p className="text-xs text-gray-700">
-                                  <span className="italic font-medium text-gray-800 block mb-1">
-                                    Impact:
-                                  </span>
-                                  {change.impact}
-                                </p>
-                                <p className="text-xs text-gray-700 pt-2">
-                                  <span className="italic font-medium text-gray-800 block mb-1">
-                                    Timing:
-                                  </span>
-                                  {change.timing}
-                                </p>
+                                {change.impact && (
+                                  <p className="text-xs text-gray-700">
+                                    <span className="italic font-medium text-gray-800 block mb-1">
+                                      Impact:
+                                    </span>
+                                    {change.impact}
+                                  </p>
+                                )}
+                                {change.timing && (
+                                  <p className="text-xs text-gray-700 pt-2">
+                                    <span className="italic font-medium text-gray-800 block mb-1">
+                                      Timing:
+                                    </span>
+                                    {change.timing}
+                                  </p>
+                                )}
+                                {change.action && (
+                                  <p className="text-xs text-gray-700 pt-2">
+                                    <span className="italic font-medium text-gray-800 block mb-1">
+                                      Action:
+                                    </span>
+                                    {change.action}
+                                  </p>
+                                )}
                               </div>
-                              {/* <div className="bg-green-50 px-4 py-3 rounded-3px">
-                                <p className="text-xs text-gray-700">
-                                  <span className="italic font-medium text-gray-800 block mb-1">
-                                    Timing:
-                                  </span>
-                                  {change.timing}
-                                </p>
-                              </div> */}
                             </div>
                           </div>
                         ))}

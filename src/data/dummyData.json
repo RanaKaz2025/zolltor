@@ -316,7 +316,12 @@
       "projections": [
         { "quarter": "Q3 2025", "rate": 1.0, "change": "stable" },
         { "quarter": "Q4 2025", "rate": 1.0, "change": "stable" },
-        { "quarter": "Q1 2026", "rate": 0.0, "change": "decrease" },
+        {
+          "quarter": "Q1 2026",
+          "rate": 0.0,
+          "change": "decrease",
+          "changeExplanation": "2026-02-01 Rate ↓ to 0%"
+        },
         { "quarter": "Q2 2026", "rate": 0.0, "change": "stable" }
       ],
       "keyDates": [
@@ -329,46 +334,51 @@
       "marketIntelligence": [
         {
           "country": "China",
-          "total": 690000000,
+          "total": 690,
           "marketShare": 17.0,
-          "volume": 11400,
+          "volume": "11 400",
           "avgDuty": 3.7,
-          "rank": 1
+          "rank": 1,
+          "status": "increase"
         },
         {
           "country": "Czech Republic",
-          "total": 275000000,
+          "total": 275,
           "marketShare": 9.0,
-          "volume": 5800,
+          "volume": "5 800",
           "avgDuty": 0.0,
-          "rank": 2
+          "rank": 2,
+          "status": "decrease"
         },
         {
           "country": "United States",
-          "total": 220000000,
+          "total": 220,
           "marketShare": 8.0,
-          "volume": 5100,
+          "volume": "51 00",
           "avgDuty": 3.7,
-          "rank": 3
+          "rank": 3,
+          "status": "increase"
         },
         {
           "country": "Poland",
-          "total": 215000000,
+          "total": 215,
           "marketShare": 6.0,
-          "volume": 3900,
+          "volume": "39 00",
           "avgDuty": 0.0,
-          "rank": 4
+          "rank": 4,
+          "status": "decrease"
         },
         {
           "country": "Japan",
-          "total": 180000000,
+          "total": 180,
           "marketShare": 5.0,
-          "volume": 3200,
+          "volume": "32 000",
           "avgDuty": 1.0,
-          "rank": 5
+          "rank": 5,
+          "status": "stable"
         }
       ],
-      "additionalInfo": "Electrical connectors from Japan currently qualify for a 1% import duty under the EU-Japan trade agreement. To qualify for the lower rate, the product must be made or significantly processed in Japan. Your Japanese supplier must provide a short \"statement of origin\" on the invoice that proves this. The preferential rate will fall to 0% on 2025-02-01 as part of the EU-Japan free trade agreement. No quotas or trade restrictions apply to these parts."
+      "additionalInfo": "Electrical connectors from Japan currently qualify for a 1% import duty under the EU-Japan trade agreement. To qualify for the lower rate, the product must be made or significantly processed in Japan. Your Japanese supplier must provide a short \"statement of origin\" on the invoice that proves this. \nThe preferential rate will fall to 0% on 2025-02-01 as part of the EU-Japan free trade agreement. No quotas or trade restrictions apply to these parts."
     },
     {
       "hsCode": "7604.21",
@@ -386,8 +396,18 @@
       "projections": [
         { "quarter": "Q3 2025", "rate": 32.5, "change": "stable" },
         { "quarter": "Q4 2025", "rate": 32.5, "change": "stable" },
-        { "quarter": "Q1 2026", "rate": 32.5, "change": "not-sure" },
-        { "quarter": "Q2 2026", "rate": 32.5, "change": "not-sure" }
+        {
+          "quarter": "Q1 2026",
+          "rate": 32.5,
+          "change": "not-sure",
+          "changeExplanation": "Possible ↑↓ after December 2025 review"
+        },
+        {
+          "quarter": "Q2 2026",
+          "rate": 32.5,
+          "change": "not-sure",
+          "changeExplanation": "Possible ↑↓ after December 2025 review"
+        }
       ],
       "keyDates": [
         {
@@ -399,46 +419,51 @@
       "marketIntelligence": [
         {
           "country": "China",
-          "total": 420000000,
+          "total": 420,
           "marketShare": 18.0,
-          "volume": 72000,
+          "volume": "72 000",
           "avgDuty": 32.5,
-          "rank": 1
+          "rank": 1,
+          "status": "increase"
         },
         {
           "country": "Turkey",
-          "total": 390000000,
+          "total": 390,
           "marketShare": 17.0,
-          "volume": 68000,
+          "volume": "68 000",
           "avgDuty": 0.0,
-          "rank": 2
+          "rank": 2,
+          "status": "decrease"
         },
         {
           "country": "Italy",
-          "total": 340000000,
+          "total": 340,
           "marketShare": 15.0,
-          "volume": 63000,
+          "volume": "63 000",
           "avgDuty": 0.0,
-          "rank": 3
+          "rank": 3,
+          "status": "decrease"
         },
         {
           "country": "Spain",
-          "total": 275000000,
+          "total": 275,
           "marketShare": 12.0,
-          "volume": 50000,
+          "volume": "50 000",
           "avgDuty": 0.0,
-          "rank": 4
+          "rank": 4,
+          "status": "decrease"
         },
         {
           "country": "Poland",
-          "total": 250000000,
+          "total": 250,
           "marketShare": 11.0,
-          "volume": 46000,
+          "volume": "46 000",
           "avgDuty": 0.0,
-          "rank": 5
+          "rank": 5,
+          "status": "decrease"
         }
       ],
-      "additionalInfo": "Imports of aluminium profiles from China face a 7.5% tariff plus a 25% anti-dumping duty, totaling 32.5%. The EU has renewed these measures several times, so they are a long-term structural cost when sourcing from China. The next review of these measures is December 2025, after which the rates may increase or decrease. For now, costs will remain high. Consider shifting part of your sourcing to Turkey or EU suppliers, which benefit from zero tariffs under the EU-Turkey Customs Union."
+      "additionalInfo": "Imports of aluminium profiles from China face a 7.5% tariff plus a 25% anti-dumping duty, totaling 32.5%. The EU has renewed these measures several times, so they are a long-term structural cost when sourcing from China. The next review of these measures is December 2025, after which the rates may increase or decrease.\nFor now, costs will remain high. Consider shifting part of your sourcing to Turkey or EU suppliers, which benefit from zero tariffs under the EU-Turkey Customs Union."
     },
     {
       "hsCode": "8538.90",
@@ -453,7 +478,12 @@
       "source": "USTR",
       "status": "Subject of EU-US trade negotiations",
       "projections": [
-        { "quarter": "Q3 2025", "rate": 15.0, "change": "decrease" },
+        {
+          "quarter": "Q3 2025",
+          "rate": 15.0,
+          "change": "decrease",
+          "changeExplanation": "2025-08-01 Rate ↓ from 27.5%"
+        },
         { "quarter": "Q4 2025", "rate": 15.0, "change": "stable" },
         { "quarter": "Q1 2026", "rate": 15.0, "change": "stable" },
         { "quarter": "Q2 2026", "rate": 15.0, "change": "stable" }
@@ -473,43 +503,48 @@
       "marketIntelligence": [
         {
           "country": "China",
-          "total": 3150000000,
+          "total": "3 150",
           "marketShare": 38.0,
-          "volume": 96000,
+          "volume": "96 000",
           "avgDuty": 58.5,
-          "rank": 1
+          "rank": 1,
+          "status": "increase"
         },
         {
           "country": "Mexico",
-          "total": 2450000000,
+          "total": "2 450",
           "marketShare": 30.0,
-          "volume": 72000,
+          "volume": "72 000",
           "avgDuty": 28.5,
-          "rank": 2
+          "rank": 2,
+          "status": "stable"
         },
         {
           "country": "Germany",
-          "total": 980000000,
+          "total": "980",
           "marketShare": 12.0,
-          "volume": 26000,
+          "volume": "26 000",
           "avgDuty": 15.0,
-          "rank": 3
+          "rank": 3,
+          "status": "decrease"
         },
         {
           "country": "Japan",
-          "total": 720000000,
+          "total": "720",
           "marketShare": 9.0,
-          "volume": 21000,
+          "volume": "21 000",
           "avgDuty": 15.0,
-          "rank": 4
+          "rank": 4,
+          "status": "decrease"
         },
         {
           "country": "South Korea",
-          "total": 460000000,
+          "total": "460",
           "marketShare": 6.0,
-          "volume": 14000,
+          "volume": "14 000",
           "avgDuty": 18.5,
-          "rank": 5
+          "rank": 5,
+          "status": "stable"
         }
       ],
       "additionalInfo": "U.S. import duty on German sensor sub-assemblies rose from 2.5% MFN rate to 27.5% effective 2025-05-03 as part of new US tariffs on automobiles and auto parts. In September 2025 this rate was reduced to 15% (effective 2025-08-01) as part of trade negotiations between the EU and US. There is no free-trade agreement to offset this rate, which is expected to remain through 2026. U.S. buyers now face higher landed costs, so you may need to adjust pricing or consider partial production in a lower-tariff region."
@@ -1087,7 +1122,7 @@
       "type": "Metals and structural materials",
       "title": "Copper wire (HS 7408.19 – Kazakhstan)",
       "description": "The EU's anti-circumvention probe continues; potential +2% duty if Russian-origin material confirmed.",
-      "impact": "Additional costs if circumvention found.",
+      "impact": "",
       "timing": "March 2026 earliest; decision window Q1 2026."
     },
     {
@@ -1095,7 +1130,7 @@
       "title": "Electrical connectors (HS 8536.69 – Japan)",
       "description": "Final EU–Japan tariff cut to 0% takes effect 1 February 2025, completing the EPA phase-in.",
       "impact": "Small but permanent savings; confirm supplier origin documentation before year-end.",
-      "timing": "1 February 2025."
+      "timing": ""
     },
     {
       "type": "Components and electrical goods",
@@ -1109,51 +1144,51 @@
       "title": "Plastic fasteners (HS 3926.30 – China)",
       "description": "EU Trade Defence Service has flagged this category for a potential safeguard screening in mid-2026.",
       "impact": "Low probability of action, but under monitoring.",
-      "timing": "Mid-2026 screening."
+      "timing": ""
     },
     {
       "type": "Policy and compliance environment",
       "title": "CBAM (Carbon Border Adjustment Mechanism)",
       "description": "From January 2026, importers of aluminium and steel products must start emissions reporting under CBAM.",
       "impact": "Administrative only in 2026, but financial charges start in 2027; early data collection recommended.",
-      "timing": "January 2026 reporting; 2027 financial charges."
+      "timing": ""
     },
     {
       "type": "Policy and compliance environment",
       "title": "Origin documentation refresh",
       "description": "Several FTAs (Japan, Morocco, UK) have new supplier statement formats effective in early 2026.",
       "impact": "Low; ensure procurement teams receive updated templates.",
-      "timing": "Early 2026."
+      "timing": ""
     }
   ],
   "exportUpcomingChangesData": [
     {
       "type": "Policy and compliance environment",
       "title": "United Kingdom (EU–UK TCA)",
-      "description": "The UK and EU are tightening the rules-of-origin process for all goods traded duty-free under the Trade and Cooperation Agreement. New declaration formats and expiry periods for supplier statements take effect January 2026.",
-      "impact": "No tariff change, but missing or outdated paperwork would trigger UK MFN rates (2–3%). Automotive and electronics parts like wiring harnesses and sensor assemblies remain 0% duty if origin proofs are valid.",
-      "timing": "Refresh origin documentation with suppliers by December 2025 to keep duty-free status."
+      "description": "The UK and EU are tightening the rules-of-origin process for all goods traded duty-free under the Trade and Cooperation Agreement. New declaration formats and expiry periods for supplier statements take effect January 2026. Automotive and electronics parts like wiring harnesses and sensor assemblies remain 0% duty if origin proofs are valid.",
+      "impact": "No tariff change, but missing or outdated paperwork would trigger UK MFN rates (2–3%).",
+      "action": "Refresh origin documentation with suppliers by December 2025 to keep duty-free status."
     },
     {
       "type": "Policy and compliance environment",
       "title": "United States",
-      "description": "The 15% U.S. import tariff on EU industrial goods is expected to remain in place through at least 2027, but Washington and Brussels are due to review the framework in mid-2026. USTR has also hinted that some components may be recategorized under a new 'essential industrial goods' list.",
-      "impact": "No change to current pricing in 2025, but a policy window in 2026 could open for partial rollback or product-specific exclusions. Specific subheadings such as electrical parts (HS 8538, 8544) might see lower rates.",
-      "timing": "Track the 2026 review timetable and maintain dialogue with U.S. distributors about requesting exclusion status for low-risk automotive parts."
+      "description": "The 15% U.S. import tariff on EU industrial goods is expected to remain in place through at least 2027, but Washington and Brussels are due to review the framework in mid-2026. USTR has also hinted that some components may be recategorized under a new 'essential industrial goods' list, which might lower rates on specific subheadings such as electrical parts (HS 8538, 8544).",
+      "impact": "No change to current pricing in 2025, but a policy window in 2026 could open for partial rollback or product-specific exclusions.",
+      "action": "Track the 2026 review timetable and maintain dialogue with U.S. distributors about requesting exclusion status for low-risk automotive parts."
     },
     {
       "type": "Components and electrical goods",
       "title": "Norway (EEA Agreement)",
       "description": "The EEA digital certificate rollout will replace the paper EUR.1 origin form in Q1 2026. No duty change; Norway continues to apply 0% tariff on EU-origin goods.",
       "impact": "Only administrative—ensure export paperwork migrates to the new format.",
-      "timing": "Update ERP templates and train the shipping team before March 2026."
+      "action": "Update ERP templates and train the shipping team before March 2026."
     },
     {
       "type": "Components and electrical goods",
       "title": "Switzerland (EU–CH FTA)",
       "description": "The EU–Switzerland trade modernization program introduces new supplier statement templates and e-certification options in early 2026. Duty stays 0% with origin proof.",
       "impact": "Minimal, but incorrect documents could delay clearance.",
-      "timing": "Adopt the new statement wording in Q1 2026."
+      "action": "Adopt the new statement wording in Q1 2026."
     }
   ]
 }
