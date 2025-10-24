@@ -310,7 +310,11 @@ const UserProfile = ({ user, setUser }) => {
                           className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold"
                         >
                           {dummyData.countries.map((country) => (
-                            <option key={country.code} value={country.code} className="text-16-semibold">
+                            <option
+                              key={country.code}
+                              value={country.code}
+                              className="text-16-semibold"
+                            >
                               {country.flag} {country.name}
                             </option>
                           ))}

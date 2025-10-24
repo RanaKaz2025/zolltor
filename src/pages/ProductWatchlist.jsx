@@ -335,7 +335,11 @@ const ProductWatchlist = ({ user }) => {
               className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold"
             >
               {dummyData.countries.map((country) => (
-                <option key={country.code} value={country.code} className="text-16-semibold">
+                <option
+                  key={country.code}
+                  value={country.code}
+                  className="text-16-semibold"
+                >
                   {country.flag} {country.name}
                 </option>
               ))}
@@ -597,7 +601,9 @@ const ProductWatchlist = ({ user }) => {
                                 }
                                 className="w-full px-2 py-1 border border-gray-300 rounded-3px text-16-semibold"
                               >
-                                <option value="" className="text-16-semibold">Select origin</option>
+                                <option value="" className="text-16-semibold">
+                                  Select origin
+                                </option>
                                 {dummyData.countries.map((country) => (
                                   <option
                                     key={country.code}
@@ -895,7 +901,9 @@ const ProductWatchlist = ({ user }) => {
                                 }
                                 className="w-full px-2 py-1 border border-gray-300 rounded-3px text-16-semibold"
                               >
-                                <option value="" className="text-16-semibold">Select destination</option>
+                                <option value="" className="text-16-semibold">
+                                  Select destination
+                                </option>
                                 {dummyData.countries.map((country) => (
                                   <option
                                     key={country.code}

@@ -377,9 +377,15 @@ const AuthPage = ({ onLogin }) => {
                     }`}
                     required={!isLogin}
                   >
-                    <option value="" className="text-16-semibold">Select your country</option>
+                    <option value="" className="text-16-semibold">
+                      Select your country
+                    </option>
                     {dummyData.countries.map((country) => (
-                      <option key={country.code} value={country.code} className="text-16-semibold">
+                      <option
+                        key={country.code}
+                        value={country.code}
+                        className="text-16-semibold"
+                      >
                         {country.flag} {country.name}
                       </option>
                     ))}
