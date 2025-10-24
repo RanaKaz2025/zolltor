@@ -326,16 +326,16 @@ const ProductWatchlist = ({ user }) => {
           </div>
 
           <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-16-medium text-gray-700 mb-2">
               Base Country (Your Location)
             </label>
             <select
               value={baseCountry}
               onChange={(e) => setBaseCountry(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="px-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold"
             >
               {dummyData.countries.map((country) => (
-                <option key={country.code} value={country.code}>
+                <option key={country.code} value={country.code} className="text-16-semibold">
                   {country.flag} {country.name}
                 </option>
               ))}
@@ -582,7 +582,7 @@ const ProductWatchlist = ({ user }) => {
                                   )
                                 }
                                 placeholder="HS Code"
-                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
+                                className="w-full px-2 py-1 border border-gray-300 rounded-3px font-mono text-16-semibold placeholder:text-16-medium"
                               />
                             </td>
                             <td className="px-6 py-3 text-[16px] text-gray-900">
@@ -595,13 +595,14 @@ const ProductWatchlist = ({ user }) => {
                                     e.target.value
                                   )
                                 }
-                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                                className="w-full px-2 py-1 border border-gray-300 rounded-3px text-16-semibold"
                               >
-                                <option value="">Select origin</option>
+                                <option value="" className="text-16-semibold">Select origin</option>
                                 {dummyData.countries.map((country) => (
                                   <option
                                     key={country.code}
                                     value={country.code}
+                                    className="text-16-semibold"
                                   >
                                     {country.flag} {country.name}
                                   </option>
@@ -879,7 +880,7 @@ const ProductWatchlist = ({ user }) => {
                                   )
                                 }
                                 placeholder="HS Code"
-                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px font-mono"
+                                className="w-full px-2 py-1 border border-gray-300 rounded-3px font-mono text-16-semibold placeholder:text-16-medium"
                               />
                             </td>
                             <td className="px-6 py-3 text-[16px] text-gray-900">
@@ -892,13 +893,14 @@ const ProductWatchlist = ({ user }) => {
                                     e.target.value
                                   )
                                 }
-                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded-3px"
+                                className="w-full px-2 py-1 border border-gray-300 rounded-3px text-16-semibold"
                               >
-                                <option value="">Select destination</option>
+                                <option value="" className="text-16-semibold">Select destination</option>
                                 {dummyData.countries.map((country) => (
                                   <option
                                     key={country.code}
                                     value={country.code}
+                                    className="text-16-semibold"
                                   >
                                     {country.flag} {country.name}
                                   </option>

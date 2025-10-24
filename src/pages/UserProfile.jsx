@@ -124,7 +124,7 @@ const UserProfile = ({ user, setUser }) => {
 
                   <div className="space-y-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-16-medium text-gray-700 mb-2">
                         Email Address (Read only)
                       </label>
                       <div className="relative">
@@ -136,14 +136,14 @@ const UserProfile = ({ user, setUser }) => {
                           type="email"
                           value={profileData.email}
                           readOnly
-                          className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px bg-gray-50 text-gray-500 cursor-not-allowed"
+                          className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px bg-gray-50 text-gray-500 cursor-not-allowed text-16-semibold placeholder:text-16-medium"
                           placeholder="you@example.com"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-16-medium text-gray-700 mb-2">
                         Language Preference
                       </label>
                       <div className="flex space-x-6">
@@ -164,7 +164,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="language-english"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             English
                           </label>
@@ -186,7 +186,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="language-german"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             German
                           </label>
@@ -195,7 +195,7 @@ const UserProfile = ({ user, setUser }) => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-16-medium text-gray-700 mb-2">
                         Role
                       </label>
                       <div className="flex flex-wrap gap-6">
@@ -216,7 +216,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="role-ceo"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             CEO
                           </label>
@@ -238,7 +238,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="role-cfo"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             CFO
                           </label>
@@ -260,7 +260,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="role-supply-chain"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             Supply Chain Manager
                           </label>
@@ -282,7 +282,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="role-other"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             Other
                           </label>
@@ -291,7 +291,7 @@ const UserProfile = ({ user, setUser }) => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-16-medium text-gray-700 mb-2">
                         Country of Operation
                       </label>
                       <div className="relative">
@@ -307,10 +307,10 @@ const UserProfile = ({ user, setUser }) => {
                               country: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                          className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold"
                         >
                           {dummyData.countries.map((country) => (
-                            <option key={country.code} value={country.code}>
+                            <option key={country.code} value={country.code} className="text-16-semibold">
                               {country.flag} {country.name}
                             </option>
                           ))}
@@ -344,7 +344,7 @@ const UserProfile = ({ user, setUser }) => {
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-16-medium text-gray-700 mb-2">
                         Email Address for Notifications
                       </label>
                       <div className="relative">
@@ -361,7 +361,7 @@ const UserProfile = ({ user, setUser }) => {
                               emailAddress: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                          className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium"
                           placeholder="notifications@example.com"
                         />
                       </div>
@@ -371,7 +371,7 @@ const UserProfile = ({ user, setUser }) => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-16-medium text-gray-700 mb-2">
                         Notification Frequency
                       </label>
                       <div className="flex flex-wrap gap-6">
@@ -392,7 +392,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="frequency-daily"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             Daily Digest
                           </label>
@@ -416,7 +416,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="frequency-weekly"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             Weekly Digest
                           </label>
@@ -440,7 +440,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="frequency-monthly"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             Monthly Digest
                           </label>
@@ -462,7 +462,7 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="frequency-major"
-                            className="ml-2 text-sm text-gray-700"
+                            className="ml-2 text-16-medium text-gray-700"
                           >
                             Major Changes Only
                           </label>
@@ -509,7 +509,7 @@ const UserProfile = ({ user, setUser }) => {
 
                   <div className="space-y-4 max-w-md">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-16-medium text-gray-700 mb-2">
                         Current Password
                       </label>
                       <div className="relative">
@@ -526,7 +526,7 @@ const UserProfile = ({ user, setUser }) => {
                               currentPassword: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                          className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium"
                           placeholder="Enter current password"
                         />
                         <button
@@ -549,7 +549,7 @@ const UserProfile = ({ user, setUser }) => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-16-medium text-gray-700 mb-2">
                         New Password
                       </label>
                       <div className="relative">
@@ -566,7 +566,7 @@ const UserProfile = ({ user, setUser }) => {
                               newPassword: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                          className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium"
                           placeholder="Enter new password"
                         />
                         <button
@@ -589,7 +589,7 @@ const UserProfile = ({ user, setUser }) => {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-16-medium text-gray-700 mb-2">
                         Confirm New Password
                       </label>
                       <div className="relative">
@@ -606,7 +606,7 @@ const UserProfile = ({ user, setUser }) => {
                               confirmPassword: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                          className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium"
                           placeholder="Confirm new password"
                         />
                         <button

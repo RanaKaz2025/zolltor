@@ -181,7 +181,7 @@ const AuthPage = ({ onLogin }) => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-16-medium text-gray-700 mb-2">
               Email Address *
             </label>
             <div className="relative">
@@ -194,7 +194,7 @@ const AuthPage = ({ onLogin }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-3 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                className={`w-full pl-10 pr-3 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium ${
                   errors.email ? "border-red-300" : "border-gray-300"
                 }`}
                 placeholder="you@example.com"
@@ -207,7 +207,7 @@ const AuthPage = ({ onLogin }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-16-medium text-gray-700 mb-2">
               Password *
             </label>
             <div className="relative">
@@ -220,7 +220,7 @@ const AuthPage = ({ onLogin }) => {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-12 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                className={`w-full pl-10 pr-12 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium ${
                   errors.password ? "border-red-300" : "border-gray-300"
                 }`}
                 placeholder="Enter your password"
@@ -242,7 +242,7 @@ const AuthPage = ({ onLogin }) => {
           {!isLogin && (
             <>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-16-medium text-gray-700 mb-2">
                   Language Preference *
                 </label>
                 <div className="flex space-x-6">
@@ -258,7 +258,7 @@ const AuthPage = ({ onLogin }) => {
                     />
                     <label
                       htmlFor="language-english"
-                      className="ml-2 text-sm text-gray-700"
+                      className="ml-2 text-16-medium text-gray-700"
                     >
                       English
                     </label>
@@ -275,7 +275,7 @@ const AuthPage = ({ onLogin }) => {
                     />
                     <label
                       htmlFor="language-german"
-                      className="ml-2 text-sm text-gray-700"
+                      className="ml-2 text-16-medium text-gray-700"
                     >
                       German
                     </label>
@@ -284,7 +284,7 @@ const AuthPage = ({ onLogin }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-16-medium text-gray-700 mb-2">
                   Role *
                 </label>
                 <div className="flex flex-wrap gap-6">
@@ -300,7 +300,7 @@ const AuthPage = ({ onLogin }) => {
                     />
                     <label
                       htmlFor="role-ceo"
-                      className="ml-2 text-sm text-gray-700"
+                      className="ml-2 text-16-medium text-gray-700"
                     >
                       CEO
                     </label>
@@ -317,7 +317,7 @@ const AuthPage = ({ onLogin }) => {
                     />
                     <label
                       htmlFor="role-cfo"
-                      className="ml-2 text-sm text-gray-700"
+                      className="ml-2 text-16-medium text-gray-700"
                     >
                       CFO
                     </label>
@@ -334,7 +334,7 @@ const AuthPage = ({ onLogin }) => {
                     />
                     <label
                       htmlFor="role-supply-chain"
-                      className="ml-2 text-sm text-gray-700"
+                      className="ml-2 text-16-medium text-gray-700"
                     >
                       Supply Chain Manager
                     </label>
@@ -351,7 +351,7 @@ const AuthPage = ({ onLogin }) => {
                     />
                     <label
                       htmlFor="role-other"
-                      className="ml-2 text-sm text-gray-700"
+                      className="ml-2 text-16-medium text-gray-700"
                     >
                       Other
                     </label>
@@ -360,7 +360,7 @@ const AuthPage = ({ onLogin }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-16-medium text-gray-700 mb-2">
                   Country of Operation *
                 </label>
                 <div className="relative">
@@ -372,14 +372,14 @@ const AuthPage = ({ onLogin }) => {
                     name="country"
                     value={formData.country}
                     onChange={handleInputChange}
-                    className={`w-full pl-10 pr-3 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 ${
+                    className={`w-full pl-10 pr-3 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold ${
                       errors.country ? "border-red-300" : "border-gray-300"
                     }`}
                     required={!isLogin}
                   >
-                    <option value="">Select your country</option>
+                    <option value="" className="text-16-semibold">Select your country</option>
                     {dummyData.countries.map((country) => (
-                      <option key={country.code} value={country.code}>
+                      <option key={country.code} value={country.code} className="text-16-semibold">
                         {country.flag} {country.name}
                       </option>
                     ))}
