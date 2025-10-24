@@ -578,13 +578,13 @@ const ProductWatchlist = ({ user }) => {
                               <input
                                 type="text"
                                 value={newImportRow.hsCode}
-                                onChange={(e) =>
-                                  handleNewRowChange(
-                                    "import",
-                                    "hsCode",
-                                    e.target.value
-                                  )
-                                }
+                                onChange={(e) => {
+                                  const value = e.target.value.replace(
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
+                                  handleNewRowChange("import", "hsCode", value);
+                                }}
                                 placeholder="HS Code"
                                 className="w-full px-2 py-1 border border-gray-300 rounded-3px font-mono text-16-semibold placeholder:text-16-medium"
                               />
@@ -878,13 +878,13 @@ const ProductWatchlist = ({ user }) => {
                               <input
                                 type="text"
                                 value={newExportRow.hsCode}
-                                onChange={(e) =>
-                                  handleNewRowChange(
-                                    "export",
-                                    "hsCode",
-                                    e.target.value
-                                  )
-                                }
+                                onChange={(e) => {
+                                  const value = e.target.value.replace(
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
+                                  handleNewRowChange("export", "hsCode", value);
+                                }}
                                 placeholder="HS Code"
                                 className="w-full px-2 py-1 border border-gray-300 rounded-3px font-mono text-16-semibold placeholder:text-16-medium"
                               />

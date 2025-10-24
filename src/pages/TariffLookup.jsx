@@ -170,7 +170,10 @@ const TariffLookup = () => {
               <input
                 type="text"
                 value={hsCode}
-                onChange={(e) => setHsCode(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^0-9.]/g, "");
+                  setHsCode(value);
+                }}
                 placeholder="e.g., 8517.12.00"
                 className="w-full px-3 py-2 border border-gray-300 rounded-3px text-16-semibold placeholder:text-16-medium"
                 required
