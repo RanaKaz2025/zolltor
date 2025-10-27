@@ -92,6 +92,46 @@
     line-height: 1.5;
   }
 
+  /* 24px font sizes */
+  .text-24-medium {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .text-24-semibold {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .text-30-semibold {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .text-30-bold {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .text-20-bold {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .text-18-bold {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .text-16-bold {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
   /* Button utility classes */
   /* Button sizes */
   .btn-md {
@@ -104,21 +144,43 @@
 
   /* Primary Button */
   .btn-primary {
-    @apply text-16-medium bg-primary-700 text-white rounded-3px border-0 cursor-pointer transition-colors hover:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply text-16-medium bg-primary-700 text-white rounded-3px border-0 cursor-pointer transition-colors hover:bg-primary-800 active:bg-primary-800 disabled:cursor-not-allowed;
+  }
+  .btn-primary.loading {
+    @apply bg-primary-500 cursor-wait;
   }
 
   /* Secondary Button */
   .btn-secondary {
-    @apply text-16-medium bg-white text-gray-700 rounded-3px border border-gray-300 cursor-pointer transition-all hover:bg-gray-50 hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply text-16-medium bg-white text-primary-700 cursor-pointer transition-all
+    disabled:opacity-50 disabled:cursor-not-allowed
+    rounded-3px border border-teal-700
+    hover:bg-teal-50 hover:border-teal-800
+    active:bg-teal-50 active:border-teal-800;
   }
 
   /* Tertiary Button */
   .btn-tertiary {
-    @apply text-16-medium bg-transparent text-gray-700 rounded-3px border-0 cursor-pointer transition-colors hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply px-3 py-[9px] flex items-center space-x-2 text-16-medium bg-transparent text-primary-700 cursor-pointer transition-all rounded-3px hover:bg-teal-50 active:bg-teal-50 
+    disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400;
   }
 
   /* Link Button */
   .btn-link {
-    @apply text-16-medium bg-transparent text-primary-700 border-0 cursor-pointer underline p-0 h-auto transition-colors hover:text-primary-800 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply text-16-medium bg-transparent text-primary-700 border-0 cursor-pointer underline p-0 h-auto transition-colors hover:text-primary-800 active:text-primary-800 disabled:cursor-not-allowed;
+  }
+  .btn-danger {
+    @apply text-16-medium bg-red-700 text-white rounded-3px border-0 cursor-pointer transition-colors hover:bg-red-800 active:bg-red-800 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .site_nav {
+    @apply text-16-regular;
+  }
+
+  /* Input Styles */
+  input,
+  select,
+  textarea {
+    @apply text-gray-500 rounded-3px border border-gray-300 px-3 py-2 transition-all focus:outline-none focus:ring-1 focus:ring-teal-700;
   }
 }

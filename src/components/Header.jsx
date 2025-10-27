@@ -64,25 +64,31 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
             <nav className="hidden md:flex items-center space-x-8">
               <Link
                 to="/"
-                className={`flex items-center space-x-1 transition-colors pb-1 border-b-2 ${
+                className={`flex items-center space-x-1 transition-colors  relative ${
                   location.pathname === "/"
-                    ? "text-primary-700 font-semibold border-primary-700"
-                    : "text-gray-700 hover:text-primary-600 border-transparent"
+                    ? "text-16-semibold text-primary-700"
+                    : "text-16-regular text-gray-800 hover:text-primary-600 active:text-primary-700"
                 }`}
               >
                 <span>Tariff Lookup</span>
+                {location.pathname === "/" && (
+                  <div className="absolute bottom-[-20px] left-[-20px] right-[-20px] h-[2px] bg-primary-700"></div>
+                )}
               </Link>
 
               {isAuthenticated && (
                 <Link
                   to="/watchlist"
-                  className={`flex items-center space-x-1 transition-colors pb-1 border-b-2 ${
+                  className={`flex items-center space-x-1 transition-colors relative ${
                     location.pathname === "/watchlist"
-                      ? "text-primary-700 font-semibold  border-primary-700"
-                      : "text-gray-700 hover:text-primary-600 border-transparent"
+                      ? "text-16-semibold text-primary-700"
+                      : "text-16-regular text-gray-800 hover:text-primary-600 active:text-primary-700"
                   }`}
                 >
                   <span>My Watchlist</span>
+                  {location.pathname === "/watchlist" && (
+                    <div className="absolute bottom-[-20px] left-[-20px] right-[-20px] h-[2px] bg-primary-700"></div>
+                  )}
                 </Link>
               )}
             </nav>

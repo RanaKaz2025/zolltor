@@ -42,14 +42,15 @@ function App() {
   return (
     <ToastProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-100">
           <Header
             isAuthenticated={isAuthenticated}
             user={user}
             onLogout={handleLogout}
           />
 
-          <main className="container mx-auto px-4 py-8">
+          {/* <main className="container mx-auto px-4 py-8"> */}
+          <main>
             <Routes>
               <Route path="/" element={<TariffLookup />} />
               <Route
@@ -58,7 +59,9 @@ function App() {
                   isAuthenticated ? (
                     <Navigate to="/watchlist" replace />
                   ) : (
-                    <AuthPage onLogin={handleLogin} />
+                    <div className="py-8">
+                      <AuthPage onLogin={handleLogin} />
+                    </div>
                   )
                 }
               />
@@ -66,18 +69,29 @@ function App() {
                 path="/watchlist"
                 element={
                   isAuthenticated ? (
-                    <ProductWatchlist user={user} />
+                    <div className="py-8">
+                      <ProductWatchlist user={user} />
+                    </div>
                   ) : (
                     <Navigate to="/auth" replace />
                   )
                 }
               />
-              <Route path="/hscode/:code" element={<HSCodeDetails />} />
+              <Route
+                path="/hscode/:code"
+                element={
+                  <div className="py-8">
+                    <HSCodeDetails />
+                  </div>
+                }
+              />
               <Route
                 path="/profile"
                 element={
                   isAuthenticated ? (
-                    <UserProfile user={user} setUser={setUser} />
+                    <div className="py-8">
+                      <UserProfile user={user} setUser={setUser} />
+                    </div>
                   ) : (
                     <Navigate to="/auth" replace />
                   )
