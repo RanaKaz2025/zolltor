@@ -183,4 +183,64 @@
   textarea {
     @apply text-gray-500 rounded-3px border border-gray-300 px-3 py-2 transition-all focus:outline-none focus:ring-1 focus:ring-teal-700;
   }
+
+  input[type="checkbox"] {
+    @apply w-[18px] h-[18px] rounded border-gray-300 focus:ring-teal-700 focus:ring-1;
+    accent-color: #0f766e; /* teal-700 */
+  }
+
+  input[type="checkbox"]:hover {
+    @apply border-teal-700;
+  }
+
+  input[type="checkbox"]:checked {
+    @apply bg-teal-800 border-teal-800;
+    accent-color: #0f766e; /* teal-800 */
+  }
+
+  input[type="checkbox"]:focus {
+    @apply ring-teal-700;
+  }
+
+  /* Page Navigation Styles */
+  .page-navigation {
+    @apply px-4 py-[9px] mx-[2px] rounded-full transition-all duration-200 text-16-medium;
+  }
+
+  .page-navigation.active {
+    @apply bg-teal-700 text-white;
+  }
+
+  .page-navigation.inactive {
+    @apply text-gray-500;
+  }
+
+  .page-navigation.inactive:hover {
+    @apply bg-gray-100;
+  }
+
+  .page-navigation.inactive:active {
+    @apply bg-gray-200;
+  }
+
+  /* Section Navigation Styles */
+  .section-navigation {
+    @apply px-[18px] py-[11px] mx-1 transition-all duration-200 text-16-medium;
+  }
+
+  .section-navigation.active {
+    @apply bg-teal-50 text-teal-700;
+  }
+
+  .section-navigation.inactive {
+    @apply text-gray-500;
+  }
+
+  .section-navigation.inactive:hover {
+    @apply bg-gray-50;
+  }
+
+  .section-navigation.inactive:active {
+    @apply bg-gray-100;
+  }
 }

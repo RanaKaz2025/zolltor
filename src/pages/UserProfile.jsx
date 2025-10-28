@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Save, Mail, Globe, Bell, Key, Eye, EyeOff } from "lucide-react";
+import Select from "../components/Select";
 import dummyData from "../data/dummyData.json";
 
 const UserProfile = ({ user, setUser }) => {
@@ -296,29 +297,24 @@ const UserProfile = ({ user, setUser }) => {
                       </label>
                       <div className="relative">
                         <Globe
-                          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"
                           size={18}
                         />
-                        <select
+                        <Select
                           value={profileData.country}
-                          onChange={(e) =>
+                          onChange={(value) =>
                             setProfileData({
                               ...profileData,
-                              country: e.target.value,
+                              country: value,
                             })
                           }
-                          className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold"
-                        >
-                          {dummyData.countries.map((country) => (
-                            <option
-                              key={country.code}
-                              value={country.code}
-                              className="text-16-semibold"
-                            >
-                              {country.flag} {country.name}
-                            </option>
-                          ))}
-                        </select>
+                          options={dummyData.countries.map((country) => ({
+                            value: country.code,
+                            label: `${country.flag} ${country.name}`,
+                          }))}
+                          placeholder="Select country"
+                          className="pl-10"
+                        />
                       </div>
                       <p className="mt-1 text-sm text-gray-500">
                         This determines your import/export perspective

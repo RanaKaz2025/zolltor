@@ -128,7 +128,7 @@ const HSCodeDetails = () => {
           className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-800 mb-4"
         >
           <ArrowLeft size={20} />
-          <span>Back to Watchlist</span>
+          <span>Back</span>
         </Link>
 
         <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6">

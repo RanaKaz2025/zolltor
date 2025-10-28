@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, User, Globe } from "lucide-react";
+import Select from "../components/Select";
 import dummyData from "../data/dummyData.json";
 
 const AuthPage = ({ onLogin }) => {
@@ -293,31 +294,24 @@ const AuthPage = ({ onLogin }) => {
                 </label>
                 <div className="relative">
                   <Globe
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"
                     size={18}
                   />
-                  <select
-                    name="country"
+                  <Select
                     value={formData.country}
-                    onChange={handleInputChange}
-                    className={`w-full pl-10 pr-3 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold ${
-                      errors.country ? "border-red-300" : "border-gray-300"
+                    onChange={(value) =>
+                      handleInputChange({ target: { name: "country", value } })
+                    }
+                    options={dummyData.countries.map((country) => ({
+                      value: country.code,
+                      label: `${country.flag} ${country.name}`,
+                    }))}
+                    placeholder="Select your country"
+                    className={`pl-10 ${
+                      errors.country ? "border-red-300" : ""
                     }`}
                     required={!isLogin}
-                  >
-                    <option value="" className="text-16-semibold">
-                      Select your country
-                    </option>
-                    {dummyData.countries.map((country) => (
-                      <option
-                        key={country.code}
-                        value={country.code}
-                        className="text-16-semibold"
-                      >
-                        {country.flag} {country.name}
-                      </option>
-                    ))}
-                  </select>
+                  />
                 </div>
                 {errors.country && (
                   <p className="mt-1 text-sm text-red-600">{errors.country}</p>
