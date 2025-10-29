@@ -1049,25 +1049,30 @@
     "Past Week": [
       {
         "title": "UK (EU–UK TCA)",
-        "description": "The UK government published a new template for supplier origin declarations, valid from January 2026. This replaces the 2021 version but keeps the same 0% duty treatment for qualifying EU goods."
+        "description": "The UK government published a new template for supplier origin declarations, valid from January 2026. This replaces the 2021 version but keeps the same 0% duty treatment for qualifying EU goods.",
+        "impact": "No tariff change, but exporters must update invoice declaration text for 2026 shipments."
       },
       {
         "title": "U.S.",
-        "description": "USTR confirmed review hearings for the new 15% tariffs on EU industrial goods will begin February 2026, establishing the next policy milestone."
+        "description": "USTR confirmed review hearings for the new 15% tariffs on EU industrial goods will begin February 2026, establishing the next policy milestone.",
+        "impact": "No immediate effect, but clarifies when revisions could occur."
       }
     ],
     "Past Month": [
       {
         "title": "UK",
-        "description": "HMRC issued guidance reminding importers that statements of origin older than 12 months will no longer be accepted from January 2026."
+        "description": "HMRC issued guidance reminding importers that statements of origin older than 12 months will no longer be accepted from January 2026.",
+        "impact": "Administrative tightening — exporters should ensure supplier statements are refreshed annually."
       },
       {
         "title": "U.S.",
-        "description": "The U.S.–EU Reciprocal Tariff Framework officially entered into the Federal Register, confirming the 15% rate effective 1 Aug 2025 for auto-related goods (including HS 8538 / 8544)."
+        "description": "The U.S.–EU Reciprocal Tariff Framework officially entered into the Federal Register, confirming the 15% rate effective 1 Aug 2025 for auto-related goods (including HS 8538 / 8544).",
+        "impact": "Confirms current tariff structure now embedded in U.S. law."
       },
       {
         "title": "Switzerland",
-        "description": "Swiss customs announced a 2026 rollout of e-origin certification, allowing digital proof of origin under the EU–CH FTA."
+        "description": "Swiss customs announced a 2026 rollout of e-origin certification, allowing digital proof of origin under the EU–CH FTA.",
+        "Impact": "No tariff change; paper statements remain valid until mid-2026."
       }
     ],
     "Past 3 Months": [
@@ -1077,7 +1082,8 @@
       },
       {
         "title": "U.S.",
-        "description": "Implementation of the 15% tariff (effective August 1) replaced the prior 2.6% MFN rate for EU-made industrial components."
+        "description": "Implementation of the 15% tariff (effective August 1) replaced the prior 2.6% MFN rate for EU-made industrial components.",
+        "impact": "HanseAuto’s U.S. customers now face a structurally higher cost base; re-pricing of 2026 contracts likely."
       },
       {
         "title": "Norway",
@@ -1165,28 +1171,40 @@
     {
       "type": "Policy and compliance environment",
       "title": "United Kingdom (EU–UK TCA)",
-      "description": "The UK and EU are tightening the rules-of-origin process for all goods traded duty-free under the Trade and Cooperation Agreement. New declaration formats and expiry periods for supplier statements take effect January 2026. Automotive and electronics parts like wiring harnesses and sensor assemblies remain 0% duty if origin proofs are valid.",
+      "description": "The UK and EU are tightening the rules-of-origin process for all goods traded duty-free under the Trade and Cooperation Agreement.",
+      "points": [
+        "New declaration formats and expiry periods for supplier statements take effect January 2026.",
+        "Automotive and electronics parts like wiring harnesses and sensor assemblies remain 0% duty if origin proofs are valid."
+      ],
       "impact": "No tariff change, but missing or outdated paperwork would trigger UK MFN rates (2–3%).",
       "action": "Refresh origin documentation with suppliers by December 2025 to keep duty-free status."
     },
     {
       "type": "Policy and compliance environment",
       "title": "United States",
-      "description": "The 15% U.S. import tariff on EU industrial goods is expected to remain in place through at least 2027, but Washington and Brussels are due to review the framework in mid-2026. USTR has also hinted that some components may be recategorized under a new 'essential industrial goods' list, which might lower rates on specific subheadings such as electrical parts (HS 8538, 8544).",
+      "description": "The 15% U.S. import tariff on EU industrial goods is expected to remain in place through at least 2027, but Washington and Brussels are due to review the framework in mid-2026.",
+      "points": [
+        "The review could result in limited tariff relief if trade talks progress, or a broader extension if no agreement is reached.",
+        "USTR has also hinted that some components may be recategorized under a new “essential industrial goods” list, which might lower rates on specific subheadings such as electrical parts (HS 8538, 8544)."
+      ],
       "impact": "No change to current pricing in 2025, but a policy window in 2026 could open for partial rollback or product-specific exclusions.",
       "action": "Track the 2026 review timetable and maintain dialogue with U.S. distributors about requesting exclusion status for low-risk automotive parts."
     },
     {
       "type": "Components and electrical goods",
       "title": "Norway (EEA Agreement)",
-      "description": "The EEA digital certificate rollout will replace the paper EUR.1 origin form in Q1 2026. No duty change; Norway continues to apply 0% tariff on EU-origin goods.",
+      "description": "The EEA digital certificate rollout will replace the paper EUR.1 origin form in Q1 2026.",
+      "points": [
+        "No duty change; Norway continues to apply 0 % tariff on EU-origin goods."
+      ],
       "impact": "Only administrative—ensure export paperwork migrates to the new format.",
       "action": "Update ERP templates and train the shipping team before March 2026."
     },
     {
       "type": "Components and electrical goods",
       "title": "Switzerland (EU–CH FTA)",
-      "description": "The EU–Switzerland trade modernization program introduces new supplier statement templates and e-certification options in early 2026. Duty stays 0% with origin proof.",
+      "description": "The EU–Switzerland trade modernization program introduces new supplier statement templates and e-certification options in early 2026.",
+      "points": ["Duty stays 0 % with origin proof."],
       "impact": "Minimal, but incorrect documents could delay clearance.",
       "action": "Adopt the new statement wording in Q1 2026."
     }

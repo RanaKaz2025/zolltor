@@ -986,12 +986,52 @@ const ProductWatchlist = ({ user }) => {
                     key={index}
                     className="py-4 border-b border-gray-100 last:border-b-0"
                   >
-                    <h4 className="text-18-bold text-gray-700 mb-2">
+                    <h4 className="text-18-bold text-gray-700 mb-3">
                       {change.title}
                     </h4>
-                    <p className="text-16-regular text-gray-700">
+                    <p className="text-16-regular text-gray-700 mb-4">
                       {change.description}
                     </p>
+                    <div className="">
+                      {change.impact && (
+                        <div className="px-3 py-2 rounded-[3px] border-l-2 bg-sky-50 border-sky-300">
+                          <p>
+                            <span className="text-16-medium text-gray-700 mb-1">
+                              Impact:
+                            </span>
+                            <p className="text-16-regular text-gray-700">
+                              {change.impact}
+                            </p>
+                          </p>
+                        </div>
+                      )}
+
+                      {change.timing && (
+                        <div className="px-3 py-2 rounded-[3px] border-l-2 bg-sky-50 border-sky-300 mt-2">
+                          <p>
+                            <span className="text-16-medium text-gray-700 block mb-1">
+                              Timing:
+                            </span>
+                            <p className="text-16-regular text-gray-700">
+                              {change.timing}
+                            </p>
+                          </p>
+                        </div>
+                      )}
+
+                      {change.action && (
+                        <div className="px-3 py-2 rounded-[3px] border-l-2 bg-sky-50 border-sky-300 mt-2">
+                          <p>
+                            <span className="text-16-medium text-gray-700 block mb-1">
+                              Action:
+                            </span>
+                            <p className="text-16-regular text-gray-700">
+                              {change.action}
+                            </p>
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1028,12 +1068,29 @@ const ProductWatchlist = ({ user }) => {
                       <div className="space-y-6 mb-6">
                         {groupedChanges[type].map((change, index) => (
                           <div key={index}>
-                            <h4 className="text-18-bold text-gray-700 mb-3">
+                            <h4 className="text-18-bold text-gray-700 mb-2">
                               {change.title}
                             </h4>
-                            <p className="text-gray-700 text-16-regular mb-4">
+                            <p className="text-gray-700 text-16-regular mb-2">
                               {change.description}
                             </p>
+                            {change.points && change.points.length > 0 && (
+                              <div className="px-2 py-2">
+                                <ul className="">
+                                  {change.points.map((point, pointIndex) => (
+                                    <li
+                                      key={pointIndex}
+                                      className="flex items-start space-x-2"
+                                    >
+                                      <div className="w-1.5 h-1.5 bg-gray-600 rounded-full mt-2 flex-shrink-0"></div>
+                                      <span className="text-16-regular text-gray-700">
+                                        {point}
+                                      </span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
                             <div className="">
                               {change.impact && (
                                 <div className="px-3 py-2 rounded-[3px] border-l-2 bg-sky-50 border-sky-300">
