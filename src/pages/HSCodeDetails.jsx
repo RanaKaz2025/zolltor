@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
-import {
-  ArrowLeft,
-  BookOpen,
-  TrendingUp,
-  Calendar,
-  Globe,
-  FileText,
-} from "lucide-react";
+import { ArrowLeft, BookOpen, TrendingUp, FileText } from "lucide-react";
 import dummyData from "../data/dummyData.json";
+import NewsIcon from "../components/NewsIcon";
 
 const HSCodeDetails = () => {
   const { code } = useParams();
@@ -122,7 +116,7 @@ const HSCodeDetails = () => {
   return (
     <div className="max-w-6xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
+      <div className="">
         <Link
           to="/watchlist"
           className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-800 mb-4"
@@ -131,25 +125,23 @@ const HSCodeDetails = () => {
           <span>Back</span>
         </Link>
 
-        <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-6">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                HS Code: {hsCodeData.code}
-              </h1>
-              <p className="text-lg text-gray-700 mb-4">
-                {hsCodeData.description}
-              </p>
-              <span className="inline-block bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium">
-                {hsCodeData.category}
-              </span>
-            </div>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-30-bold text-gray-700 mb-[2px]">
+              HS Code: {hsCodeData.code}
+            </h1>
+            <p className="text-16-regular text-gray-500">
+              {hsCodeData.description}
+            </p>
+            {/* <span className="inline-block bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium">
+              {hsCodeData.category}
+            </span> */}
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-3px shadow-sm border border-gray-200 mb-8">
+      <div className="bg-white rounded-3px shadow-sm border border-gray-200 mb-8 mt-4">
         <div className="border-b border-gray-200">
           <nav className="flex">
             {tabs.map((tab) => {
@@ -158,13 +150,15 @@ const HSCodeDetails = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
-                    activeTab === tab.id
-                      ? "border-primary-500 text-primary-600"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                  }`}
+                  className={`section-navigation ${
+                    activeTab === tab.id ? "active" : "inactive"
+                  } flex items-center space-x-2`}
                 >
-                  <Icon size={18} />
+                  {tab.id === "news" ? (
+                    <NewsIcon isActive={activeTab === tab.id} />
+                  ) : (
+                    <Icon size={18} />
+                  )}
                   <span>{tab.label}</span>
                 </button>
               );
@@ -177,25 +171,22 @@ const HSCodeDetails = () => {
           {activeTab === "overview" && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                <h3 className="text-20-bold text-gray-800 mb-3">
                   Regulatory Text
                 </h3>
-                <div className="bg-gray-50 p-4 rounded-3px">
-                  <p className="text-gray-700 leading-relaxed">
-                    {hsCodeData.regulatoryText}
-                  </p>
-                </div>
+
+                <p className="text-gray-700 text-16-regular">
+                  {hsCodeData.regulatoryText}
+                </p>
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              <div className="px-3 py-2 rounded-[3px] border-l-2 bg-sky-50 border-sky-300 mt-2">
+                <h3 className="text-16-medium text-gray-700 mb-1">
                   Plain Language Explanation
                 </h3>
-                <div className="bg-blue-50 p-4 rounded-3px border border-blue-200">
-                  <p className="text-blue-800 leading-relaxed">
-                    {hsCodeData.plainLanguageExplanation}
-                  </p>
-                </div>
+                <p className="text-16-regular text-gray-700">
+                  {hsCodeData.plainLanguageExplanation}
+                </p>
               </div>
             </div>
           )}
@@ -203,7 +194,7 @@ const HSCodeDetails = () => {
           {/* Historical Trends Tab */}
           {activeTab === "trends" && (
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <h3 className="text-20-bold text-gray-800 mb-3">
                 Annual Imports of {code} to the EU by country (€M):
               </h3>
 
@@ -214,22 +205,22 @@ const HSCodeDetails = () => {
                     <table className="w-full">
                       <thead>
                         <tr className="border-b border-gray-200 bg-gray-50">
-                          <th className="text-left py-3 px-4 text-sm font-medium text-gray-700">
+                          <th className="text-left text-16-medium py-3 px-4 text-gray-800">
                             Origin
                           </th>
-                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
-                            2021
+                          <th className="text-center py-3 px-2 text-16-regular text-gray-700">
+                            2021 (€)
                           </th>
-                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
-                            2022
+                          <th className="text-center py-3 px-2 text-16-regular text-gray-700">
+                            2022 (€)
                           </th>
-                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
-                            2023
+                          <th className="text-center py-3 px-2 text-16-regular text-gray-700">
+                            2023 (€)
                           </th>
-                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
-                            2024
+                          <th className="text-center py-3 px-2 text-16-regular text-gray-700">
+                            2024 (€)
                           </th>
-                          <th className="text-center py-3 px-2 text-sm font-medium text-gray-700">
+                          <th className="text-center py-3 px-2 text-16-regular text-gray-700">
                             CAGR
                           </th>
                         </tr>
@@ -240,7 +231,7 @@ const HSCodeDetails = () => {
                             key={index}
                             className="border-b border-gray-100 hover:bg-gray-50"
                           >
-                            <td className="py-3 px-4 text-sm text-gray-900 font-medium">
+                            <td className="py-3 px-4 text-16-medium text-gray-700">
                               <div className="flex items-center space-x-2">
                                 <div
                                   className="w-3 h-3 rounded-full"
@@ -252,19 +243,19 @@ const HSCodeDetails = () => {
                                 <span>{country.origin}</span>
                               </div>
                             </td>
-                            <td className="text-center py-3 px-2 text-sm text-gray-900">
+                            <td className="text-center py-3 px-2 text-16-regular text-gray-700">
                               €{country[2021]}M
                             </td>
-                            <td className="text-center py-3 px-2 text-sm text-gray-900">
+                            <td className="text-center py-3 px-2 text-16-regular text-gray-700">
                               €{country[2022]}M
                             </td>
-                            <td className="text-center py-3 px-2 text-sm text-gray-900">
+                            <td className="text-center py-3 px-2 text-16-regular text-gray-700">
                               €{country[2023]}M
                             </td>
-                            <td className="text-center py-3 px-2 text-sm text-gray-900">
+                            <td className="text-center py-3 px-2 text-16-regular text-gray-700">
                               €{country[2024]}M
                             </td>
-                            <td className="text-center py-3 px-2 text-sm font-medium">
+                            <td className="text-center py-3 px-2 text-16-regular text-gray-700">
                               <span
                                 className={`${
                                   calculateCAGR(
@@ -295,19 +286,19 @@ const HSCodeDetails = () => {
                         ))}
                         {/* Total Row */}
                         <tr className="border-t-2 border-gray-300 bg-gray-50 font-semibold">
-                          <td className="py-3 px-4 text-sm text-gray-900">
+                          <td className="py-3 px-4 text-16-medium text-gray-700">
                             Total
                           </td>
-                          <td className="text-center py-3 px-2 text-sm text-gray-900">
+                          <td className="text-center py-3 px-2 text-16-medium text-gray-700">
                             €{calculateYearTotal(2021)}M
                           </td>
-                          <td className="text-center py-3 px-2 text-sm text-gray-900">
+                          <td className="text-center py-3 px-2 text-16-medium text-gray-700">
                             €{calculateYearTotal(2022)}M
                           </td>
-                          <td className="text-center py-3 px-2 text-sm text-gray-900">
+                          <td className="text-center py-3 px-2 text-16-medium text-gray-700">
                             €{calculateYearTotal(2023)}M
                           </td>
-                          <td className="text-center py-3 px-2 text-sm text-gray-900">
+                          <td className="text-center py-3 px-2 text-16-medium text-gray-700">
                             €{calculateYearTotal(2024)}M
                           </td>
                           <td className="text-center py-3 px-2 text-sm">
@@ -492,11 +483,11 @@ const HSCodeDetails = () => {
                 </div>
               </div>
 
-              <div className="mt-6 bg-yellow-50 p-4 rounded-3px border border-yellow-200">
-                <h4 className="text-yellow-800 font-semibold mb-2">
+              <div className="mt-6 p-4 px-3 py-2 rounded-[3px] border-l-2 bg-sky-50 border-sky-300">
+                <h4 className="text-gray-700 text-16-medium mb-2">
                   Notes on Import Trends:
                 </h4>
-                <ul className="text-yellow-800 space-y-1 list-disc pl-5">
+                <ul className="text-16-regular text-gray-700 space-y-1 list-disc pl-5">
                   <li>
                     Vietnam's rapid increase reflects preferential access under
                     EVFTA.
@@ -517,7 +508,7 @@ const HSCodeDetails = () => {
           {/* Recent News Tab */}
           {activeTab === "news" && (
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              <h3 className="text-20-bold text-gray-800 mb-3">
                 Recent News & Updates
               </h3>
               <div className="space-y-4">
@@ -526,17 +517,18 @@ const HSCodeDetails = () => {
                     key={index}
                     className="bg-gray-50 p-4 rounded-3px border border-gray-200"
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="text-lg font-medium text-gray-900">
-                        {news.title}
-                      </h4>
-                      <div className="flex items-center space-x-1 text-sm text-gray-500">
-                        <Calendar size={14} />
-                        <span>{news.date}</span>
-                      </div>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-2">{news.summary}</p>
-                    <p className="text-xs text-gray-500">
+                    <span className="text-14-regular text-gray-700">
+                      {news.date}
+                    </span>
+
+                    <h4 className="text-18-bold text-gray-800 pt-3 pb-2">
+                      {news.title}
+                    </h4>
+
+                    <p className="text-16-regular text-gray-700 mb-2">
+                      {news.summary}
+                    </p>
+                    <p className="text-14-regular text-gray-700">
                       Source: {news.source}
                     </p>
                   </div>

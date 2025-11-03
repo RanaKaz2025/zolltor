@@ -202,6 +202,29 @@
     @apply ring-teal-700;
   }
 
+  /* Radio Styles - match checkbox sizing and teal accent when selected */
+  input[type="radio"] {
+    @apply w-[18px] h-[18px] rounded-full border border-gray-300 focus:ring-teal-700 focus:ring-1;
+    accent-color: #0f766e; /* teal-700 */
+  }
+
+  input[type="radio"]:hover {
+    @apply border-teal-700;
+  }
+
+  input[type="radio"]:checked {
+    @apply bg-teal-700 border-teal-700;
+    accent-color: #0f766e; /* teal-700 */
+  }
+
+  input[type="radio"]:focus {
+    @apply ring-teal-700;
+  }
+
+  input[type="radio"]:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
   /* Page Navigation Styles */
   .page-navigation {
     @apply px-4 py-[9px] mx-[2px] rounded-full transition-all duration-200 text-16-medium;
@@ -229,11 +252,11 @@
   }
 
   .section-navigation.active {
-    @apply bg-teal-50 text-teal-700;
+    @apply bg-teal-50 text-teal-700 text-16-medium;
   }
 
   .section-navigation.inactive {
-    @apply text-gray-500;
+    @apply text-gray-700 text-16-regular;
   }
 
   .section-navigation.inactive:hover {

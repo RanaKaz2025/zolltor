@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Save, Mail, Globe, Bell, Key, Eye, EyeOff } from "lucide-react";
+import { Save, Mail, UserRound, Bell, Key, Eye, EyeOff } from "lucide-react";
 import Select from "../components/Select";
 import dummyData from "../data/dummyData.json";
+import PasswordIcon from "../components/PasswordIcon";
 
 const UserProfile = ({ user, setUser }) => {
   const [activeTab, setActiveTab] = useState("profile");
@@ -66,7 +67,7 @@ const UserProfile = ({ user, setUser }) => {
   };
 
   const tabs = [
-    { id: "profile", label: "Profile Information", icon: Globe },
+    { id: "profile", label: "Profile Information", icon: UserRound },
     { id: "notifications", label: "Notification Settings", icon: Bell },
     { id: "password", label: "Change Password", icon: Key },
   ];
@@ -74,8 +75,8 @@ const UserProfile = ({ user, setUser }) => {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">User Profile</h1>
-        <p className="text-gray-600">
+        <h1 className="text-20-bold text-gray-700 mb-2">User Profile</h1>
+        <p className="text-16-regular text-gray-500">
           Manage your account settings and preferences
         </p>
       </div>
@@ -92,20 +93,22 @@ const UserProfile = ({ user, setUser }) => {
         <div className="flex">
           {/* Vertical Tab Navigation */}
           <div className="w-50 border-r border-gray-200">
-            <nav className="flex flex-col">
+            <nav className="flex flex-col p-1">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center space-x-3 px-6 py-4 text-sm font-medium border-r-2 transition-colors text-left ${
-                      activeTab === tab.id
-                        ? "border-primary-500 text-primary-600 bg-primary-50"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                    }`}
+                    className={`section-navigation ${
+                      activeTab === tab.id ? "active" : "inactive"
+                    } flex items-center space-x-2`}
                   >
-                    <Icon size={18} />
+                    {tab.id === "password" ? (
+                      <PasswordIcon isActive={activeTab === tab.id} />
+                    ) : (
+                      <Icon size={18} />
+                    )}
                     <span>{tab.label}</span>
                   </button>
                 );
@@ -119,14 +122,14 @@ const UserProfile = ({ user, setUser }) => {
             {activeTab === "profile" && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  <h3 className="text-20-bold text-gray-800 mb-4">
                     Profile Information
                   </h3>
 
                   <div className="space-y-6">
                     <div>
-                      <label className="block text-16-medium text-gray-700 mb-2">
-                        Email Address (Read only)
+                      <label className="block text-16-regular text-gray-800 mb-2">
+                        Email Address
                       </label>
                       <div className="relative">
                         <Mail
@@ -144,8 +147,8 @@ const UserProfile = ({ user, setUser }) => {
                     </div>
 
                     <div>
-                      <label className="block text-16-medium text-gray-700 mb-2">
-                        Language Preference
+                      <label className="block text-16-regular text-gray-800 mb-2">
+                        Notification Frequency
                       </label>
                       <div className="flex space-x-6">
                         <div className="flex items-center">
@@ -161,11 +164,15 @@ const UserProfile = ({ user, setUser }) => {
                                 language: e.target.value,
                               })
                             }
-                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                            className="h-4 w-4"
                           />
                           <label
                             htmlFor="language-english"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular  ${
+                              profileData.language === "english"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             English
                           </label>
@@ -187,7 +194,11 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="language-german"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular  ${
+                              profileData.language === "german"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             German
                           </label>
@@ -217,7 +228,11 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="role-ceo"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular  ${
+                              profileData.role === "ceo"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             CEO
                           </label>
@@ -239,7 +254,11 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="role-cfo"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular  ${
+                              profileData.role === "cfo"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             CFO
                           </label>
@@ -261,7 +280,11 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="role-supply-chain"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular  ${
+                              profileData.role === "supply-chain"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             Supply Chain Manager
                           </label>
@@ -283,7 +306,11 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="role-other"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular  ${
+                              profileData.role === "other"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             Other
                           </label>
@@ -296,10 +323,6 @@ const UserProfile = ({ user, setUser }) => {
                         Country of Operation
                       </label>
                       <div className="relative">
-                        <Globe
-                          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"
-                          size={18}
-                        />
                         <Select
                           value={profileData.country}
                           onChange={(value) =>
@@ -313,10 +336,9 @@ const UserProfile = ({ user, setUser }) => {
                             label: `${country.flag} ${country.name}`,
                           }))}
                           placeholder="Select country"
-                          className="pl-10"
                         />
                       </div>
-                      <p className="mt-1 text-sm text-gray-500">
+                      <p className="mt-1 text-14-regular text-gray-500">
                         This determines your import/export perspective
                       </p>
                     </div>
@@ -325,7 +347,7 @@ const UserProfile = ({ user, setUser }) => {
                   <div className="mt-6">
                     <button
                       onClick={handleProfileSave}
-                      className="bg-primary-600 text-white px-6 py-2 rounded-3px hover:bg-primary-700 transition-colors flex items-center space-x-2"
+                      className="btn-primary btn-md mx-2"
                     >
                       <span>Save Changes</span>
                     </button>
@@ -338,13 +360,13 @@ const UserProfile = ({ user, setUser }) => {
             {activeTab === "notifications" && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                    Email Notifications
+                  <h3 className="text-20-bold text-gray-800 mb-4">
+                    Notification Settings
                   </h3>
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-16-medium text-gray-700 mb-2">
+                      <label className="block text-16-regular text-gray-800 mb-2">
                         Email Address for Notifications
                       </label>
                       <div className="relative">
@@ -361,17 +383,17 @@ const UserProfile = ({ user, setUser }) => {
                               emailAddress: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium"
+                          className="w-full pl-10 pr-3 py-2"
                           placeholder="notifications@example.com"
                         />
                       </div>
-                      <p className="mt-1 text-sm text-gray-500">
+                      <p className="mt-1 text-14-regular text-gray-500">
                         Leave blank to use your account email address
                       </p>
                     </div>
 
                     <div>
-                      <label className="block text-16-medium text-gray-700 mb-2">
+                      <label className="block text-16-regular text-gray-800 mb-2">
                         Notification Frequency
                       </label>
                       <div className="flex flex-wrap gap-6">
@@ -392,7 +414,11 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="frequency-daily"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular ${
+                              notificationSettings.frequency === "daily"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             Daily Digest
                           </label>
@@ -416,7 +442,11 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="frequency-weekly"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular text-gray-800 ${
+                              notificationSettings.frequency === "weekly"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             Weekly Digest
                           </label>
@@ -440,7 +470,11 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="frequency-monthly"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular  ${
+                              notificationSettings.frequency === "monthly"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             Monthly Digest
                           </label>
@@ -462,24 +496,28 @@ const UserProfile = ({ user, setUser }) => {
                           />
                           <label
                             htmlFor="frequency-major"
-                            className="ml-2 text-16-medium text-gray-700"
+                            className={`ml-2 text-16-regular  ${
+                              notificationSettings.frequency === "major"
+                                ? " text-gray-800"
+                                : "text-gray-600"
+                            }`}
                           >
                             Major Changes Only
                           </label>
                         </div>
                       </div>
-                      <p className="mt-3 text-sm text-gray-500">
+                      <p className="mt-3 text-14-regular text-gray-500">
                         Choose your preferred frequency to balance information
                         needs with inbox management
                       </p>
                     </div>
                   </div>
 
-                  <div className="mt-6 p-4 bg-blue-50 rounded-3px border border-blue-200">
-                    <h4 className="text-sm font-medium text-blue-900 mb-2">
+                  <div className="mt-6 p-4 px-3 py-2 rounded-[3px] border-l-2 bg-sky-50 border-sky-300">
+                    <h4 className="text-16-medium text-gray-700 mb-2">
                       What you'll receive notifications about:
                     </h4>
-                    <ul className="text-sm text-blue-800 space-y-1">
+                    <ul className="text-16-regular text-gray-700 space-y-1">
                       <li>• Rate changes affecting your tracked products</li>
                       <li>• New trade agreement implementations</li>
                       <li>• Market analysis updates</li>
@@ -503,13 +541,13 @@ const UserProfile = ({ user, setUser }) => {
             {activeTab === "password" && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                  <h3 className="text-20-bold text-gray-800 mb-4">
                     Change Password
                   </h3>
 
                   <div className="space-y-4 max-w-md">
                     <div>
-                      <label className="block text-16-medium text-gray-700 mb-2">
+                      <label className="block text-16-regular text-gray-800 mb-2">
                         Current Password
                       </label>
                       <div className="relative">
@@ -526,8 +564,7 @@ const UserProfile = ({ user, setUser }) => {
                               currentPassword: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium"
-                          placeholder="Enter current password"
+                          className="w-full pl-10 pr-12 py-2"
                         />
                         <button
                           type="button"
@@ -549,7 +586,7 @@ const UserProfile = ({ user, setUser }) => {
                     </div>
 
                     <div>
-                      <label className="block text-16-medium text-gray-700 mb-2">
+                      <label className="block text-16-regular text-gray-800 mb-2">
                         New Password
                       </label>
                       <div className="relative">
@@ -566,7 +603,7 @@ const UserProfile = ({ user, setUser }) => {
                               newPassword: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium"
+                          className="w-full pl-10 pr-12 py-2"
                           placeholder="Enter new password"
                         />
                         <button
@@ -589,7 +626,7 @@ const UserProfile = ({ user, setUser }) => {
                     </div>
 
                     <div>
-                      <label className="block text-16-medium text-gray-700 mb-2">
+                      <label className="block text-16-regular text-gray-800 mb-2">
                         Confirm New Password
                       </label>
                       <div className="relative">
@@ -606,7 +643,7 @@ const UserProfile = ({ user, setUser }) => {
                               confirmPassword: e.target.value,
                             })
                           }
-                          className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium"
+                          className="w-full pl-10 pr-12 py-2"
                           placeholder="Confirm new password"
                         />
                         <button
@@ -632,7 +669,7 @@ const UserProfile = ({ user, setUser }) => {
                   <div className="mt-6">
                     <button
                       onClick={handlePasswordSave}
-                      className="bg-primary-600 text-white px-6 py-2 rounded-3px hover:bg-primary-700 transition-colors flex items-center space-x-2"
+                      className="btn-primary btn-md mx-2"
                     >
                       <span>Update Password</span>
                     </button>

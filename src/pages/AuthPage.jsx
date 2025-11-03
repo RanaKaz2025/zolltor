@@ -293,10 +293,6 @@ const AuthPage = ({ onLogin }) => {
                   Country of Operation *
                 </label>
                 <div className="relative">
-                  <Globe
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"
-                    size={18}
-                  />
                   <Select
                     value={formData.country}
                     onChange={(value) =>
@@ -307,9 +303,7 @@ const AuthPage = ({ onLogin }) => {
                       label: `${country.flag} ${country.name}`,
                     }))}
                     placeholder="Select your country"
-                    className={`pl-10 ${
-                      errors.country ? "border-red-300" : ""
-                    }`}
+                    className={`${errors.country ? "border-red-300" : ""}`}
                     required={!isLogin}
                   />
                 </div>
