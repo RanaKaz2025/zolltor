@@ -104,7 +104,7 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={toggleDropdown}
-                    className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors focus:outline-none"
+                    className="flex items-center space-x-1 text-teal-700 text-16-medium"
                   >
                     <CircleUserRound size={18} />
                     <span className="hidden sm:inline">CEO</span>
@@ -139,12 +139,14 @@ const Header = ({ isAuthenticated, user, onLogout }) => {
                 </div>
               </div>
             ) : (
-              <Link
-                to="/auth"
-                className="bg-primary-600 text-white px-4 py-2 rounded-3px hover:bg-primary-700 transition-colors"
-              >
-                Sign In
-              </Link>
+              location.pathname !== "/auth" && (
+                <Link
+                  to="/auth"
+                  className="bg-primary-600 text-white px-4 py-2 rounded-3px hover:bg-primary-700 transition-colors"
+                >
+                  Sign In
+                </Link>
+              )
             )}
           </div>
         </div>

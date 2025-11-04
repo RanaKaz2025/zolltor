@@ -97,10 +97,10 @@ const AuthPage = ({ onLogin }) => {
       <div className="bg-white rounded-3px shadow-sm border border-gray-200 p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-20-bold text-gray-800 mb-2">
             {isLogin ? "Sign In" : "Create Account"}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-16-regular text-gray-500">
             {isLogin
               ? "Access your tariff watchlist and get personalized alerts"
               : "Join Zolltor to monitor tariff changes and make informed trade decisions"}
@@ -110,7 +110,7 @@ const AuthPage = ({ onLogin }) => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-16-medium text-gray-700 mb-2">
+            <label className="block text-16-regular text-gray-800 mb-2">
               Email Address *
             </label>
             <div className="relative">
@@ -123,7 +123,7 @@ const AuthPage = ({ onLogin }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-3 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium ${
+                className={`w-full pl-10 pr-3 py-2 ${
                   errors.email ? "border-red-300" : "border-gray-300"
                 }`}
                 placeholder="you@example.com"
@@ -136,7 +136,7 @@ const AuthPage = ({ onLogin }) => {
           </div>
 
           <div>
-            <label className="block text-16-medium text-gray-700 mb-2">
+            <label className="block text-16-regular text-gray-800 mb-2">
               Password *
             </label>
             <div className="relative">
@@ -149,7 +149,7 @@ const AuthPage = ({ onLogin }) => {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full pl-10 pr-12 py-3 border rounded-3px focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-16-semibold placeholder:text-16-medium ${
+                className={`w-full pl-10 pr-3 py-2 ${
                   errors.password ? "border-red-300" : "border-gray-300"
                 }`}
                 placeholder="Enter your password"
@@ -171,7 +171,7 @@ const AuthPage = ({ onLogin }) => {
           {!isLogin && (
             <>
               <div>
-                <label className="block text-16-medium text-gray-700 mb-2">
+                <label className="block text-16-regular text-gray-800 mb-2">
                   Language Preference *
                 </label>
                 <div className="flex space-x-6">
@@ -183,11 +183,11 @@ const AuthPage = ({ onLogin }) => {
                       value="english"
                       checked={formData.language === "english"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor="language-english"
-                      className="ml-2 text-16-medium text-gray-700"
+                      className="ml-2 text-16-regular text-gray-800"
                     >
                       English
                     </label>
@@ -200,11 +200,11 @@ const AuthPage = ({ onLogin }) => {
                       value="german"
                       checked={formData.language === "german"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor="language-german"
-                      className="ml-2 text-16-medium text-gray-700"
+                      className="ml-2 text-16-regular text-gray-800"
                     >
                       German
                     </label>
@@ -213,7 +213,7 @@ const AuthPage = ({ onLogin }) => {
               </div>
 
               <div>
-                <label className="block text-16-medium text-gray-700 mb-2">
+                <label className="block text-16-regular text-gray-800 mb-2">
                   Role *
                 </label>
                 <div className="flex flex-wrap gap-6">
@@ -225,11 +225,11 @@ const AuthPage = ({ onLogin }) => {
                       value="ceo"
                       checked={formData.role === "ceo"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor="role-ceo"
-                      className="ml-2 text-16-medium text-gray-700"
+                      className="ml-2 text-16-regular text-gray-800"
                     >
                       CEO
                     </label>
@@ -242,11 +242,11 @@ const AuthPage = ({ onLogin }) => {
                       value="cfo"
                       checked={formData.role === "cfo"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor="role-cfo"
-                      className="ml-2 text-16-medium text-gray-700"
+                      className="ml-2 text-16-regular text-gray-800"
                     >
                       CFO
                     </label>
@@ -259,11 +259,11 @@ const AuthPage = ({ onLogin }) => {
                       value="supply-chain"
                       checked={formData.role === "supply-chain"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor="role-supply-chain"
-                      className="ml-2 text-16-medium text-gray-700"
+                      className="ml-2 text-16-regular text-gray-800"
                     >
                       Supply Chain Manager
                     </label>
@@ -276,11 +276,11 @@ const AuthPage = ({ onLogin }) => {
                       value="other"
                       checked={formData.role === "other"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                      className="h-4 w-4"
                     />
                     <label
                       htmlFor="role-other"
-                      className="ml-2 text-16-medium text-gray-700"
+                      className="ml-2 text-16-regular text-gray-800"
                     >
                       Other
                     </label>
@@ -289,7 +289,7 @@ const AuthPage = ({ onLogin }) => {
               </div>
 
               <div>
-                <label className="block text-16-medium text-gray-700 mb-2">
+                <label className="block text-16-regular text-gray-800 mb-2">
                   Country of Operation *
                 </label>
                 <div className="relative">
@@ -308,26 +308,32 @@ const AuthPage = ({ onLogin }) => {
                   />
                 </div>
                 {errors.country && (
-                  <p className="mt-1 text-sm text-red-600">{errors.country}</p>
+                  <p className="mt-1 text-14-regular text-red-600">
+                    {errors.country}
+                  </p>
                 )}
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-14-regular text-gray-500">
                   This helps us personalize your trade data perspective
                 </p>
               </div>
             </>
           )}
 
-          <button
-            type="submit"
-            className="w-full bg-primary-600 text-white py-3 rounded-3px hover:bg-primary-700 transition-colors font-medium"
-          >
+          <button type="submit" className="btn-primary btn-md w-full ">
             {isLogin ? "Sign In" : "Create Account"}
           </button>
         </form>
 
+        {/* Password Recovery */}
+        {isLogin && (
+          <div className="mt-2 text-center">
+            <button className="btn-link btn-sm">Forgot your password?</button>
+          </div>
+        )}
+
         {/* Switch Mode */}
         <div className="mt-6 text-center">
-          <p className="text-gray-600">
+          <p className="text-16-regular text-gray-500">
             {isLogin ? "Don't have an account?" : "Already have an account?"}
             <button
               onClick={() => {
@@ -350,21 +356,12 @@ const AuthPage = ({ onLogin }) => {
                   });
                 }
               }}
-              className="ml-1 text-primary-600 hover:text-primary-800 font-medium"
+              className="ml-1 btn-link btn-md"
             >
-              {isLogin ? "Sign up" : "Sign in"}
+              {isLogin ? "Create Account" : "Sign in"}
             </button>
           </p>
         </div>
-
-        {/* Password Recovery */}
-        {isLogin && (
-          <div className="mt-4 text-center">
-            <button className="text-sm text-gray-500 hover:text-gray-700">
-              Forgot your password?
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Information Box */}

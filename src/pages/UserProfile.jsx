@@ -88,12 +88,12 @@ const UserProfile = ({ user, setUser }) => {
         </div>
       )}
 
-      <div className="bg-white rounded-3px shadow-sm border border-gray-200">
+      <div className="bg-white rounded-3px">
         {/* Vertical Tabs Layout */}
         <div className="flex">
           {/* Vertical Tab Navigation */}
-          <div className="w-50 border-r border-gray-200">
-            <nav className="flex flex-col p-1">
+          <div className="w-50 py-1">
+            <nav className="flex flex-col">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 return (

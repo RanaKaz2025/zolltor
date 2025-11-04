@@ -343,24 +343,22 @@ const ProductWatchlist = ({ user }) => {
 
       {/* Tabs */}
       <div className="bg-white rounded-3px shadow-sm">
-        <div>
-          <nav className="flex">
-            {tabs.map((tab) => {
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`section-navigation ${
-                    activeTab === tab.id ? "active" : "inactive"
-                  } flex items-center space-x-2 
+        <nav className="flex py-1">
+          {tabs.map((tab) => {
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`section-navigation ${
+                  activeTab === tab.id ? "active" : "inactive"
+                } flex items-center space-x-2 
                   }`}
-                >
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
+              >
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </nav>
 
         <div>
           {/* Watchlist Tab */}

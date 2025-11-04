@@ -141,8 +141,8 @@ const HSCodeDetails = () => {
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-3px shadow-sm border border-gray-200 mb-8 mt-4">
-        <div className="border-b border-gray-200">
+      <div className="bg-white rounded-3px  mb-8 mt-4">
+        <div className="py-1">
           <nav className="flex">
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -511,12 +511,9 @@ const HSCodeDetails = () => {
               <h3 className="text-20-bold text-gray-800 mb-3">
                 Recent News & Updates
               </h3>
-              <div className="space-y-4">
+              <div className="">
                 {hsCodeData.recentNews.map((news, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-50 p-4 rounded-3px border border-gray-200"
-                  >
+                  <div key={index}>
                     <span className="text-14-regular text-gray-700">
                       {news.date}
                     </span>
@@ -531,6 +528,9 @@ const HSCodeDetails = () => {
                     <p className="text-14-regular text-gray-700">
                       Source: {news.source}
                     </p>
+                    {index < hsCodeData.recentNews.length - 1 && (
+                      <hr className="my-8" />
+                    )}
                   </div>
                 ))}
               </div>
